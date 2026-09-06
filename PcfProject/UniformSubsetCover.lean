@@ -115,7 +115,7 @@ theorem exists_bounded_subset_mk_eq_of_isRegular_of_cof_ne
 
 /-! At cardinality at most `2^mu`, all injectively enumerated `mu`-sets form
 a sufficiently small downward cover. -/
-noncomputable def uniformSubsetCover_of_mk_le_two_power
+noncomputable def uniformSubsetCoverOfMkLeTwoPower
     (α : Type u)
     {mu : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
@@ -151,12 +151,12 @@ noncomputable def uniformSubsetCover_of_mk_le_two_power
     rw [← ha]
     exact (eZ a).2
 
-#print axioms uniformSubsetCover_of_mk_le_two_power
+#print axioms uniformSubsetCoverOfMkLeTwoPower
 
 /-! Assemble covers of all proper initial-cardinal segments into a cover of
 one larger initial ordinal.  The cofinality hypothesis supplies a bounded
 `mu`-subsubset, which is then handled by the corresponding smaller cover. -/
-noncomputable def uniformSubsetCover_of_smaller
+noncomputable def uniformSubsetCoverOfSmaller
     {mu alpha : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
     (hPowerAlpha : (2 : Cardinal.{u}) ^ mu < alpha)
@@ -252,7 +252,7 @@ noncomputable def uniformSubsetCover_of_smaller
       exact hXZ (hi hx)
   }
 
-#print axioms uniformSubsetCover_of_smaller
+#print axioms uniformSubsetCoverOfSmaller
 
 theorem orderCof_cardinalOrdToType
     (alpha : Cardinal.{u}) :
@@ -275,7 +275,7 @@ theorem nonempty_uniformSubsetCover_of_no_equal_cofinality
   induction alpha using Cardinal.lt_wf.induction with
   | h alpha ih =>
       by_cases hSmall : alpha <= (2 : Cardinal.{u}) ^ mu
-      · exact ⟨uniformSubsetCover_of_mk_le_two_power
+      · exact ⟨uniformSubsetCoverOfMkLeTwoPower
           alpha.ord.ToType hMu (by
             rw [Cardinal.mk_ord_toType]
             exact hSmall)⟩
@@ -288,12 +288,12 @@ theorem nonempty_uniformSubsetCover_of_no_equal_cofinality
             UniformSubsetCover gamma.ord.ToType mu := fun gamma hGamma =>
           Classical.choice (ih gamma hGamma
             (hGamma.le.trans hAlphaBound))
-        exact ⟨uniformSubsetCover_of_smaller
+        exact ⟨uniformSubsetCoverOfSmaller
           hMu hPowerAlpha hCofNe smaller⟩
 
 #print axioms nonempty_uniformSubsetCover_of_no_equal_cofinality
 
-noncomputable def uniformSubsetCover_of_no_equal_cofinality
+noncomputable def uniformSubsetCoverOfNoEqualCofinality
     {mu bound alpha : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
     (hAlphaBound : alpha <= bound)
@@ -357,17 +357,17 @@ theorem cardinal_ord_cof_ne_of_two_power_lt_of_lt_aleph
 
 /-! Source form of Jech 24.23: below `aleph_(mu.ord)` the cofinality
 avoidance condition is automatic. -/
-noncomputable def uniformSubsetCover_of_lt_aleph
+noncomputable def uniformSubsetCoverOfLtAleph
     {mu alpha : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
     (hAlpha : alpha < Cardinal.aleph mu.ord) :
     UniformSubsetCover alpha.ord.ToType mu :=
-  uniformSubsetCover_of_no_equal_cofinality (bound := alpha) hMu le_rfl
+  uniformSubsetCoverOfNoEqualCofinality (bound := alpha) hMu le_rfl
     (fun _gamma hPower hGamma =>
       cardinal_ord_cof_ne_of_two_power_lt_of_lt_aleph
         hMu hPower (hGamma.trans_lt hAlpha))
 
-#print axioms uniformSubsetCover_of_lt_aleph
+#print axioms uniformSubsetCoverOfLtAleph
 
 /-! Exact family form of Lemma 24.23 on the canonical representative of an
 ambient cardinal. -/
@@ -381,7 +381,7 @@ theorem exists_uniformSubsetCover_family_of_two_power_le_of_lt_aleph
       (forall i, Cardinal.mk (F i) = mu) /\
       (forall Z : Set alpha.ord.ToType, Cardinal.mk Z = mu ->
         exists i, F i ⊆ Z) := by
-  let C := uniformSubsetCover_of_lt_aleph hMu hAlpha
+  let C := uniformSubsetCoverOfLtAleph hMu hAlpha
   refine ⟨C.Index, C.member, ?_, C.member_cardinal,
     C.downward_cofinal⟩
   have hPower' : (2 : Cardinal.{u}) ^ mu <=

@@ -12,7 +12,8 @@
 ## 2. 声明名表达数学命题
 
 - 类型、结构和主要谓词使用 `UpperCamelCase`，例如 `MaxPcfWitness`。
-- 定理、定义和函数以小写开头；不同语义子句用下划线分隔。
+- 定理名以小写开头，不同语义子句用下划线分隔；产生数据的定义和函数采用
+  `lowerCamelCase`，不把定理式的 `_of_` 链用于构造器。
 - 项目已稳定使用的领域原子保留驼峰拼写，例如 `alephOmega`、`maxPcf`、
   `cardinalProduct`。它们作为一个数学词处理，不在重构中机械拆分。
 - 用 `_of_` 引出充分条件，用 `_iff_` 表示等价，用 `_eq_`、`_lt_`、
@@ -27,6 +28,8 @@ interCardSet
 unionCardSet
 finsetUnionCardSet
 continuumAtAlephOmega
+CardinalProductQuotientScale.ofScale
+uniformSubsetCoverOfLtAleph
 targetConditionalStatement_of_strongLimit
 continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
 exists_pcf_transitive_successorDirected_generators_of_successorDoublePower

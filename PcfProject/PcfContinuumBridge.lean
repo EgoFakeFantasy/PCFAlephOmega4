@@ -464,12 +464,12 @@ noncomputable def alephOmegaUniformSubsetCharacteristicCoding
 
 #print axioms alephOmegaUniformSubsetCharacteristicCoding
 
-noncomputable def uniformSubsetCover_of_card_lt_aleph
+noncomputable def uniformSubsetCoverOfCardLtAleph
     (K : Type u) {mu : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
     (hK : Cardinal.mk K < Cardinal.aleph mu.ord) :
     UniformSubsetCover K mu :=
-  let C := uniformSubsetCover_of_lt_aleph hMu hK
+  let C := uniformSubsetCoverOfLtAleph hMu hK
   let e : (Cardinal.mk K).ord.ToType ≃ K :=
     (Cardinal.eq.mp (Cardinal.mk_ord_toType (Cardinal.mk K))).some
   C.mapEquiv e
@@ -499,7 +499,7 @@ theorem alephOmegaCharacteristicRange_mk_le
       _ <= alpha * alpha := mul_le_mul' hIndex hStage
       _ = alpha := Cardinal.mul_eq_self hAlphaInfinite
   let C : UniformSubsetCover K mu :=
-    uniformSubsetCover_of_card_lt_aleph K
+    uniformSubsetCoverOfCardLtAleph K
       (finiteAleph_isRegular k).lift (hK.trans_lt hAlphaLt)
   exact (alephOmegaUniformSubsetCharacteristicCoding hk F).mk_le_of_uniformSubsetCover
     C hPower hK

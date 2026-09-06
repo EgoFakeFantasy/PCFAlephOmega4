@@ -2378,7 +2378,7 @@ theorem cardinalProductQuotient_mk_strictly_increasing_and_cofinal_of_scale
 
 /-! Every raw product scale determines a quotient scale with exactly the same
 well-ordered index. This merely transports a supplied scale to the quotient. -/
-def CardinalProductQuotientScale.of_scale
+def CardinalProductQuotientScale.ofScale
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
     {L : ScaleLength.{v}}
@@ -2398,7 +2398,7 @@ theorem CardinalProductQuotientScale.nonempty_of_scale
     {L : ScaleLength.{v}}
     (s : Scale (cardinalProductFrame A J) L) :
     Nonempty (CardinalProductQuotientScale A J L) :=
-  ⟨CardinalProductQuotientScale.of_scale s⟩
+  ⟨CardinalProductQuotientScale.ofScale s⟩
 
 #print axioms CardinalProductQuotientScale.nonempty_of_scale
 
@@ -5584,7 +5584,7 @@ theorem cardinalScaleLength_hasTrueCofinality_iff_exists_quotientCofinalFamily_o
   constructor
   · intro hTcf
     obtain ⟨s⟩ := hTcf.hasScaleWitness
-    let qScale := CardinalProductQuotientScale.of_scale s
+    let qScale := CardinalProductQuotientScale.ofScale s
     refine ⟨qScale.seq, qScale.cofinal, ?_⟩
     exact (cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
       hRegular hUltra qScale).symm.le
@@ -5617,7 +5617,7 @@ theorem cardinalScaleLength_hasTrueCofinality_iff_quotient_cof_eq_lift
   · intro hTcf
     obtain ⟨s⟩ := hTcf.hasScaleWitness
     exact cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
-      hRegular hUltra (CardinalProductQuotientScale.of_scale s)
+      hRegular hUltra (CardinalProductQuotientScale.ofScale s)
   · intro hCofEq
     obtain ⟨s⟩ := cardinalProductQuotientScale_of_cof_eq_lift
       hRegulars hUltra hCofEq
@@ -6444,7 +6444,7 @@ theorem cardinalProductRepresentation_exists_pcf_mem_ge_of_small_cardinalIndex_o
   have hCofEq : Order.cof (CardinalProductQuotient A J) =
       Cardinal.lift.{u + 1} theta :=
     cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
-      hRegular hUltra (CardinalProductQuotientScale.of_scale s)
+      hRegular hUltra (CardinalProductQuotientScale.ofScale s)
   have hLambdaThetaLift : Cardinal.lift.{u + 1} lambda <=
       Cardinal.lift.{u + 1} theta := by
     exact hCofLower.trans_eq hCofEq

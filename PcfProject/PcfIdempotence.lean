@@ -250,7 +250,7 @@ theorem cardinalProductFubini_hasTrueCofinality
           Order.cof (CardinalProductQuotient B J) :=
         (cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
           hThetaRegular hJUltra
-          (CardinalProductQuotientScale.of_scale t)).symm
+          (CardinalProductQuotientScale.ofScale t)).symm
       _ <= Order.cof (CardinalProductQuotient A (J.fubini D)) :=
         cardinalProductQuotient_cof_le_fubini
           hARegulars hSmall D s
