@@ -55,5 +55,8 @@ exists_pcf_transitive_successorDirected_generators_of_successorDoublePower
 3. 改名前后分别保证默认构建有效。
 4. 改名后检查 `#print axioms`，并同步 README/TROPHIES 中的公开入口。
 
+迁移前后的文件数、LF 归一化 UTF-8 字节数与行数记录在
+[ProofNamingBaseline.md](ProofNamingBaseline.md)。
+
 本项目没有 YesMetaZFC 的宿主层、元理论层和对象理论层三层架构，因此不机械
 采用 `_l`、`_m`、`_d` 后缀；命名空间和数学术语已经能够准确表达这里的层次。

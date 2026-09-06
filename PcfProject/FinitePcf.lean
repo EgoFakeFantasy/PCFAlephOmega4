@@ -100,12 +100,17 @@ theorem IsUltrafilterDual.eq_excludePoint_of_finite
 
 end Ideal
 
-theorem finite_principalUltrafiltersOn
+namespace AllUltrafiltersPrincipal
+
+/-- 有限规范指标集上的每个超滤对偶理想都是排除某个单点所得的主理想。 -/
+theorem of_finite
     {A : CardSet.{u}}
     [Finite (CardinalIndex A)] :
-    PrincipalUltrafiltersOn A := by
+    AllUltrafiltersPrincipal A := by
   intro J hJ
   exact hJ.eq_excludePoint_of_finite
+
+end AllUltrafiltersPrincipal
 
 
 /-! 有限 PCF 的核心事实：有限多个有限坐标的并仍有有限索引，单点集亦然。 -/
@@ -160,7 +165,7 @@ theorem cardinalProductRepresentation_pcf_subset_of_finite
     (hRegulars : SetOfRegulars A) :
   SubsetOf (cardinalProductRepresentation.pcf A) A := by
   exact cardinalProductRepresentation_pcf_subset_of_principal_ultrafilters
-    hRegulars (finite_principalUltrafiltersOn (A := A))
+    hRegulars (AllUltrafiltersPrincipal.of_finite (A := A))
 
 theorem cardinalProductRepresentation_pcf_eq_of_finite
     {A : CardSet.{u}}
@@ -168,7 +173,7 @@ theorem cardinalProductRepresentation_pcf_eq_of_finite
     (hRegulars : SetOfRegulars A) :
   cardinalProductRepresentation.pcf A = A := by
   exact cardinalProductRepresentation_pcf_eq_of_principal_ultrafilters
-    hRegulars (finite_principalUltrafiltersOn (A := A))
+    hRegulars (AllUltrafiltersPrincipal.of_finite (A := A))
 
 /-! 对非空有限正则集，取有限索引中的最大坐标；`pcf(A)=A` 保证它正是最大 pcf 见证。 -/
 noncomputable def finiteMaxPcfWitness

@@ -43,7 +43,8 @@ import PcfProject
 | 汇总 | `PcfTransitiveApplications` | 构造强极限尾部并组合出最终不等式 |
 
 更细的稳定里程碑、准确前提与依赖关系见 [TROPHIES.md](TROPHIES.md)。命名
-规则见 [ProofNaming.md](ProofNaming.md)。
+规则见 [ProofNaming.md](ProofNaming.md)，迁移度量见
+[ProofNamingBaseline.md](ProofNamingBaseline.md)。
 
 ## 本地复核
 
@@ -55,7 +56,7 @@ lake build
 ```
 
 完整构建会编译根模块 `PcfProject.lean` 及其传递依赖，并同时执行源码中的
-`#print axioms` 审计点。2026-09-06 的默认构建通过了 1017 个构建任务。
+`#print axioms` 审计点。2026-09-07 的默认构建通过了 1017 个构建任务。
 
 ## 仓库范围
 

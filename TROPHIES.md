@@ -16,6 +16,7 @@ import PcfProject
 #check PcfProject.successorAlephLocalLemma2410ExactUpperBounds
 #check PcfProject.exists_omegaOneClubGuessingAtAlephThree
 #check PcfProject.targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
+#check PcfProject.AllUltrafiltersPrincipal.pcf_below_alephOmega4
 ```
 
 ## 最终结果
@@ -29,12 +30,13 @@ import PcfProject
 
 | ID | Lean 声明 | 数学内容 | 复用边界 | 源码 |
 | --- | --- | --- | --- | --- |
-| PCF-101 | `exists_pcf_transitive_successorDirected_generators_of_successorDoublePower` | 在 PCF 谱上构造传递且后继有向的生成元系统 | 需要正则性、小指标、指标无限及逐坐标双幂集间隙 | [PcfTransitiveGenerators.lean](PcfProject/PcfTransitiveGenerators.lean#L2091) |
+| PCF-101 | `exists_pcf_transitive_successorDirected_generators_of_successorDoublePower` | 在 PCF 谱上构造传递且后继有向的生成元系统 | 需要正则性、小指标、指标无限及逐坐标双幂集间隙 | [PcfTransitiveGenerators.lean](PcfProject/PcfTransitiveGenerators.lean#L2015) |
 | PCF-102 | `alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit` | 对完整后继 aleph 核心证明 Localization 24.32 所需输出 | 需要 `aleph_omega` 强极限；尾部生成元在证明内构造 | [PcfTransitiveApplications.lean](PcfProject/PcfTransitiveApplications.lean#L713) |
-| PCF-103 | `successorAlephLocalLemma2410ExactUpperBounds` | 对推前非稳理想及其局部化给出 Lemma 24.10 的闭精确上界 | 保留源共尾度与幂集间隙前提 | [RankClosureConstruction.lean](PcfProject/RankClosureConstruction.lean#L1405) |
-| PCF-104 | `exists_omegaOneClubGuessingAtAlephThree` | 在 `omega_3` 以下构造同时猜测俱乐部的 `omega_1` 梯系统 | 结论在项目基础理论中直接证明，不把猜测系统作为假设 | [LocalRank.lean](PcfProject/LocalRank.lean#L1235) |
+| PCF-103 | `successorAlephLocalLemma2410ExactUpperBounds` | 对推前非稳理想及其局部化给出 Lemma 24.10 的闭精确上界 | 保留源共尾度与幂集间隙前提 | [RankClosureConstruction.lean](PcfProject/RankClosureConstruction.lean#L1398) |
+| PCF-104 | `exists_omegaOneClubGuessingAtAlephThree` | 在 `omega_3` 以下构造同时猜测俱乐部的 `omega_1` 梯系统 | 结论在项目基础理论中直接证明，不把猜测系统作为假设 | [LocalRank.lean](PcfProject/LocalRank.lean#L1225) |
 | PCF-105 | `targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4` | 将特征模型计数转化为 `aleph_omega ^ aleph_0` 的 PCF 最大值上界 | 需要强极限性及一个低于 `aleph_(omega_4)` 的核心最大 PCF 见证 | [PcfContinuumBridge.lean](PcfProject/PcfContinuumBridge.lean#L687) |
 | PCF-106 | `canonicalGeneratorSystemOfTwoPowerBelowCoordinates` | 从逐坐标幂集间隙构造语义生成元系统 | 需要正则、小而无限的指标及显式幂集间隙；不声称适用于任意渐进集 | [PcfGeneratorConstruction.lean](PcfProject/PcfGeneratorConstruction.lean#L775) |
+| PCF-107 | `AllUltrafiltersPrincipal.pcf_below_alephOmega4` | 主超滤情形下，规范 PCF 谱不产生超出原集的新基数，因而低于 `aleph_(omega_4)` | 需要原集正则、低于 `aleph_omega`，且所有超滤对偶理想为主理想 | [PrincipalPcf.lean](PcfProject/PrincipalPcf.lean#L26) |
 
 ## 依赖主线
 
@@ -50,7 +52,7 @@ import PcfProject
 
 ## 信任与核验
 
-- 最近核验日期：2026-09-06。
+- 最近核验日期：2026-09-07。
 - 默认 `lake build`：1017/1017 个任务通过。
 - 核心定理公理：`propext`、`Classical.choice`、`Quot.sound`。
 - 禁止项扫描：无 `sorry`、`admit`、`native_decide`、`sorryAx`、顶层

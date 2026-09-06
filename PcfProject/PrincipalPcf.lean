@@ -13,16 +13,20 @@ namespace PcfProject
 universe u
 
 /-- 每个超滤对偶理想都是排除某个单点所得的主理想。 -/
-def PrincipalUltrafiltersOn (A : CardSet.{u}) : Prop :=
+def AllUltrafiltersPrincipal (A : CardSet.{u}) : Prop :=
   forall J : Ideal (CardinalIndex A),
     J.IsUltrafilterDual ->
       exists i0, J = Ideal.excludePoint i0
 
-/-- 主理想假设使规范 pcf 谱包含于原集合，从而把 `aleph_omega` 下界传递为目标上界。 -/
-theorem cardinalProductRepresentation_pcf_below_alephOmega4_of_principalUltrafilters
+namespace AllUltrafiltersPrincipal
+
+/-- 若所有超滤对偶理想都为主理想，则规范 PCF 谱不产生新基数。
+因此，一个由正则基数组成且位于 `aleph_omega` 以下的集合，其 PCF 谱也严格低于
+`aleph_(omega_4)`。此定理只处理主理想情形，不声称所有超滤自动为主的。 -/
+theorem pcf_below_alephOmega4
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
-    (hPrincipal : PrincipalUltrafiltersOn A)
+    (hPrincipal : AllUltrafiltersPrincipal A)
     (hBelow : BelowAlephOmega A) :
     PcfBelowAlephOmega4 cardinalProductRepresentation A := by
   intro theta hTheta
@@ -31,6 +35,8 @@ theorem cardinalProductRepresentation_pcf_below_alephOmega4_of_principalUltrafil
       hRegulars hPrincipal theta hTheta)).trans
     targetAlephOmega_lt_targetAlephOmega4
 
-#print axioms cardinalProductRepresentation_pcf_below_alephOmega4_of_principalUltrafilters
+#print axioms AllUltrafiltersPrincipal.pcf_below_alephOmega4
+
+end AllUltrafiltersPrincipal
 
 end PcfProject
