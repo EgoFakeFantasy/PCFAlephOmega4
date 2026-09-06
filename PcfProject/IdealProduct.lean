@@ -165,12 +165,6 @@ theorem finset_small_iff
             · exact Or.inl hPi
             · exact Or.inr ⟨j, hj, hPi⟩)
 
-theorem emptyOnly_isProper
-    (i : I) :
-    IsProper (emptyOnly I) := by
-  intro hUniv
-  exact hUniv i True.intro
-
 theorem excludePoint_isProper
     (i0 : I) :
     IsProper (excludePoint i0) := by
@@ -241,62 +235,6 @@ theorem pushforward_mono
   exact hLe _ hS
 
 #print axioms pushforward_mono
-
-/- A principal pushforward along an injection can only be supported at a
-single point in the image. Properness rules out the alternative that the
-whole image is small, so the original ideal is principal as well. -/
-theorem IsProper.exists_eq_excludePoint_of_pushforward_eq_excludePoint
-    {K : Type v}
-    {J : Ideal I}
-    (hJ : J.IsProper)
-    {f : I -> K}
-    (hf : Function.Injective f)
-    {k0 : K}
-    (hPush : J.pushforward f = excludePoint k0) :
-    exists i0, J = excludePoint i0 := by
-  classical
-  have hk0 : exists i0, f i0 = k0 :=
-    Classical.byContradiction (fun hNotRange => by
-      apply hJ
-      have hRangeSmall :
-          (J.pushforward f).Small (fun k => exists i, f i = k) := by
-        rw [hPush]
-        exact hNotRange
-      change J.Small (fun i => exists j, f j = f i) at hRangeSmall
-      exact J.subset_small hRangeSmall (fun i _ => Exists.intro i rfl))
-  obtain ⟨i0, hi0⟩ := hk0
-  refine ⟨i0, Ideal.ext ?_⟩
-  intro S
-  let T : K -> Prop := fun k => exists i, f i = k /\ S i
-  have hTAt (i : I) : T (f i) <-> S i := by
-    constructor
-    · rintro ⟨j, hj, hSj⟩
-      exact hf hj ▸ hSj
-    · intro hSi
-      exact ⟨i, rfl, hSi⟩
-  have hSmall : J.Small S <-> J.Small (fun i => T (f i)) := by
-    constructor
-    · intro hS
-      exact J.subset_small hS (fun i hTi => (hTAt i).mp hTi)
-    · intro hT
-      exact J.subset_small hT (fun i hSi => (hTAt i).mpr hSi)
-  calc
-    J.Small S <-> (J.pushforward f).Small T := hSmall
-    _ <-> (excludePoint k0).Small T := by rw [hPush]
-    _ <-> Not (S i0) := by
-      constructor
-      · intro hNotT hSi
-        exact hNotT ⟨i0, hi0, hSi⟩
-      · intro hNotS hTk0
-        obtain ⟨i, hi, hSi⟩ := hTk0
-        apply hNotS
-        exact hf (hi.trans hi0.symm) ▸ hSi
-    _ <-> (excludePoint i0).Small S := Iff.rfl
-
-theorem all_small
-    (S : I -> Prop) :
-    (all I).Small S :=
-  True.intro
 
 def Eventually (P : I -> Prop) : Prop :=
   J.Small (fun i => Not (P i))
@@ -695,61 +633,6 @@ theorem le_trans
   intro S hS
   exact h23 S (h12 S hS)
 
-theorem equivalent_refl (J : Ideal I) :
-    Equivalent J J :=
-  And.intro (le_refl J) (le_refl J)
-
-theorem equivalent_symm
-    {J1 J2 : Ideal I}
-    (h : Equivalent J1 J2) :
-    Equivalent J2 J1 :=
-  And.intro h.right h.left
-
-theorem equivalent_trans
-    {J1 J2 J3 : Ideal I}
-    (h12 : Equivalent J1 J2)
-    (h23 : Equivalent J2 J3) :
-    Equivalent J1 J3 :=
-  And.intro
-    (le_trans h12.left h23.left)
-    (le_trans h23.right h12.right)
-
-theorem excludePoint_extendBy_singleton_equivalent_all
-    (i0 : I) :
-    Equivalent
-      (all I)
-      ((excludePoint i0).extendBy (fun i => i = i0)) := by
-  classical
-  constructor
-  · intro S _
-    refine ⟨fun i => Not (i = i0), ?_, ?_⟩
-    · intro h
-      exact h rfl
-    · intro i _
-      by_cases hi : i = i0
-      · exact Or.inr hi
-      · exact Or.inl hi
-  · intro S _
-    exact all_small S
-
-theorem isProper_of_equivalent
-    {J1 J2 : Ideal I}
-    (hProper : IsProper J1)
-    (hEquivalent : Equivalent J1 J2) :
-    IsProper J2 := by
-  intro hUniv
-  exact hProper (hEquivalent.right _ hUniv)
-
-theorem isProper_equivalent_iff
-    {J1 J2 : Ideal I}
-    (hEquivalent : Equivalent J1 J2) :
-    IsProper J1 <-> IsProper J2 := by
-  constructor
-  · intro hProper
-    exact isProper_of_equivalent hProper hEquivalent
-  · intro hProper
-    exact isProper_of_equivalent hProper (equivalent_symm hEquivalent)
-
 theorem le_of_equivalent_left
     {J1 J2 : Ideal I}
     (h : Equivalent J1 J2) :
@@ -776,22 +659,6 @@ theorem le_extendBy
     Le J (J.extendBy B) := by
   intro S hS
   exact J.small_in_extendBy hS
-
-theorem extendBy_mono
-    {B C : I -> Prop}
-    (hBC : forall i, B i -> C i) :
-    Le (J.extendBy B) (J.extendBy C) := by
-  intro S hS
-  cases hS with
-  | intro T hT =>
-      exact Exists.intro T
-        (And.intro hT.left (by
-          intro i hSi
-          cases hT.right i hSi with
-          | inl hTi =>
-              exact Or.inl hTi
-          | inr hBi =>
-              exact Or.inr (hBC i hBi)))
 
 theorem generator_small_in_extendBy
     (B : I -> Prop) :
@@ -840,23 +707,6 @@ theorem IsProper.not_eventually_of_forall_not
   exact J.subset_small hEventually (by
     intro i _
     exact hP i)
-
-theorem IsProper.not_eventually_not_of_eventually
-    {J : Ideal I}
-    (hProper : IsProper J)
-    {P : I -> Prop}
-    (hEventually : J.Eventually P) :
-    Not (J.Eventually (fun i => Not (P i))) := by
-  classical
-  intro hEventuallyNot
-  apply hProper
-  exact J.subset_small (J.union_small hEventually hEventuallyNot) (by
-    intro i _
-    by_cases hPi : P i
-    · exact Or.inr (by
-        intro hNotPi
-        exact hNotPi hPi)
-    · exact Or.inl hPi)
 
 theorem eventually_mono
     {P Q : I -> Prop}

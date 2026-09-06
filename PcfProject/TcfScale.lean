@@ -88,41 +88,6 @@ theorem exists_pointwiseStrict_chain_of_not_eventuallyLe
 #print axioms
   ReducedProductFrame.exists_pointwiseStrict_chain_of_not_eventuallyLe
 
-theorem eventuallyLt_le
-    {x y : ProductElement F}
-    (hxy : F.eventuallyLt x y) :
-    F.eventuallyLe x y :=
-  hxy.left
-
-theorem eventuallyLt_not_ge
-    {x y : ProductElement F}
-    (hxy : F.eventuallyLt x y) :
-    Not (F.eventuallyLe y x) :=
-  hxy.right
-
-theorem not_eventuallyLt_self
-    (x : ProductElement F) :
-    Not (F.eventuallyLt x x) := by
-  intro h
-  exact h.right h.left
-
-theorem eventuallyLt_irrefl :
-    forall x : ProductElement F, Not (F.eventuallyLt x x) := by
-  intro x
-  exact F.not_eventuallyLt_self x
-
-theorem eventuallyLt_trans
-    {x y z : ProductElement F}
-    (hxy : F.eventuallyLt x y)
-    (hyz : F.eventuallyLt y z) :
-    F.eventuallyLt x z := by
-  exact And.intro
-    (F.eventuallyLe_trans hxy.left hyz.left)
-    (by
-      intro hzx
-      have hyx : F.eventuallyLe y x := F.eventuallyLe_trans hyz.left hzx
-      exact hxy.right hyx)
-
 /-- A family is cofinal in the reduced product when every product element is
 eventually below one of its members. -/
 def IsCofinalFamily
@@ -573,16 +538,6 @@ def withLargerIdeal
     obtain ⟨alpha, hAlpha⟩ := s.cofinal g
     exact ⟨alpha, hLe _ hAlpha⟩
 
-theorem exists_scale_withLargerIdeal
-    (s : PointwiseStrictScale F L)
-    (J : Ideal F.Index)
-    (hLe : Ideal.Le F.J J)
-    (hProper : J.IsProper) :
-    Nonempty (Scale (F.withIdeal J) L) :=
-  ⟨(s.withLargerIdeal J hLe).toScale hProper⟩
-
-#print axioms PointwiseStrictScale.exists_scale_withLargerIdeal
-
 end PointwiseStrictScale
 
 /-- The weak assertion that a scale of the specified length exists. -/
@@ -624,13 +579,6 @@ namespace Scale
 
 variable {F : ReducedProductFrame.{u, v}} {L : ScaleLength.{w}}
 
-theorem eventuallyLt_of_lt
-    (s : Scale F L)
-    {alpha beta : L.Level}
-    (h : L.lt alpha beta) :
-    F.eventuallyLt (s.seq alpha) (s.seq beta) :=
-  s.increasing h
-
 theorem eventuallyLe_of_lt
     (s : Scale F L)
     {alpha beta : L.Level}
@@ -645,12 +593,6 @@ theorem not_eventuallyLe_of_lt
     Not (F.eventuallyLe (s.seq beta) (s.seq alpha)) :=
   (s.increasing h).right
 
-theorem bound_exists
-    (s : Scale F L)
-    (g : ProductElement F) :
-    exists alpha, F.eventuallyLe g (s.seq alpha) :=
-  s.cofinal g
-
 theorem isCofinalFamily_seq
     (s : Scale F L) :
     F.IsCofinalFamily s.seq :=
@@ -662,37 +604,6 @@ theorem hasScaleWitness
   Nonempty.intro s
 
 end Scale
-
-/-! A true-cofinality witness is bounded by the size of the whole reduced
-    product. This is elementary, but useful when a later product-cardinality
-    estimate is available: the identity family is already cofinal. -/
-theorem isCofinalFamily_identity
-    {F : ReducedProductFrame.{u, v}} :
-    F.IsCofinalFamily (fun x : ProductElement F => x) := by
-  intro g
-  exact ⟨g, F.eventuallyLe_refl g⟩
-
-theorem cardinal_mk_level_le_of_hasTrueCofinality
-    {F : ReducedProductFrame.{u, v}}
-    {L : ScaleLength.{max u v}}
-    (h : HasTrueCofinality F L) :
-    Cardinal.mk L.Level <= Cardinal.mk (ProductElement F) := by
-  exact h.cardinal_le_of_cofinalFamily
-    (fun x : ProductElement F => x)
-    isCofinalFamily_identity
-
-theorem ideal_isProper_of_scale_step
-    {F : ReducedProductFrame.{u, v}}
-    {L : ScaleLength.{w}}
-    (s : Scale F L)
-    {alpha beta : L.Level}
-    (hStep : L.lt alpha beta) :
-    F.J.IsProper := by
-  intro hUniv
-  apply (s.not_eventuallyLe_of_lt hStep)
-  exact F.J.subset_small hUniv (by
-    intro i _
-    exact True.intro)
 
 theorem cardinal_mk_level_eq_of_hasTrueCofinality
     {F : ReducedProductFrame.{u, v}}

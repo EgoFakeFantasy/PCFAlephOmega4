@@ -335,13 +335,6 @@ noncomputable def cardinalProductPcfWitnessIdeal
   Classical.choose
     (cardinalProductRepresentation_mem_pcf_iff.mp theta.2).2
 
-theorem cardinalProductPcfWitnessIdeal_isUltrafilterDual
-    {A : CardSet.{u}}
-    (theta : CardinalIndex (cardinalProductRepresentation.pcf A)) :
-    (cardinalProductPcfWitnessIdeal theta).IsUltrafilterDual :=
-  (Classical.choose_spec
-    (cardinalProductRepresentation_mem_pcf_iff.mp theta.2).2).1
-
 theorem cardinalProductPcfWitnessIdeal_hasTrueCofinality
     {A : CardSet.{u}}
     (theta : CardinalIndex (cardinalProductRepresentation.pcf A)) :

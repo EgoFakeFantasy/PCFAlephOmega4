@@ -3069,22 +3069,6 @@ theorem cardinalProductQuotient_aleph0_lt_cof_of_regulars
 
 #print axioms cardinalProductQuotient_aleph0_lt_cof_of_regulars
 
-/-! The diagonal obstruction applies uniformly to every at-most-countable
-index type, not only to an explicitly presented copy of `Nat`. -/
-theorem cardinalProductFrame_not_isCofinalFamily_of_mk_le_aleph0_of_aleph0_lt
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (hAleph0 : forall theta, A theta -> Cardinal.aleph0 < theta)
-    {ι : Type u}
-    (hSmall : Cardinal.mk ι <= Cardinal.aleph0)
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (d : ι -> ProductElement (cardinalProductFrame A J)) :
-    Not ((cardinalProductFrame A J).IsCofinalFamily d) := by
-  apply cardinalProductFrame_not_isCofinalFamily_of_mk_lt
-    hRegulars (fun theta hTheta =>
-      hSmall.trans_lt (hAleph0 theta hTheta)) hProper d
-
 def IsCardinalProductOver
     (A : CardSet.{u})
     (F : ReducedProductFrame.{u + 1, u}) : Prop :=
@@ -3097,21 +3081,6 @@ theorem isCardinalProductOver_cardinalProductFrame
     (hUltra : J.IsUltrafilterDual) :
     IsCardinalProductOver A (cardinalProductFrame A J) :=
   ⟨J, hUltra, rfl⟩
-
-theorem ideal_isUltrafilterDual_of_isCardinalProductOver
-    {A : CardSet.{u}}
-    {F : ReducedProductFrame.{u + 1, u}}
-    (hProduct : IsCardinalProductOver A F) :
-    F.J.IsUltrafilterDual := by
-  obtain ⟨J, hUltra, rfl⟩ := hProduct
-  exact hUltra
-
-theorem ideal_isProper_of_isCardinalProductOver
-    {A : CardSet.{u}}
-    {F : ReducedProductFrame.{u + 1, u}}
-    (hProduct : IsCardinalProductOver A F) :
-    F.J.IsProper := by
-  exact (ideal_isUltrafilterDual_of_isCardinalProductOver hProduct).isProper
 
 noncomputable def cardinalScaleLength
     (theta : Cardinal.{u}) : ScaleLength.{u} where
@@ -6113,46 +6082,6 @@ theorem cardinalProductFrame_excludePoint_hasTrueCofinality_iff
     subst theta
     exact focusedCardinalScale_hasTrueCofinality hRegulars i0.2
 
-theorem cardinalProductFrame_isProper_of_scale
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hRegular : Cardinal.IsRegular theta)
-    (s : Scale
-      (cardinalProductFrame A J)
-      (cardinalScaleLength theta)) :
-    J.IsProper := by
-  have hOne : (1 : Cardinal.{u}) < theta :=
-    Cardinal.one_lt_aleph0.trans_le hRegular.aleph0_le
-  have hOneOrd : (1 : Ordinal.{u}) < theta.ord := by
-    exact Cardinal.lt_ord.mpr (by simpa using hOne)
-  apply ideal_isProper_of_scale_step s
-    (alpha := Ordinal.ToType.mk ⟨0, hRegular.ord_pos⟩)
-    (beta := Ordinal.ToType.mk ⟨1, hOneOrd⟩)
-  change
-    Ordinal.ToType.mk ⟨0, hRegular.ord_pos⟩ <
-      Ordinal.ToType.mk ⟨1, hOneOrd⟩
-  apply (Ordinal.ToType.mk).strictMono
-  exact (show (0 : Ordinal.{u}) < 1 from zero_lt_one)
-
-theorem mk_level_eq_of_hasTrueCofinality_cardinalProduct
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {L : ScaleLength.{u}}
-    (hRegular : Cardinal.IsRegular theta)
-    (s : Scale
-      (cardinalProductFrame A J)
-      (cardinalScaleLength theta))
-    (hTcf : HasTrueCofinality (cardinalProductFrame A J) L) :
-    Cardinal.mk L.Level = theta := by
-  calc
-    Cardinal.mk L.Level =
-        Cardinal.mk (cardinalScaleLength theta).Level :=
-      cardinal_mk_level_eq_of_hasTrueCofinality
-        hTcf (cardinalScaleLength_hasTrueCofinality hRegular s)
-    _ = theta := mk_cardinalScaleLength_level theta
-
 noncomputable def cardinalProductRepresentation :
     PcfRepresentation.{u, u + 1, u, u} where
   IsProductOver := IsCardinalProductOver
@@ -6305,15 +6234,6 @@ theorem cardinalProductRepresentation_subset_pcf
     SubsetOf A (cardinalProductRepresentation.pcf A) := by
   intro theta hTheta
   exact cardinalProductRepresentation_mem_pcf_of_mem hRegulars hTheta
-
-theorem cardinalProductRepresentation_pcf_nonempty
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (hNonempty : exists theta, A theta) :
-    exists theta, cardinalProductRepresentation.pcf A theta := by
-  obtain ⟨theta, hTheta⟩ := hNonempty
-  exact ⟨theta,
-    cardinalProductRepresentation_mem_pcf_of_mem hRegulars hTheta⟩
 
 theorem cardinalProductRepresentation_mem_pcf_iff
     {A : CardSet.{u}}
@@ -7131,14 +7051,5 @@ theorem cardinalProductRepresentation_mem_pcf_singleton_iff
   · intro hBeta
     subst beta
     exact cardinalProductRepresentation_mem_pcf_singleton hRegular
-
-theorem cardinalProductRepresentation_pcf_singleton
-    {theta : Cardinal.{u}}
-    (hRegular : Cardinal.IsRegular theta) :
-    cardinalProductRepresentation.pcf (singletonCardSet theta) =
-      singletonCardSet theta := by
-  funext beta
-  apply propext
-  exact cardinalProductRepresentation_mem_pcf_singleton_iff hRegular
 
 end PcfProject

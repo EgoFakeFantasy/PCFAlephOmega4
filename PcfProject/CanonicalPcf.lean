@@ -126,41 +126,6 @@ theorem cardinalProductRepresentation_pcf_mono
         extendCardinalScale_hasTrueCofinality
           hAB hRegulars hRegular s⟩
 
-/-! A finite-generator closure certificate has the exact canonical PCF
-    localization property once its substantive `covered` field is supplied.
-    The reverse inclusion is the already proved monotonicity of canonical PCF;
-    the forward inclusion is precisely the certificate's coverage assertion.
-    This theorem therefore records the semantic output of a certificate and
-    does not manufacture the difficult coverage field. -/
-theorem GeneratorSystem.FiniteGeneratorClosureCertificate.canonical_pcf_closure_eq
-    {A : CardSet.{u}}
-    {G : GeneratorSystem cardinalProductRepresentation.{u} A}
-    {theta : Cardinal.{u}}
-    (C : GeneratorSystem.FiniteGeneratorClosureCertificate G theta)
-    (hRegulars : SetOfRegulars A) :
-    cardinalProductRepresentation.pcf (InterCardSet A C.closure) =
-      cardinalProductRepresentation.pcf A := by
-  have hInter : InterCardSet A C.closure = C.closure := by
-    funext beta
-    apply propext
-    constructor
-    · intro hBeta
-      exact hBeta.2
-    · intro hBeta
-      exact ⟨C.closure_subset beta hBeta, hBeta⟩
-  funext beta
-  apply propext
-  constructor
-  · intro hBeta
-    rw [hInter] at hBeta
-    exact cardinalProductRepresentation_pcf_mono
-      C.closure_subset hRegulars beta hBeta
-  · intro hBeta
-    exact C.closure_covered hBeta
-
-#print axioms
-  GeneratorSystem.FiniteGeneratorClosureCertificate.canonical_pcf_closure_eq
-
 /-- A canonical PCF witness on `B` descends to `A subset B` when its
 ultrafilter is concentrated on the coordinates belonging to `A`. -/
 theorem cardinalProductRepresentation_mem_pcf_of_eventually_mem
@@ -428,35 +393,6 @@ theorem canonicalAtMostIdeal_small_iff
         cardinalProductRepresentation.pcf (InterCardSet A B) beta ->
           beta <= theta := Iff.rfl
 
-/-! The canonical filtration is ordered exactly as its PCF thresholds
-    suggest. These are semantic ideal comparisons, not generator existence
-    theorems. -/
-theorem canonicalBelowIdeal_mono
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta gamma : Cardinal.{u}}
-    (hThetaGamma : theta <= gamma) :
-    Ideal.Le (canonicalBelowIdeal A hRegulars theta)
-      (canonicalBelowIdeal A hRegulars gamma) := by
-  intro B hB
-  apply (canonicalBelowIdeal_small_iff A hRegulars gamma B).mpr
-  intro beta hBeta
-  exact ((canonicalBelowIdeal_small_iff A hRegulars theta B).mp hB beta hBeta).trans_le
-    hThetaGamma
-
-theorem canonicalAtMostIdeal_mono
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta gamma : Cardinal.{u}}
-    (hThetaGamma : theta <= gamma) :
-    Ideal.Le (canonicalAtMostIdeal A hRegulars theta)
-      (canonicalAtMostIdeal A hRegulars gamma) := by
-  intro B hB
-  apply (canonicalAtMostIdeal_small_iff A hRegulars gamma B).mpr
-  intro beta hBeta
-  exact ((canonicalAtMostIdeal_small_iff A hRegulars theta B).mp hB beta hBeta).trans
-    hThetaGamma
-
 theorem canonicalAtMostIdeal_le_canonicalBelowIdeal_of_lt
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
@@ -469,188 +405,6 @@ theorem canonicalAtMostIdeal_le_canonicalBelowIdeal_of_lt
   intro beta hBeta
   exact ((canonicalAtMostIdeal_small_iff A hRegulars theta B).mp hB beta hBeta).trans_lt
     hThetaGamma
-
-theorem canonicalBelowIdeal_isProper_iff_exists_pcf_not_lt
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (theta : Cardinal.{u}) :
-    Ideal.IsProper (canonicalBelowIdeal A hRegulars theta) <->
-      exists beta, cardinalProductRepresentation.pcf A beta /\
-        Not (beta < theta) := by
-  classical
-  constructor
-  · intro hProper
-    by_contra hNo
-    apply hProper
-    intro beta hBeta
-    by_cases hLt : beta < theta
-    · exact hLt
-    · have hBetaA : cardinalProductRepresentation.pcf A beta := by
-        have hInterEq : InterCardSet A (fun _ => True) = A := by
-          funext gamma
-          apply propext
-          constructor
-          · intro h
-            exact h.1
-          · intro h
-            exact ⟨h, True.intro⟩
-        rw [hInterEq] at hBeta
-        exact hBeta
-      exact False.elim (hNo ⟨beta, hBetaA, hLt⟩)
-  · rintro ⟨beta, hBeta, hNotLt⟩ hSmall
-    have hInterEq : InterCardSet A (fun _ => True) = A := by
-      funext gamma
-      apply propext
-      constructor
-      · intro h
-        exact h.1
-      · intro h
-        exact ⟨h, True.intro⟩
-    have hBeta' : cardinalProductRepresentation.pcf
-        (InterCardSet A (fun _ => True)) beta := by
-      rw [hInterEq]
-      exact hBeta
-    exact hNotLt (hSmall beta hBeta')
-
-theorem canonicalAtMostIdeal_isProper_iff_exists_pcf_gt
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (theta : Cardinal.{u}) :
-    Ideal.IsProper (canonicalAtMostIdeal A hRegulars theta) <->
-      exists beta, cardinalProductRepresentation.pcf A beta /\
-        theta < beta := by
-  classical
-  constructor
-  · intro hProper
-    by_contra hNo
-    apply hProper
-    intro beta hBeta
-    by_cases hLe : beta <= theta
-    · exact hLe
-    · have hBetaA : cardinalProductRepresentation.pcf A beta := by
-        have hInterEq : InterCardSet A (fun _ => True) = A := by
-          funext gamma
-          apply propext
-          constructor
-          · intro h
-            exact h.1
-          · intro h
-            exact ⟨h, True.intro⟩
-        rw [hInterEq] at hBeta
-        exact hBeta
-      exact False.elim (hNo ⟨beta, hBetaA, lt_of_not_ge hLe⟩)
-  · rintro ⟨beta, hBeta, hGt⟩ hSmall
-    have hInterEq : InterCardSet A (fun _ => True) = A := by
-      funext gamma
-      apply propext
-      constructor
-      · intro h
-        exact h.1
-      · intro h
-        exact ⟨h, True.intro⟩
-    have hBeta' : cardinalProductRepresentation.pcf
-        (InterCardSet A (fun _ => True)) beta := by
-      rw [hInterEq]
-      exact hBeta
-    exact (not_lt_of_ge (hSmall beta hBeta')) hGt
-
-theorem canonicalBelowIdeal_not_isProper_iff_forall_pcf_lt
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (theta : Cardinal.{u}) :
-    Not (Ideal.IsProper (canonicalBelowIdeal A hRegulars theta)) <->
-      forall beta, cardinalProductRepresentation.pcf A beta -> beta < theta := by
-  constructor
-  · intro hNot beta hBeta
-    by_contra hNotLt
-    apply hNot
-    exact (canonicalBelowIdeal_isProper_iff_exists_pcf_not_lt
-      hRegulars theta).mpr ⟨beta, hBeta, hNotLt⟩
-  · intro hAll hProper
-    obtain ⟨beta, hBeta, hNotLt⟩ :=
-      (canonicalBelowIdeal_isProper_iff_exists_pcf_not_lt
-        hRegulars theta).mp hProper
-    exact hNotLt (hAll beta hBeta)
-
-theorem canonicalAtMostIdeal_not_isProper_iff_forall_pcf_le
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (theta : Cardinal.{u}) :
-    Not (Ideal.IsProper (canonicalAtMostIdeal A hRegulars theta)) <->
-      forall beta, cardinalProductRepresentation.pcf A beta -> beta <= theta := by
-  constructor
-  · intro hNot beta hBeta
-    by_contra hNotLe
-    apply hNot
-    exact (canonicalAtMostIdeal_isProper_iff_exists_pcf_gt
-      hRegulars theta).mpr ⟨beta, hBeta, lt_of_not_ge hNotLe⟩
-  · intro hAll hProper
-    obtain ⟨beta, hBeta, hGt⟩ :=
-      (canonicalAtMostIdeal_isProper_iff_exists_pcf_gt
-        hRegulars theta).mp hProper
-    exact (not_lt_of_ge (hAll beta hBeta)) hGt
-
-/-! A genuine gap in the represented PCF spectrum is invisible to the
-    canonical filtration. The reverse implications use monotonicity from a
-    localized intersection back to `A`, so the statement is about all
-    localized PCF spectra, not just the global one. -/
-theorem canonicalBelowIdeal_eq_of_no_pcf_between
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta gamma : Cardinal.{u}}
-    (hThetaGamma : theta <= gamma)
-    (hGap : forall beta, cardinalProductRepresentation.pcf A beta ->
-      Not (theta <= beta /\ beta < gamma)) :
-    canonicalBelowIdeal A hRegulars theta =
-      canonicalBelowIdeal A hRegulars gamma := by
-  apply Ideal.ext
-  intro B
-  constructor
-  · intro hSmall
-    apply (canonicalBelowIdeal_small_iff A hRegulars gamma B).mpr
-    intro beta hBeta
-    exact ((canonicalBelowIdeal_small_iff A hRegulars theta B).mp
-      hSmall beta hBeta).trans_le hThetaGamma
-  · intro hSmall
-    apply (canonicalBelowIdeal_small_iff A hRegulars theta B).mpr
-    intro beta hBeta
-    have hBetaA : cardinalProductRepresentation.pcf A beta :=
-      cardinalProductRepresentation_pcf_mono
-        (hRegulars := hRegulars)
-        (fun _ h => h.1) beta hBeta
-    by_contra hNotLt
-    exact (hGap beta hBetaA) ⟨le_of_not_gt hNotLt,
-      (canonicalBelowIdeal_small_iff A hRegulars gamma B).mp
-        hSmall beta hBeta⟩
-
-theorem canonicalAtMostIdeal_eq_of_no_pcf_between
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta gamma : Cardinal.{u}}
-    (hThetaGamma : theta <= gamma)
-    (hGap : forall beta, cardinalProductRepresentation.pcf A beta ->
-      Not (theta < beta /\ beta <= gamma)) :
-    canonicalAtMostIdeal A hRegulars theta =
-      canonicalAtMostIdeal A hRegulars gamma := by
-  apply Ideal.ext
-  intro B
-  constructor
-  · intro hSmall
-    apply (canonicalAtMostIdeal_small_iff A hRegulars gamma B).mpr
-    intro beta hBeta
-    exact ((canonicalAtMostIdeal_small_iff A hRegulars theta B).mp
-      hSmall beta hBeta).trans hThetaGamma
-  · intro hSmall
-    apply (canonicalAtMostIdeal_small_iff A hRegulars theta B).mpr
-    intro beta hBeta
-    have hBetaA : cardinalProductRepresentation.pcf A beta :=
-      cardinalProductRepresentation_pcf_mono
-        (hRegulars := hRegulars)
-        (fun _ h => h.1) beta hBeta
-    by_contra hNotLe
-    exact (hGap beta hBetaA) ⟨lt_of_not_ge hNotLe,
-      (canonicalAtMostIdeal_small_iff A hRegulars gamma B).mp
-        hSmall beta hBeta⟩
 
 theorem canonicalBelowIdeal_eq_canonicalAtMostIdeal_of_not_mem
     {A : CardSet.{u}}
@@ -682,39 +436,9 @@ theorem canonicalBelowIdeal_eq_canonicalAtMostIdeal_of_not_mem
       ((canonicalAtMostIdeal_small_iff A hRegulars theta B).mp
         hSmall beta hBeta) hBetaNe
 
-#print axioms canonicalBelowIdeal_not_isProper_iff_forall_pcf_lt
-#print axioms canonicalAtMostIdeal_not_isProper_iff_forall_pcf_le
-#print axioms canonicalBelowIdeal_eq_of_no_pcf_between
-#print axioms canonicalAtMostIdeal_eq_of_no_pcf_between
 #print axioms canonicalBelowIdeal_eq_canonicalAtMostIdeal_of_not_mem
 
-theorem canonicalBelowIdeal_isProper_of_mem_pcf_le
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta beta : Cardinal.{u}}
-    (hBeta : cardinalProductRepresentation.pcf A beta)
-    (hThetaBeta : theta <= beta) :
-    Ideal.IsProper (canonicalBelowIdeal A hRegulars theta) :=
-  (canonicalBelowIdeal_isProper_iff_exists_pcf_not_lt
-    hRegulars theta).mpr
-    ⟨beta, hBeta, not_lt_of_ge hThetaBeta⟩
-
-theorem canonicalAtMostIdeal_isProper_of_mem_pcf_lt
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta beta : Cardinal.{u}}
-    (hBeta : cardinalProductRepresentation.pcf A beta)
-    (hThetaBeta : theta < beta) :
-    Ideal.IsProper (canonicalAtMostIdeal A hRegulars theta) :=
-  (canonicalAtMostIdeal_isProper_iff_exists_pcf_gt
-    hRegulars theta).mpr
-    ⟨beta, hBeta, hThetaBeta⟩
-
-#print axioms canonicalBelowIdeal_mono
-#print axioms canonicalAtMostIdeal_mono
 #print axioms canonicalAtMostIdeal_le_canonicalBelowIdeal_of_lt
-#print axioms canonicalBelowIdeal_isProper_of_mem_pcf_le
-#print axioms canonicalAtMostIdeal_isProper_of_mem_pcf_lt
 
 theorem GeneratorSystem.belowIdeal_eq_canonical
     {A : CardSet.{u}}
@@ -737,38 +461,6 @@ theorem GeneratorSystem.atMostIdeal_eq_canonical
   intro B
   exact (G.atMostIdeal_small_iff theta B).trans
     (canonicalAtMostIdeal_small_iff A hRegulars theta B).symm
-
-/-! The abstract generator equivalence can be read directly in the canonical
-    filtration. This is the local form needed when a PCF argument moves
-    between a strict threshold and its generator. -/
-theorem GeneratorSystem.canonical_atMost_small_iff_exists_below_cover
-    {A : CardSet.{u}}
-    (G : GeneratorSystem cardinalProductRepresentation A)
-    (hRegulars : SetOfRegulars A)
-    {theta : Cardinal.{u}}
-    (hTheta : cardinalProductRepresentation.pcf A theta)
-    (B : Cardinal.{u} -> Prop) :
-    (canonicalAtMostIdeal A hRegulars theta).Small B <->
-      exists T : Cardinal.{u} -> Prop,
-        (canonicalBelowIdeal A hRegulars theta).Small T /\
-          forall beta, B beta -> T beta \/ G.generator theta beta := by
-  rw [← G.atMostIdeal_eq_canonical hRegulars theta,
-    ← G.belowIdeal_eq_canonical hRegulars theta]
-  exact G.atMost_small_iff_exists_below_cover hTheta B
-
-theorem canonicalBelowIdeal_le_canonicalAtMostIdeal
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    (theta : Cardinal.{u}) :
-    Ideal.Le (canonicalBelowIdeal A hRegulars theta)
-      (canonicalAtMostIdeal A hRegulars theta) := by
-  intro B hB
-  apply (canonicalAtMostIdeal_small_iff A hRegulars theta B).mpr
-  intro beta hBeta
-  exact ((canonicalBelowIdeal_small_iff A hRegulars theta B).mp hB beta hBeta).le
-
-#print axioms GeneratorSystem.canonical_atMost_small_iff_exists_below_cover
-#print axioms canonicalBelowIdeal_le_canonicalAtMostIdeal
 
 /-- Package a supplied canonical generator family after the two filtration
 ideals have been constructed from PCF semantics. This does not prove the

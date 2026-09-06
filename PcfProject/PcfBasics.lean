@@ -39,22 +39,6 @@ theorem setOfRegulars_of_subset
   intro theta hTheta
   exact hRegulars theta (hBA theta hTheta)
 
-/-- `A` is progressive when its cardinality is below each member. The member
-cardinal is lifted because the subtype of `Cardinal.{u}` lives in `Type (u+1)`. -/
-def ProgressiveCardSet (A : CardSet.{u}) : Prop :=
-  forall theta, A theta ->
-    Cardinal.mk { beta : Cardinal.{u} // A beta } <
-      Cardinal.lift.{u + 1} theta
-
-theorem progressiveCardSet_of_subset
-    {A B : CardSet.{u}}
-    (hBA : SubsetOf B A)
-    (hProgressive : ProgressiveCardSet A) :
-    ProgressiveCardSet B := by
-  intro theta hTheta
-  exact (Cardinal.mk_subtype_mono hBA).trans_lt
-    (hProgressive theta (hBA theta hTheta))
-
 structure PcfRepresentation where
   IsProductOver :
     CardSet.{u} -> ReducedProductFrame.{v, w} -> Prop
@@ -94,38 +78,6 @@ theorem mem_pcf_of_witness
     (Exists.intro L
       (And.intro hProduct (And.intro hLength hTcf)))
 
-theorem mem_pcf_hasTrueCofinality
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hTheta : R.pcf A theta) :
-    exists F : ReducedProductFrame.{v, w},
-      exists L : ScaleLength.{x},
-        R.IsProductOver A F /\
-          R.LengthRepresents L theta /\
-          HasTrueCofinality F L :=
-  hTheta
-
-theorem represented_length_cardinality
-    {L : ScaleLength.{x}}
-    {theta : Cardinal.{u}}
-    (hLength : R.LengthRepresents L theta) :
-    Cardinal.lift.{u} (Cardinal.mk L.Level) =
-      Cardinal.lift.{x} theta :=
-  R.length_cardinal hLength
-
-theorem mem_pcf_has_represented_length
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hTheta : R.pcf A theta) :
-    exists F : ReducedProductFrame.{v, w},
-      exists L : ScaleLength.{x},
-        R.IsProductOver A F /\
-          HasTrueCofinality F L /\
-          Cardinal.lift.{u} (Cardinal.mk L.Level) =
-            Cardinal.lift.{x} theta := by
-  obtain ⟨F, L, hProduct, hLength, hTcf⟩ := hTheta
-  exact ⟨F, L, hProduct, hTcf, R.length_cardinal hLength⟩
-
 theorem mem_pcf_regular
     {A : CardSet.{u}}
     {theta : Cardinal.{u}}
@@ -139,44 +91,6 @@ theorem pcf_is_setOfRegulars
     SetOfRegulars (R.pcf A) := by
   intro theta hTheta
   exact mem_pcf_regular R hTheta
-
-theorem progressiveCardSet_pcf_of_subset
-    {A : CardSet.{u}}
-    (hBA : SubsetOf (R.pcf A) A)
-    (hProgressive : ProgressiveCardSet A) :
-    ProgressiveCardSet (R.pcf A) :=
-  progressiveCardSet_of_subset hBA hProgressive
-
-/-! These are order-theoretic closure consequences. They do not assert the
-hard PCF reverse inclusion `pcf A subset A`; callers must supply it. -/
-
-theorem pcf_eq_of_subset_of_subset
-    {A : CardSet.{u}}
-    (hExpand : SubsetOf A (R.pcf A))
-    (hContract : SubsetOf (R.pcf A) A) :
-    R.pcf A = A := by
-  funext theta
-  apply propext
-  constructor
-  · exact hContract theta
-  · exact hExpand theta
-
-theorem pcf_eq_iff_of_subset
-    {A : CardSet.{u}}
-    (hExpand : SubsetOf A (R.pcf A)) :
-    R.pcf A = A <-> SubsetOf (R.pcf A) A := by
-  constructor
-  · intro hEq theta hTheta
-    rw [hEq] at hTheta
-    exact hTheta
-  · intro hContract
-    exact R.pcf_eq_of_subset_of_subset hExpand hContract
-
-theorem pcf_pcf_eq_of_pcf_eq
-    {A : CardSet.{u}}
-    (hEq : R.pcf A = A) :
-    R.pcf (R.pcf A) = R.pcf A :=
-  congrArg R.pcf hEq
 
 end PcfRepresentation
 
