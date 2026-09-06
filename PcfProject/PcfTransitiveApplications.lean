@@ -37,7 +37,7 @@ theorem GeneratorCapturesCanonicalUltrafilters.eventually_of_eventually_subset
       (cardinalScaleLength theta))
     (hEventuallyA : J.Eventually (fun i => A i.1)) :
     J.Eventually (fun i => G.generator theta i.1) := by
-  let V : CardSet.{u} := InterCardSet W A
+  let V : CardSet.{u} := interCardSet W A
   have hVW : SubsetOf V W := by
     intro gamma hGamma
     exact hGamma.1
@@ -49,7 +49,7 @@ theorem GeneratorCapturesCanonicalUltrafilters.eventually_of_eventually_subset
   have hRange : J.Eventually (fun k => exists i, f i = k) := by
     apply (J.eventually_congr (fun k => ?_)).mpr hEventuallyA
     rw [cardinalIndexMap_mem_range_iff hVW]
-    simp only [V, InterCardSet, k.2, true_and]
+    simp only [V, interCardSet, k.2, true_and]
   have hUltraV : JV.IsUltrafilterDual :=
     hUltra.restrictAlong f (cardinalIndexMap_injective hVW) hRange
   have hPush : JV.pushforward f = J :=
@@ -197,7 +197,7 @@ theorem successorAleph_mem_tailPcf_of_mem_corePcf
   have hRegularsT : SetOfRegulars T :=
     natTailIUnionCardSet_setOfRegulars A hRegularsA n
   have hPcfSplit : cardinalProductRepresentation.pcf alephSuccSet.{u} =
-      UnionCardSet (cardinalProductRepresentation.pcf P)
+      unionCardSet (cardinalProductRepresentation.pcf P)
         (cardinalProductRepresentation.pcf T) := by
     rw [alephSuccSet_eq_iUnion_singleton,
       iUnionCardSet_eq_union_natPrefix_natTail A n]
@@ -267,7 +267,7 @@ theorem cardinalProductRepresentation_hasMaxPcf_union_of_hasMaxPcf
     (hRegularsC : SetOfRegulars C)
     (hMaxB : HasMaxPcf cardinalProductRepresentation B)
     (hMaxC : HasMaxPcf cardinalProductRepresentation C) :
-    HasMaxPcf cardinalProductRepresentation (UnionCardSet B C) := by
+    HasMaxPcf cardinalProductRepresentation (unionCardSet B C) := by
   obtain ⟨beta, hBetaMem, hBetaMax⟩ := hMaxB
   obtain ⟨gamma, hGammaMem, hGammaMax⟩ := hMaxC
   by_cases hBetaGamma : beta <= gamma
@@ -325,7 +325,7 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
   have hRegularsT : SetOfRegulars T :=
     natTailIUnionCardSet_setOfRegulars A hRegularsA n
   have hPcfSplit : cardinalProductRepresentation.pcf alephSuccSet.{u} =
-      UnionCardSet (cardinalProductRepresentation.pcf P)
+      unionCardSet (cardinalProductRepresentation.pcf P)
         (cardinalProductRepresentation.pcf T) := by
     rw [alephSuccSet_eq_iUnion_singleton,
       iUnionCardSet_eq_union_natPrefix_natTail A n]
@@ -346,10 +346,10 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
     obtain ⟨i, hiX, rfl⟩ := hGamma
     exact hCore i (hXTheta hiX)
   let XP : CardSet.{u} :=
-    InterCardSet W (cardinalProductRepresentation.pcf P)
+    interCardSet W (cardinalProductRepresentation.pcf P)
   let XT : CardSet.{u} :=
-    InterCardSet W (cardinalProductRepresentation.pcf T)
-  have hWEq : W = UnionCardSet XP XT := by
+    interCardSet W (cardinalProductRepresentation.pcf T)
+  have hWEq : W = unionCardSet XP XT := by
     funext gamma
     apply propext
     constructor
@@ -401,7 +401,7 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
         apply propext
         constructor
         · intro hGammaW
-          have hUnion : UnionCardSet XP XT gamma := by
+          have hUnion : unionCardSet XP XT gamma := by
             rw [← hWEq]
             exact hGammaW
           exact hUnion.elim (fun h => h)
@@ -412,7 +412,7 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
   · have hXTNonempty : exists gamma, XT gamma := by
       by_contra hXTEmpty
       obtain ⟨gamma, hGammaW⟩ := hWNonempty
-      have hUnion : UnionCardSet XP XT gamma := by
+      have hUnion : unionCardSet XP XT gamma := by
         rw [← hWEq]
         exact hGammaW
       exact hUnion.elim
@@ -427,7 +427,7 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
       apply propext
       constructor
       · intro hGammaW
-        have hUnion : UnionCardSet XP XT gamma := by
+        have hUnion : unionCardSet XP XT gamma := by
           rw [← hWEq]
           exact hGammaW
         exact hUnion.elim
@@ -546,7 +546,7 @@ theorem successorAlephLocalCorollary2430UltrafilterData_of_tailGenerators
       rw [hCardEq] at hRaw
       exact hRaw
     have hIntoGenerator : SubsetOf (successorAlephCardSet X)
-        (InterCardSet
+        (interCardSet
           (cardinalProductRepresentation.pcf T)
           (G.generator lambda)) := by
       intro gamma hGamma
@@ -554,7 +554,7 @@ theorem successorAlephLocalCorollary2430UltrafilterData_of_tailGenerators
       obtain ⟨j, hjC, rfl⟩ := hAlphaX
       exact ⟨(hCP j hjC).1, (hCP j hjC).2⟩
     have hLocalPcfInGenerator : cardinalProductRepresentation.pcf
-        (InterCardSet
+        (interCardSet
           (cardinalProductRepresentation.pcf T)
           (G.generator lambda))
         (successorAlephLocalMaxPcfCardinal hMax X) :=
@@ -783,10 +783,10 @@ theorem targetConditionalStatement_of_strongLimit :
   have hMlt : coreMax.theta < targetAlephOmega4.{u} :=
     coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
       hLocal hClub hLocalization hCore coreMax hCoreMaxEq
-  have hContinuumLe : ContinuumAtAlephOmega.{u} <= coreMax.theta :=
+  have hContinuumLe : continuumAtAlephOmega.{u} <= coreMax.theta :=
     continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
       hStrongLimit coreMax hMlt
-  change ContinuumAtAlephOmega.{u} < targetAlephOmega4.{u}
+  change continuumAtAlephOmega.{u} < targetAlephOmega4.{u}
   exact hContinuumLe.trans_lt hMlt
 
 #print axioms targetConditionalStatement_of_strongLimit

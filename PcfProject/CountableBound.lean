@@ -273,8 +273,8 @@ theorem natTailIUnionCardSet_eq_finsetUnion_Icc_union_tail
     {n m : Nat}
     (hnm : n <= m) :
     natTailIUnionCardSet A n =
-      UnionCardSet
-        (FinsetUnionCardSet
+      unionCardSet
+        (finsetUnionCardSet
           ((Finset.range (m + 1)).filter (fun k => n < k)) A)
         (natTailIUnionCardSet A m) := by
   classical
@@ -306,8 +306,8 @@ theorem cardinalProductRepresentation_pcf_natTail_eq_finiteDifference_union_tail
     {n m : Nat}
     (hnm : n <= m) :
     cardinalProductRepresentation.pcf (natTailIUnionCardSet A n) =
-      UnionCardSet
-        (FinsetUnionCardSet
+      unionCardSet
+        (finsetUnionCardSet
           ((Finset.range (m + 1)).filter (fun k => n < k))
           (fun i => cardinalProductRepresentation.pcf (A i)))
         (cardinalProductRepresentation.pcf (natTailIUnionCardSet A m)) := by

@@ -17,7 +17,7 @@ namespace PcfProject
 
 universe u v w x
 
-def InterCardSet (A B : CardSet.{u}) : CardSet.{u} :=
+def interCardSet (A B : CardSet.{u}) : CardSet.{u} :=
   fun theta => A theta /\ B theta
 
 structure GeneratorSystem
@@ -29,11 +29,11 @@ structure GeneratorSystem
   belowIdeal_spec :
     forall theta B,
       (belowIdeal theta).Small B <->
-        forall beta, R.pcf (InterCardSet A B) beta -> beta < theta
+        forall beta, R.pcf (interCardSet A B) beta -> beta < theta
   atMostIdeal_spec :
     forall theta B,
       (atMostIdeal theta).Small B <->
-        forall beta, R.pcf (InterCardSet A B) beta -> beta <= theta
+        forall beta, R.pcf (interCardSet A B) beta -> beta <= theta
   generator_subset :
     forall {theta}, R.pcf A theta -> SubsetOf (generator theta) A
   generator_ideal_equiv :
@@ -59,7 +59,7 @@ theorem belowIdeal_small_iff
     (theta : Cardinal.{u})
     (B : CardSet.{u}) :
     (G.belowIdeal theta).Small B <->
-      forall beta, R.pcf (InterCardSet A B) beta -> beta < theta :=
+      forall beta, R.pcf (interCardSet A B) beta -> beta < theta :=
   G.belowIdeal_spec theta B
 
 theorem atMostIdeal_small_iff
@@ -67,7 +67,7 @@ theorem atMostIdeal_small_iff
     (theta : Cardinal.{u})
     (B : CardSet.{u}) :
     (G.atMostIdeal theta).Small B <->
-      forall beta, R.pcf (InterCardSet A B) beta -> beta <= theta :=
+      forall beta, R.pcf (interCardSet A B) beta -> beta <= theta :=
   G.atMostIdeal_spec theta B
 
 theorem ideal_equiv_of_mem_pcf
@@ -120,7 +120,7 @@ theorem generator_pcf_le
     (G : GeneratorSystem R A)
     {theta beta : Cardinal.{u}}
     (hTheta : R.pcf A theta)
-    (hBeta : R.pcf (InterCardSet A (G.generator theta)) beta) :
+    (hBeta : R.pcf (interCardSet A (G.generator theta)) beta) :
     beta <= theta :=
   (G.atMostIdeal_small_iff theta (G.generator theta)).mp
     (G.generator_small_atMost hTheta) beta hBeta

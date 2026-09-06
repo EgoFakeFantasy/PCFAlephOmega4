@@ -6411,7 +6411,7 @@ theorem cardinalProductRepresentation_exists_pcf_mem_gt_of_small_cardinalIndex
 /-! A quotient-cofinality lower bound also gives a non-strict PCF lower
 bound, without requiring the lower-bound cardinal itself to be singular.  The
 strict version above is useful for the `aleph_omega` diagonal argument, but
-the final continuum bridge only asks for `ContinuumAtAlephOmega <= theta`.
+the final continuum bridge only asks for `continuumAtAlephOmega <= theta`.
 This theorem obtains the regular quotient scale from the small-index
 construction, computes its exact quotient cofinality, and transports the
 displayed lower bound across that equality.  The quotient lower bound remains

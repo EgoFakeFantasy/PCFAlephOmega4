@@ -742,7 +742,7 @@ theorem continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u})
     (M : MaxPcfWitness cardinalProductRepresentation alephSuccSet.{u})
     (hMlt : M.theta < targetAlephOmega4.{u}) :
-    ContinuumAtAlephOmega.{u} <= M.theta := by
+    continuumAtAlephOmega.{u} <= M.theta := by
   rw [continuumAtAlephOmega_eq_targetAlephOmega_power_aleph0_of_strongLimit
     hStrongLimit]
   exact targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4

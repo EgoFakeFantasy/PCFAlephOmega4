@@ -164,7 +164,7 @@ def GeneratorBaseRealization
       (cardinalProductRepresentation.pcf A)) : Prop :=
   forall theta, cardinalProductRepresentation.pcf A theta ->
     cardinalProductRepresentation.pcf
-      (InterCardSet A (G.generator theta)) theta
+      (interCardSet A (G.generator theta)) theta
 
 def TransitiveGeneratorSystem
     {A : CardSet.{u}}
@@ -179,7 +179,7 @@ def GeneratorCompactCover
     exists s : Finset (Cardinal.{u}),
       (forall mu, mu ∈ s ->
         cardinalProductRepresentation.pcf W mu) /\
-      SubsetOf W (FinsetUnionCardSet s G.generator)
+      SubsetOf W (finsetUnionCardSet s G.generator)
 
 /-! A bounded family of same-universe cardinals has a small index type.
 The embedding into the small cardinal interval `Iic bound` makes the
@@ -322,22 +322,22 @@ theorem GeneratorSystem.belowIdeal_le_pushforward_of_trueCofinality
       have hRegularsW : SetOfRegulars W :=
         setOfRegulars_of_subset hWA hRegulars
       have hEventuallyInter :
-          J.Eventually (fun i => InterCardSet W B i.1) := by
+          J.Eventually (fun i => interCardSet W B i.1) := by
         exact J.subset_small hEventually (by
           intro i hNotInter hNotB
           exact hNotInter ⟨i.2, hNotB⟩)
       have hThetaInterW : cardinalProductRepresentation.pcf
-          (InterCardSet W B) theta :=
+          (interCardSet W B) theta :=
         cardinalProductRepresentation_mem_pcf_of_eventually_mem
-          (A := InterCardSet W B) (B := W)
+          (A := interCardSet W B) (B := W)
           (fun gamma hGamma => hGamma.1)
           hRegularsW hThetaRegular J hUltra hTcf hEventuallyInter
       have hInterSubset :
-          SubsetOf (InterCardSet W B) (InterCardSet A B) := by
+          SubsetOf (interCardSet W B) (interCardSet A B) := by
         intro gamma hGamma
         exact ⟨hWA gamma hGamma.1, hGamma.2⟩
       have hThetaInterA : cardinalProductRepresentation.pcf
-          (InterCardSet A B) theta :=
+          (interCardSet A B) theta :=
         cardinalProductRepresentation_pcf_mono
           hInterSubset
           (fun gamma hGamma => hRegulars gamma hGamma.1)
@@ -410,12 +410,12 @@ theorem generatorBaseRealization_of_canonicalUltrafilterCapture
     hCapture A hAPcfA J hUltra theta hThetaRegular
       hThetaPcfPcfA hTcf
   have hEventuallyInter :
-      J.Eventually (fun i => InterCardSet A (G.generator theta) i.1) := by
+      J.Eventually (fun i => interCardSet A (G.generator theta) i.1) := by
     exact J.eventually_mono hEventuallyGenerator (by
       intro i hGenerator
       exact ⟨i.2, hGenerator⟩)
   exact cardinalProductRepresentation_mem_pcf_of_eventually_mem
-    (A := InterCardSet A (G.generator theta)) (B := A)
+    (A := interCardSet A (G.generator theta)) (B := A)
     (fun gamma hGamma => hGamma.1)
     hRegulars hThetaRegular J hUltra hTcf hEventuallyInter
 
@@ -449,7 +449,7 @@ theorem cardinalProductPcfMaxReductionAt_of_canonicalUltrafilterCapture
       J.Eventually (fun i => G.generator lambda i.1) :=
     hCapture X hXA J hUltra lambda hLambdaRegular
       hLambdaPcfPcfA hTcf
-  let Y : CardSet.{u} := InterCardSet X (G.generator lambda)
+  let Y : CardSet.{u} := interCardSet X (G.generator lambda)
   have hYX : SubsetOf Y X := fun gamma hGamma => hGamma.1
   have hEventuallyY : J.Eventually (fun i => Y i.1) := by
     exact J.eventually_mono hEventuallyGenerator (by
@@ -472,7 +472,7 @@ theorem cardinalProductPcfMaxReductionAt_of_canonicalUltrafilterCapture
     cardinalProductRepresentation_pcf_mono
       (fun gamma hGamma => hGamma.2)
       hGeneratorRegulars beta hBetaY
-  have hInterEq : InterCardSet
+  have hInterEq : interCardSet
       (cardinalProductRepresentation.pcf A)
       (G.generator lambda) = G.generator lambda := by
     funext gamma
@@ -538,7 +538,7 @@ theorem generatorCompactCover_of_canonicalUltrafilterCapture
       intro mu hMu
       obtain ⟨nu, hNuS, hNu⟩ := Finset.mem_image.mp hMu
       simpa only [hNu] using nu.2
-    have hTCover : SubsetOf W (FinsetUnionCardSet t G.generator) := by
+    have hTCover : SubsetOf W (finsetUnionCardSet t G.generator) := by
       intro theta hTheta
       let i : CardinalIndex W := ⟨theta, hTheta⟩
       obtain ⟨mu, hMuS, hGenerator⟩ := hCoverIndex i
@@ -597,8 +597,8 @@ theorem cardinalProductRepresentation_hasMaxPcf_of_generatorCompactCover
       exact hRegulars gamma (G.subset_of_mem_pcf hMuPcfA gamma (by
         simpa [Gen, hMuS] using hGamma))
     · simp [Gen, hMuS, emptyCardSet] at hGamma
-  have hUnionEq : FinsetUnionCardSet s Gen =
-      FinsetUnionCardSet s G.generator := by
+  have hUnionEq : finsetUnionCardSet s Gen =
+      finsetUnionCardSet s G.generator := by
     funext gamma
     apply propext
     constructor
@@ -607,9 +607,9 @@ theorem cardinalProductRepresentation_hasMaxPcf_of_generatorCompactCover
     · rintro ⟨mu, hMuS, hGamma⟩
       exact ⟨mu, hMuS, by simpa [Gen, hMuS] using hGamma⟩
   have hBetaUnion : cardinalProductRepresentation.pcf
-      (FinsetUnionCardSet s Gen) beta := by
+      (finsetUnionCardSet s Gen) beta := by
     apply cardinalProductRepresentation_pcf_mono
-      (B := FinsetUnionCardSet s Gen)
+      (B := finsetUnionCardSet s Gen)
       (A := W)
       (by
         intro gamma hGammaW
@@ -623,7 +623,7 @@ theorem cardinalProductRepresentation_hasMaxPcf_of_generatorCompactCover
   have hMuPcfA : cardinalProductRepresentation.pcf A mu :=
     cardinalProductRepresentation_pcf_mono
       hWA hRegulars mu (hSupportPcf mu hMuS)
-  have hInterEq : InterCardSet A (G.generator mu) =
+  have hInterEq : interCardSet A (G.generator mu) =
       G.generator mu := by
     funext gamma
     apply propext
@@ -681,7 +681,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
   obtain ⟨Y, hYX, hLambdaMax⟩ :=
     hReduction X lambda hXA hLambdaX
   let B : CardinalIndex Y -> CardSet.{u} := fun y =>
-    InterCardSet A (G.generator y.1)
+    interCardSet A (G.generator y.1)
   let E : CardSet.{u} := iUnionCardSet B
   have hBSubset : forall y, SubsetOf (B y) A := by
     intro y theta hTheta
@@ -756,7 +756,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
     have hMuLe : mu <= lambda := hLambdaMax.2 mu hMuY
     exact lt_of_le_of_ne hMuLe (fun hEq => hLambdaW (hEq ▸ hMuW))
   have hEFiniteUnion :
-      SubsetOf E (FinsetUnionCardSet s G.generator) := by
+      SubsetOf E (finsetUnionCardSet s G.generator) := by
     intro theta hTheta
     obtain ⟨y, hyS, hThetaB⟩ := hSCover theta hTheta
     have hYW : W y.1 := ⟨⟨y, hyS⟩, rfl⟩
@@ -764,7 +764,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
     exact ⟨mu, hMuS,
       hTransitive hGenMuY theta hThetaB.2⟩
   have hFiniteUnionRegulars :
-      SetOfRegulars (FinsetUnionCardSet s G.generator) := by
+      SetOfRegulars (finsetUnionCardSet s G.generator) := by
     intro theta hTheta
     obtain ⟨mu, hMuS, hGen⟩ := hTheta
     have hMuPcfPcfA :
@@ -778,7 +778,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
       theta (G.subset_of_mem_pcf hMuPcfPcfA theta hGen)
   have hLambdaFiniteUnion :
       cardinalProductRepresentation.pcf
-        (FinsetUnionCardSet s G.generator) lambda :=
+        (finsetUnionCardSet s G.generator) lambda :=
     cardinalProductRepresentation_pcf_mono
       hEFiniteUnion hFiniteUnionRegulars lambda hLambdaE
   let Gen : Cardinal.{u} -> CardSet.{u} := fun mu =>
@@ -798,7 +798,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
           simpa [Gen, hMuS] using hTheta))
     · simp [Gen, hMuS, emptyCardSet] at hTheta
   have hUnionEq :
-      FinsetUnionCardSet s Gen = FinsetUnionCardSet s G.generator := by
+      finsetUnionCardSet s Gen = finsetUnionCardSet s G.generator := by
     funext theta
     apply propext
     constructor
@@ -820,7 +820,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
       (cardinalProductRepresentation.pcf_is_setOfRegulars A)
       mu hMuW
   have hInterEq :
-      InterCardSet (cardinalProductRepresentation.pcf A)
+      interCardSet (cardinalProductRepresentation.pcf A)
           (G.generator mu) =
         G.generator mu := by
     funext theta
@@ -831,7 +831,7 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
       exact ⟨G.subset_of_mem_pcf hMuPcfPcfA theta hTheta, hTheta⟩
   have hLambdaInter :
       cardinalProductRepresentation.pcf
-        (InterCardSet (cardinalProductRepresentation.pcf A)
+        (interCardSet (cardinalProductRepresentation.pcf A)
           (G.generator mu)) lambda := by
     rw [hInterEq]
     simpa [Gen, hMuS] using hLambdaGen
@@ -1003,7 +1003,7 @@ theorem alephSuccSet_cardinalProductPcfLocalizationOutput_of_tail
   have hRegularsT : SetOfRegulars T := by
     exact natTailIUnionCardSet_setOfRegulars A hRegularsA n
   have hPcfSplit : cardinalProductRepresentation.pcf alephSuccSet.{u} =
-      UnionCardSet (cardinalProductRepresentation.pcf P)
+      unionCardSet (cardinalProductRepresentation.pcf P)
         (cardinalProductRepresentation.pcf T) := by
     rw [alephSuccSet_eq_iUnion_singleton,
       iUnionCardSet_eq_union_natPrefix_natTail A n]
@@ -1018,10 +1018,10 @@ theorem alephSuccSet_cardinalProductPcfLocalizationOutput_of_tail
     cardinalProductRepresentation_pcf_eq_of_finite hRegularsP
   intro X lambda hXFull hLambdaX
   let XP : CardSet.{u} :=
-    InterCardSet X (cardinalProductRepresentation.pcf P)
+    interCardSet X (cardinalProductRepresentation.pcf P)
   let XT : CardSet.{u} :=
-    InterCardSet X (cardinalProductRepresentation.pcf T)
-  have hXEq : X = UnionCardSet XP XT := by
+    interCardSet X (cardinalProductRepresentation.pcf T)
+  have hXEq : X = unionCardSet XP XT := by
     funext theta
     apply propext
     constructor

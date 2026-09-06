@@ -224,7 +224,7 @@ theorem alephSuccSet_tail_maxPcf_theta_gt_targetAlephOmega
 
 theorem alephSuccSet_eq_first_union_zero_tail :
     alephSuccSet.{u} =
-      UnionCardSet
+      unionCardSet
         (singletonCardSet (Cardinal.aleph ((0 : Ordinal.{u}) + 1)))
         (natTailIUnionCardSet
           (fun k : Nat =>
@@ -247,7 +247,7 @@ theorem alephSuccSet_eq_first_union_zero_tail :
 
 theorem cardinalProductRepresentation_pcf_alephSuccSet_eq_first_union_zero_tail :
     cardinalProductRepresentation.pcf alephSuccSet.{u} =
-      UnionCardSet
+      unionCardSet
         (cardinalProductRepresentation.pcf
           (singletonCardSet (Cardinal.aleph ((0 : Ordinal.{u}) + 1))))
         (cardinalProductRepresentation.pcf
@@ -298,8 +298,8 @@ theorem alephSuccSet_tail_maxPcf_witness_isMaxPcf_all_tails
         (alephSuccSet_tail_maxPcf_witness_mem_pcf_all_tails n hMax m)
     · intro beta hBeta
       have hSplit :
-          UnionCardSet
-            (FinsetUnionCardSet
+          unionCardSet
+            (finsetUnionCardSet
               ((Finset.range (n + 1)).filter (fun k => m < k))
               (fun k => cardinalProductRepresentation.pcf (A k)))
             (cardinalProductRepresentation.pcf

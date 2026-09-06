@@ -119,7 +119,7 @@ theorem finite_cardinalIndex_finsetUnion
     (s : Finset I)
     (A : I -> CardSet.{u})
     (hFinite : forall i, i ∈ s -> Finite (CardinalIndex (A i))) :
-    Finite (CardinalIndex (FinsetUnionCardSet s A)) := by
+    Finite (CardinalIndex (finsetUnionCardSet s A)) := by
   classical
   let K := {i : I // i ∈ s}
   letI : Fintype K := Fintype.ofFinite K
@@ -129,7 +129,7 @@ theorem finite_cardinalIndex_finsetUnion
     letI : forall i : K, Fintype (CardinalIndex (A i.1)) :=
       fun i => Fintype.ofFinite (CardinalIndex (A i.1))
     exact Finite.of_fintype (Sigma (fun i : K => CardinalIndex (A i.1)))
-  let f : CardinalIndex (FinsetUnionCardSet s A) ->
+  let f : CardinalIndex (finsetUnionCardSet s A) ->
       Sigma (fun i : K => CardinalIndex (A i.1)) := fun theta =>
     let hTheta := Classical.choose_spec theta.2
     ⟨⟨Classical.choose theta.2, hTheta.1⟩,

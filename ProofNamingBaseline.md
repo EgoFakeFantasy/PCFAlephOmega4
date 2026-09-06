@@ -78,3 +78,22 @@
 
 所有定理类型保持不变；核心定理的公理集合仍为 `propext`、
 `Classical.choice`、`Quot.sound`。
+
+## 第四批：基数集合和值的大小写
+
+将四个返回集合或基数的公开定义统一为函数和值的小驼峰命名：
+`InterCardSet` 改为 `interCardSet`，`UnionCardSet` 改为 `unionCardSet`，
+`FinsetUnionCardSet` 改为 `finsetUnionCardSet`，`ContinuumAtAlephOmega`
+改为 `continuumAtAlephOmega`。这些声明不是类型、结构或主要谓词，因此不应使用
+大驼峰；数学含义及全部定理类型均未改变。旧名称和旧调用点已全部删除，未增加
+兼容别名。
+
+| 项目 | 数值 | 相对第三批 |
+| --- | ---: | ---: |
+| Git 跟踪的 Lean 文件 | 29 | 0 |
+| LF 归一化 UTF-8 字节 | 1,202,939 | 0 |
+| LF 归一化源码行 | 28,807 | 0 |
+
+本批只改变同长度标识符的首字母大小写，所以源码规模不变。默认构建通过
+1017/1017 个任务；核心定理的公理集合仍为 `propext`、
+`Classical.choice`、`Quot.sound`。

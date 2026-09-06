@@ -23,6 +23,10 @@
 推荐：
 
 ```lean
+interCardSet
+unionCardSet
+finsetUnionCardSet
+continuumAtAlephOmega
 targetConditionalStatement_of_strongLimit
 continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
 exists_pcf_transitive_successorDirected_generators_of_successorDoublePower

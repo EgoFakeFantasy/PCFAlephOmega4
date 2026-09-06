@@ -2041,7 +2041,7 @@ theorem
       rw [hCardEq] at hRaw
       exact hRaw
     have hIntoGenerator : SubsetOf (successorAlephCardSet X)
-        (InterCardSet
+        (interCardSet
           (cardinalProductRepresentation.pcf alephSuccSet)
           (G.generator lambda)) := by
       intro gamma hGamma
@@ -2049,7 +2049,7 @@ theorem
       obtain ⟨j, hjC, rfl⟩ := hAlphaX
       exact ⟨hCore j.1 (j.2.trans hEtaTheta), hCP j hjC⟩
     have hLocalPcfInGenerator : cardinalProductRepresentation.pcf
-        (InterCardSet
+        (interCardSet
           (cardinalProductRepresentation.pcf alephSuccSet)
           (G.generator lambda))
         (successorAlephLocalMaxPcfCardinal hMax X) :=

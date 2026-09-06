@@ -17,18 +17,18 @@ universe u v
 def emptyCardSet : CardSet.{u} :=
   fun _ => False
 
-def UnionCardSet (A B : CardSet.{u}) : CardSet.{u} :=
+def unionCardSet (A B : CardSet.{u}) : CardSet.{u} :=
   fun theta => A theta \/ B theta
 
 theorem subset_union_left
     (A B : CardSet.{u}) :
-    SubsetOf A (UnionCardSet A B) := by
+    SubsetOf A (unionCardSet A B) := by
   intro theta hTheta
   exact Or.inl hTheta
 
 theorem subset_union_right
     (A B : CardSet.{u}) :
-    SubsetOf B (UnionCardSet A B) := by
+    SubsetOf B (unionCardSet A B) := by
   intro theta hTheta
   exact Or.inr hTheta
 
@@ -36,7 +36,7 @@ theorem unionCardSet_regulars
     {A B : CardSet.{u}}
     (hRegularsA : SetOfRegulars A)
     (hRegularsB : SetOfRegulars B) :
-    SetOfRegulars (UnionCardSet A B) := by
+    SetOfRegulars (unionCardSet A B) := by
   intro theta hTheta
   cases hTheta with
   | inl hA => exact hRegularsA theta hA
@@ -45,7 +45,7 @@ theorem unionCardSet_regulars
 theorem interCardSet_regulars
     {A B : CardSet.{u}}
     (hRegulars : SetOfRegulars A) :
-    SetOfRegulars (InterCardSet A B) :=
+    SetOfRegulars (interCardSet A B) :=
   setOfRegulars_of_subset
     (by
       intro theta hTheta
@@ -54,8 +54,8 @@ theorem interCardSet_regulars
 
 theorem inter_unionCardSet
     (A B C : CardSet.{u}) :
-    InterCardSet A (UnionCardSet B C) =
-      UnionCardSet (InterCardSet A B) (InterCardSet A C) := by
+    interCardSet A (unionCardSet B C) =
+      unionCardSet (interCardSet A B) (interCardSet A C) := by
   funext theta
   apply propext
   constructor
@@ -165,8 +165,8 @@ theorem cardinalProductRepresentation_pcf_union
     {A B : CardSet.{u}}
     (hRegularsA : SetOfRegulars A)
     (hRegularsB : SetOfRegulars B) :
-    cardinalProductRepresentation.pcf (UnionCardSet A B) =
-      UnionCardSet
+    cardinalProductRepresentation.pcf (unionCardSet A B) =
+      unionCardSet
         (cardinalProductRepresentation.pcf A)
         (cardinalProductRepresentation.pcf B) := by
   funext theta
@@ -175,7 +175,7 @@ theorem cardinalProductRepresentation_pcf_union
   · intro hTheta
     obtain ⟨hRegular, J, hUltra, hTcf⟩ :=
       (cardinalProductRepresentation_mem_pcf_iff
-        (A := UnionCardSet A B) (theta := theta)).mp hTheta
+        (A := unionCardSet A B) (theta := theta)).mp hTheta
     cases hUltra.eventually_or_eventually_not (fun i => A i.1) with
     | inl hA =>
         exact Or.inl
@@ -208,7 +208,7 @@ theorem cardinalProductRepresentation_pcf_union
           (unionCardSet_regulars hRegularsA hRegularsB)
           theta hB
 
-def FinsetUnionCardSet
+def finsetUnionCardSet
     {ι : Type v}
     (s : Finset ι)
     (A : ι -> CardSet.{u}) : CardSet.{u} :=
@@ -217,7 +217,7 @@ def FinsetUnionCardSet
 theorem finsetUnionCardSet_empty
     {ι : Type v}
     (A : ι -> CardSet.{u}) :
-    FinsetUnionCardSet (∅ : Finset ι) A = emptyCardSet := by
+    finsetUnionCardSet (∅ : Finset ι) A = emptyCardSet := by
   funext theta
   apply propext
   constructor
@@ -232,8 +232,8 @@ theorem finsetUnionCardSet_insert
     (i : ι)
     (s : Finset ι)
     (A : ι -> CardSet.{u}) :
-    FinsetUnionCardSet (insert i s) A =
-      UnionCardSet (A i) (FinsetUnionCardSet s A) := by
+    finsetUnionCardSet (insert i s) A =
+      unionCardSet (A i) (finsetUnionCardSet s A) := by
   classical
   funext theta
   apply propext
@@ -254,7 +254,7 @@ theorem finsetUnionCardSet_regulars
     {s : Finset ι}
     {A : ι -> CardSet.{u}}
     (hRegulars : forall i, SetOfRegulars (A i)) :
-    SetOfRegulars (FinsetUnionCardSet s A) := by
+    SetOfRegulars (finsetUnionCardSet s A) := by
   intro theta hTheta
   obtain ⟨i, _hi, hA⟩ := hTheta
   exact hRegulars i theta hA
@@ -269,8 +269,8 @@ theorem cardinalProductRepresentation_pcf_finsetUnion
     (s : Finset ι)
     (A : ι -> CardSet.{u})
     (hRegulars : forall i, SetOfRegulars (A i)) :
-    cardinalProductRepresentation.pcf (FinsetUnionCardSet s A) =
-      FinsetUnionCardSet s
+    cardinalProductRepresentation.pcf (finsetUnionCardSet s A) =
+      finsetUnionCardSet s
         (fun i => cardinalProductRepresentation.pcf (A i)) := by
   classical
   induction s using Finset.induction_on with
@@ -291,12 +291,12 @@ def canonicalBelowIdeal
     (theta : Cardinal.{u}) : Ideal Cardinal.{u} where
   Small B :=
     forall beta,
-      cardinalProductRepresentation.pcf (InterCardSet A B) beta ->
+      cardinalProductRepresentation.pcf (interCardSet A B) beta ->
         beta < theta
   empty_small := by
     intro beta hBeta
     have hEmpty :
-        InterCardSet A (fun _ => False) = emptyCardSet := by
+        interCardSet A (fun _ => False) = emptyCardSet := by
       funext gamma
       apply propext
       constructor
@@ -313,13 +313,13 @@ def canonicalBelowIdeal
     apply hB beta
     exact cardinalProductRepresentation_pcf_mono
       (hRegulars := interCardSet_regulars hRegulars)
-      (fun gamma (hGamma : InterCardSet A C gamma) =>
+      (fun gamma (hGamma : interCardSet A C gamma) =>
         ⟨hGamma.1, hCB gamma hGamma.2⟩)
       beta hBeta
   union_small := by
     intro B C hB hC beta hBeta
     have hBetaUnion : cardinalProductRepresentation.pcf
-        (UnionCardSet (InterCardSet A B) (InterCardSet A C)) beta := by
+        (unionCardSet (interCardSet A B) (interCardSet A C)) beta := by
       rw [← inter_unionCardSet A B C]
       exact hBeta
     rw [cardinalProductRepresentation_pcf_union
@@ -335,12 +335,12 @@ def canonicalAtMostIdeal
     (theta : Cardinal.{u}) : Ideal Cardinal.{u} where
   Small B :=
     forall beta,
-      cardinalProductRepresentation.pcf (InterCardSet A B) beta ->
+      cardinalProductRepresentation.pcf (interCardSet A B) beta ->
         beta <= theta
   empty_small := by
     intro beta hBeta
     have hEmpty :
-        InterCardSet A (fun _ => False) = emptyCardSet := by
+        interCardSet A (fun _ => False) = emptyCardSet := by
       funext gamma
       apply propext
       constructor
@@ -357,13 +357,13 @@ def canonicalAtMostIdeal
     apply hB beta
     exact cardinalProductRepresentation_pcf_mono
       (hRegulars := interCardSet_regulars hRegulars)
-      (fun gamma (hGamma : InterCardSet A C gamma) =>
+      (fun gamma (hGamma : interCardSet A C gamma) =>
         ⟨hGamma.1, hCB gamma hGamma.2⟩)
       beta hBeta
   union_small := by
     intro B C hB hC beta hBeta
     have hBetaUnion : cardinalProductRepresentation.pcf
-        (UnionCardSet (InterCardSet A B) (InterCardSet A C)) beta := by
+        (unionCardSet (interCardSet A B) (interCardSet A C)) beta := by
       rw [← inter_unionCardSet A B C]
       exact hBeta
     rw [cardinalProductRepresentation_pcf_union
@@ -380,7 +380,7 @@ theorem canonicalBelowIdeal_small_iff
     (B : CardSet.{u}) :
     (canonicalBelowIdeal A hRegulars theta).Small B <->
       forall beta,
-        cardinalProductRepresentation.pcf (InterCardSet A B) beta ->
+        cardinalProductRepresentation.pcf (interCardSet A B) beta ->
           beta < theta := Iff.rfl
 
 theorem canonicalAtMostIdeal_small_iff
@@ -390,7 +390,7 @@ theorem canonicalAtMostIdeal_small_iff
     (B : CardSet.{u}) :
     (canonicalAtMostIdeal A hRegulars theta).Small B <->
       forall beta,
-        cardinalProductRepresentation.pcf (InterCardSet A B) beta ->
+        cardinalProductRepresentation.pcf (interCardSet A B) beta ->
           beta <= theta := Iff.rfl
 
 theorem canonicalAtMostIdeal_le_canonicalBelowIdeal_of_lt

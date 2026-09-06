@@ -129,13 +129,13 @@ theorem canonicalBelowIdeal_le_pushforward_of_trueCofinality
   | inl hSmall => exact hSmall
   | inr hEventually =>
     have hRegularsW : SetOfRegulars W := setOfRegulars_of_subset hWA hRegulars
-    have hInter : J.Eventually (fun i => InterCardSet W B i.1) :=
+    have hInter : J.Eventually (fun i => interCardSet W B i.1) :=
       J.eventually_mono hEventually (fun i hi => ⟨i.2, hi⟩)
-    have hPcfW : cardinalProductRepresentation.pcf (InterCardSet W B) theta :=
+    have hPcfW : cardinalProductRepresentation.pcf (interCardSet W B) theta :=
       cardinalProductRepresentation_mem_pcf_of_eventually_mem
-        (A := InterCardSet W B) (B := W) (fun _ h => h.1)
+        (A := interCardSet W B) (B := W) (fun _ h => h.1)
         hRegularsW hTheta J hUltra hTcf hInter
-    have hPcfA : cardinalProductRepresentation.pcf (InterCardSet A B) theta :=
+    have hPcfA : cardinalProductRepresentation.pcf (interCardSet A B) theta :=
       cardinalProductRepresentation_pcf_mono
         (fun gamma h => ⟨hWA gamma h.1, h.2⟩)
         (fun gamma h => hRegulars gamma h.1) theta hPcfW
@@ -392,7 +392,7 @@ theorem canonicalAtMostIndexIdeal_le_of_successorDirected
   obtain ⟨mu, hMuRegular, hTcf, _⟩ :=
     cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt
       hRegulars hUltra hSmall hUncountable
-  let W : CardSet.{u} := InterCardSet A (fun a => exists i : CardinalIndex A, i.1 = a /\ S i)
+  let W : CardSet.{u} := interCardSet A (fun a => exists i : CardinalIndex A, i.1 = a /\ S i)
   have hLocalS : (J.localize S).Eventually S := by
     change J.Small (fun k => Not (S k) /\ S k)
     exact J.subset_small J.empty_small (fun k hk => hk.1 hk.2)
@@ -424,7 +424,7 @@ theorem canonicalAtMostIndexIdeal_small_of_localized_scale
     ((canonicalAtMostIdeal A hRegulars theta).restrictAlong
       (fun i : CardinalIndex A => i.1)).Small X := by
   classical
-  let W : CardSet.{u} := InterCardSet A (fun a => exists i : CardinalIndex A, i.1 = a /\ X i)
+  let W : CardSet.{u} := interCardSet A (fun a => exists i : CardinalIndex A, i.1 = a /\ X i)
   change forall mu, cardinalProductRepresentation.pcf W mu -> mu <= theta
   intro mu hMu
   by_contra hNot
@@ -608,8 +608,8 @@ theorem canonicalBelowIdeal_succ_eq_atMost
     canonicalBelowIdeal A hRegulars (Order.succ theta) = canonicalAtMostIdeal A hRegulars theta := by
   apply Ideal.ext
   intro S
-  change (forall mu, cardinalProductRepresentation.pcf (InterCardSet A S) mu -> mu < Order.succ theta) <->
-    (forall mu, cardinalProductRepresentation.pcf (InterCardSet A S) mu -> mu <= theta)
+  change (forall mu, cardinalProductRepresentation.pcf (interCardSet A S) mu -> mu < Order.succ theta) <->
+    (forall mu, cardinalProductRepresentation.pcf (interCardSet A S) mu -> mu <= theta)
   simp only [Order.lt_succ_iff]
 
 #print axioms canonicalBelowIdeal_succ_eq_atMost
@@ -937,7 +937,7 @@ theorem generator_mem_pcf_of_successorDirected
     (G : GeneratorSystem cardinalProductRepresentation A)
     (hDirected : GeneratorAtMostIdealSuccessorDirected G)
     {theta : Cardinal.{u}} (hTheta : cardinalProductRepresentation.pcf A theta) :
-    cardinalProductRepresentation.pcf (InterCardSet A (G.generator theta)) theta := by
+    cardinalProductRepresentation.pcf (interCardSet A (G.generator theta)) theta := by
   obtain ⟨hReg, J, hUltra, hTcf⟩ := cardinalProductRepresentation_mem_pcf_iff.mp hTheta
   have hCapture := generatorCapturesCanonicalUltrafilters_of_atMostIdealEscape hRegulars G
     (generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected G hDirected)
@@ -957,7 +957,7 @@ theorem generator_predicate_injective_of_successorDirected
     Function.Injective (fun theta : CardinalIndex (cardinalProductRepresentation.pcf A) =>
       fun i : CardinalIndex A => G.generator theta.1 i.1) := by
   intro theta mu hEq
-  have hInter : InterCardSet A (G.generator theta.1) = InterCardSet A (G.generator mu.1) := by
+  have hInter : interCardSet A (G.generator theta.1) = interCardSet A (G.generator mu.1) := by
     funext a
     apply propext
     constructor

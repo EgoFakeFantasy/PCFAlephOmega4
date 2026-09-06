@@ -79,7 +79,7 @@ theorem infinite_cardinalIndex_of_cofinalInAlephOmega
 theorem cofinalBelow_union_iff
     {A B : CardSet.{u}}
     {bound : Cardinal.{u}} :
-    CofinalBelow (UnionCardSet A B) bound <->
+    CofinalBelow (unionCardSet A B) bound <->
       CofinalBelow A bound \/ CofinalBelow B bound := by
   classical
   constructor
@@ -127,7 +127,7 @@ theorem cofinalBelow_finsetUnion_iff
     (A : ι -> CardSet.{u})
     (bound : Cardinal.{u})
     (hBoundPos : 0 < bound) :
-    CofinalBelow (FinsetUnionCardSet s A) bound <->
+    CofinalBelow (finsetUnionCardSet s A) bound <->
       exists i, i ∈ s /\ CofinalBelow (A i) bound := by
   classical
   induction s using Finset.induction_on with
@@ -148,9 +148,9 @@ theorem cofinalInAlephOmega_finsetUnion_iff
     {ι : Type v}
     (s : Finset ι)
     (A : ι -> CardSet.{u}) :
-    CofinalInAlephOmega (FinsetUnionCardSet s A) <->
+    CofinalInAlephOmega (finsetUnionCardSet s A) <->
       exists i, i ∈ s /\ CofinalInAlephOmega (A i) := by
-  change CofinalBelow (FinsetUnionCardSet s A) targetAlephOmega <-> _
+  change CofinalBelow (finsetUnionCardSet s A) targetAlephOmega <-> _
   exact cofinalBelow_finsetUnion_iff s A targetAlephOmega
     (Cardinal.aleph0_pos.trans_le targetAlephOmega_aleph0_le)
 
@@ -198,7 +198,7 @@ theorem natPrefixIUnionCardSet_eq_finsetUnion_range
     (A : Nat -> CardSet.{u})
     (n : Nat) :
     natPrefixIUnionCardSet A n =
-      FinsetUnionCardSet (Finset.range (n + 1)) A := by
+      finsetUnionCardSet (Finset.range (n + 1)) A := by
   funext theta
   apply propext
   constructor
@@ -224,7 +224,7 @@ theorem iUnionCardSet_eq_union_natPrefix_natTail
     (A : Nat -> CardSet.{u})
     (n : Nat) :
     iUnionCardSet A =
-      UnionCardSet (natPrefixIUnionCardSet A n)
+      unionCardSet (natPrefixIUnionCardSet A n)
         (natTailIUnionCardSet A n) := by
   funext theta
   apply propext

@@ -20,17 +20,17 @@ universe u v w x
 
 open Cardinal Set Order
 
-noncomputable abbrev ContinuumAtAlephOmega : Cardinal.{u} :=
+noncomputable abbrev continuumAtAlephOmega : Cardinal.{u} :=
   (2 : Cardinal.{u}) ^ targetAlephOmega
 
 /-! The countable-exponent power of `aleph_omega` is bounded by the power
-    appearing in `ContinuumAtAlephOmega`. This is only cardinal arithmetic:
+    appearing in `continuumAtAlephOmega`. This is only cardinal arithmetic:
     the exponent is enlarged from `aleph0` to `aleph_omega`, and the latter
     self-power is identified with the two-power by Cantor arithmetic. It does
     not identify the two cardinals and does not supply the PCF continuum
     bridge. -/
 theorem targetAlephOmega_power_aleph0_le_continuumAtAlephOmega :
-    targetAlephOmega.{u} ^ Cardinal.aleph0 <= ContinuumAtAlephOmega := by
+    targetAlephOmega.{u} ^ Cardinal.aleph0 <= continuumAtAlephOmega := by
   calc
     targetAlephOmega.{u} ^ Cardinal.aleph0 <=
         targetAlephOmega.{u} ^ targetAlephOmega.{u} :=
@@ -40,7 +40,7 @@ theorem targetAlephOmega_power_aleph0_le_continuumAtAlephOmega :
         targetAlephOmega_aleph0_le
     _ = (2 : Cardinal.{u}) ^ targetAlephOmega := by
       exact Cardinal.power_self_eq targetAlephOmega_aleph0_le
-    _ = ContinuumAtAlephOmega := rfl
+    _ = continuumAtAlephOmega := rfl
 
 #print axioms targetAlephOmega_power_aleph0_le_continuumAtAlephOmega
 
@@ -52,7 +52,7 @@ theorem targetAlephOmega_power_aleph0_le_continuumAtAlephOmega :
     it does not use any PCF structural theorem. -/
 theorem continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u}) :
-    ContinuumAtAlephOmega.{u} <=
+    continuumAtAlephOmega.{u} <=
       targetAlephOmega.{u} ^ Cardinal.aleph0 := by
   let α := targetAlephOmega.ord.ToType
   obtain ⟨s, hsCof, hsCard⟩ := Order.exists_cof_eq α
@@ -131,7 +131,7 @@ theorem continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
     repeating the arithmetic sandwich in final-assembly arguments. -/
 theorem continuumAtAlephOmega_eq_targetAlephOmega_power_aleph0_of_strongLimit
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u}) :
-    ContinuumAtAlephOmega.{u} =
+    continuumAtAlephOmega.{u} =
       targetAlephOmega.{u} ^ Cardinal.aleph0 := by
   exact le_antisymm
     (continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
