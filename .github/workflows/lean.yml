@@ -1,0 +1,32 @@
+name: Lean proof check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build with the pinned Lean toolchain
+        uses: leanprover/lean-action@v1
+        with:
+          test: false
+          lint: false
+
+      - name: Reject proof placeholders and project axioms
+        shell: bash
+        run: |
+          if git grep -nE '\b(sorry|admit|native_decide|sorryAx)\b|^[[:space:]]*axiom[[:space:]]' -- 'PcfProject/*.lean' 'PcfProject.lean'; then
+            echo 'Forbidden proof placeholder or project axiom found.'
+            exit 1
+          fi
