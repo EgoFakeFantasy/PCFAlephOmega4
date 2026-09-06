@@ -944,8 +944,8 @@ theorem alephSuccSet_tail_pcf_cardinalIndex_small (n : Nat) :
 #print axioms alephSuccSet_tail_pcf_cardinalIndex_small
 
 /-! Tail-specialized localization with the source smallness condition made
-explicit.  Together with the strong-limit tail-selection theorem above,
-this removes the old full-core idempotence premise from the source route. -/
+explicit. Together with the strong-limit tail-selection theorem above, it
+derives the localization output without assuming full-core idempotence. -/
 theorem alephSuccSet_tail_cardinalProductPcfLocalizationOutput_of_doublePowerBelow
     (n : Nat)
     (hDouble : CardinalProductDoublePowerBelowCoordinates

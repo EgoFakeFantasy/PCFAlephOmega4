@@ -1,10 +1,10 @@
 import PcfProject.PcfBasics
 
 /-!
-# Stage 6: Generator and max-pcf interfaces
+# Generator systems and maximum PCF witnesses
 
-This file is a Mathlib-cardinal rewrite of the former generator skeleton. It
-defines the interfaces used to state generator systems and max-pcf witnesses,
+This file defines the interfaces used to state generator systems and
+maximum-PCF witnesses,
 but it does not prove the structural PCF theorems.
 
 `GeneratorSystem` requires its two ideals to have the standard PCF semantics

@@ -2,7 +2,7 @@ import PcfProject.CofinalCore
 import PcfProject.FinitePcf
 
 /-!
-# Stage 8: Final assembly hypothesis interfaces
+# Finite and concentrated PCF assembly
 
 This file assembles the preceding explicit hypotheses into the target
 conditional statement. It does not prove Shelah's PCF theorem unconditionally:

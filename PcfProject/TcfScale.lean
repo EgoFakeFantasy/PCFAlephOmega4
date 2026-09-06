@@ -2,7 +2,7 @@ import PcfProject.IdealProduct
 import Mathlib.SetTheory.Cardinal.Basic
 
 /-!
-# Stage 4: Abstract true cofinality and scales
+# True cofinality and scales
 
 This file builds on the verified abstract reduced-product layer. It defines
 strict eventual comparison, abstract scale lengths, scales, cofinal families,

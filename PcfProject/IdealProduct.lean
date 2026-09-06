@@ -3,11 +3,10 @@ import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Order.Zorn
 
 /-!
-# Stage 3: Abstract ideals and reduced products
+# Ideals and reduced products
 
-This file is a verified abstract base layer. It does not depend on the old
-`CardinalArithmeticFrame` interface and does not assert any PCF structural
-theorem. The ideal fields are the usual closure properties needed to define
+This file is the abstract base layer for reduced products and does not assert
+any PCF structural theorem. The ideal fields are the usual closure properties needed to define
 eventual truth and reduced-product comparison. The base `Ideal` structure
 allows improper ideals for compatibility; `Ideal.IsProper` is the explicit
 predicate used when a genuine reduced-product argument needs properness.

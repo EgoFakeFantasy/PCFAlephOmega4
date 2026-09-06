@@ -9,8 +9,8 @@ namespace PcfProject
 
 universe u
 
-/-! This module constructs the formerly assumed bounded rank-reflection
-principle.  The recursion anticipates every earlier ladder initial segment
+/-! This module constructs the bounded rank-reflection principle used by the
+main PCF argument. The recursion anticipates every earlier ladder initial segment
 whose local rank is below `omega_4`.  Regularity of `aleph_4` keeps every
 stage below the cutoff, and continuity at limit stages makes the resulting
 trace normal. -/

@@ -2,20 +2,17 @@ import PcfProject.CardinalArithmetic
 import PcfProject.TcfScale
 
 /-!
-# Stage 5: Mathlib-cardinal PCF membership interface
+# PCF membership
 
-This file replaces the former `CardinalArithmeticFrame`-based skeleton with a
-small Mathlib-level interface for membership in `pcf A`.
-
-It is still abstract: `PcfRepresentation` records what it means for a reduced
+`PcfRepresentation` records what it means for a reduced
 product to be over a set of cardinals and what it means for a scale length to
 represent a cardinal. Membership requires `HasTrueCofinality`, including its
 minimality among all cofinal families. A represented length is required to
 have cardinality equal to the represented cardinal, with universe lifts made
-explicit. The separate `length_regular` field is still the source of
+explicit. The separate `length_regular` field is the source of
 regularity for an arbitrary representation; that fact is not derived here
 merely from the existence of a scale. No generator, no-holes, max-pcf,
-countable PCF bound, or final continuum bound is proved here.
+countable PCF bound, or continuum bound is proved here.
 -/
 
 namespace PcfProject

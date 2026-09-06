@@ -4,7 +4,7 @@ import Mathlib.SetTheory.Ordinal.FundamentalSequence
 import Mathlib.Order.Interval.Set.InitialSeg
 
 /-!
-# Stage 2: Stationary sets over Mathlib club sets
+# Stationary sets over Mathlib club sets
 
 Field provenance table:
 
@@ -112,14 +112,11 @@ Field provenance table:
   `regressiveOn_stationaryFiber_lt`,
   `stationary_of_stationaryFiber`,
   `exists_stationary_subset_eqOn_const_of_stationaryFiber`.
-- C. Remaining scope note:
-  no Fodor placeholder remains in this file. Pressing down is proved for the
+- C. Pressing-down scope:
+  pressing down is proved for the
   canonical well-order `c.ord.ToType` of every regular uncountable cardinal
   `c`. Transport to other concrete presentations requires an order isomorphism
   and is not asserted here.
-
-No new project `structure` is introduced in this file, so the vacuity test for
-new structures is not applicable.
 -/
 
 namespace PcfProject
@@ -2702,8 +2699,8 @@ theorem stationary_ordinalCof_eq_alephOne_below_alephThree :
 #print axioms stationary_ordinalCof_eq_alephOne_below_alephThree
 
 /-! A club in an ordinal of cofinality `aleph_1` contains a cofinal
-suborder of order type `omega_1`.  This is the purely order-theoretic
-skeleton used in the final reflection step of Jech's proof. -/
+suborder of order type `omega_1`. This is the purely order-theoretic input
+used in the reflection step of Jech's proof. -/
 theorem exists_omegaOneCofinalSubset_of_club
     {delta : Ordinal.{u}}
     (hDeltaCof : delta.cof = Cardinal.aleph 1)

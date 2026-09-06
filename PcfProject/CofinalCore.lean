@@ -1,11 +1,10 @@
 import PcfProject.CountableBound
 
 /-!
-# Stage 8: Cofinal core interfaces
+# Cofinal cores below `aleph_omega`
 
 This file records the regular, below-`aleph_omega`, and cofinality conditions
-on a set of cardinals using the Mathlib-cardinal interfaces from earlier
-stages. It also proves that cofinality below `aleph_omega` forces an infinite
+on a set of cardinals. It also proves that cofinality below `aleph_omega` forces an infinite
 cardinal index by constructing a strictly increasing natural sequence.
 -/
 
