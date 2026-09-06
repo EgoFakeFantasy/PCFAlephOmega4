@@ -748,64 +748,6 @@ theorem continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
   exact targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
     hStrongLimit M hMlt
 
-/-! The preceding bridge removes the last independent continuum premise from
-the tail/core successor-directed endpoint.  What remains is precisely the
-generator construction, transitivity, and no-holes/core-initial-segment
-portion of the PCF theorem. -/
-theorem targetConditionalStatement_of_tailAndCoreSuccessorDirectedInputs_noContinuum
-    (G : GeneratorSystem cardinalProductRepresentation
-      (cardinalProductRepresentation.pcf alephSuccSet.{u}))
-    (hDirected : GeneratorAtMostIdealSuccessorDirected G)
-    (hCore : SuccessorAlephInitialSegmentInCorePcf
-      (alephSuccSetAtMostIdealEscapeMaxAlephIndex G
-        (generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-          G hDirected)))
-    (hTailGenerators : forall n : Nat,
-      CardinalProductDoublePowerBelowCoordinates
-          (natTailIUnionCardSet
-            (fun m : Nat =>
-              singletonCardSet
-                (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n) ->
-        exists Gt : GeneratorSystem cardinalProductRepresentation
-            (cardinalProductRepresentation.pcf
-              (natTailIUnionCardSet
-                (fun m : Nat =>
-                  singletonCardSet
-                    (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n)),
-          TransitiveGeneratorSystem Gt /\
-            GeneratorAtMostIdealSuccessorDirected Gt) :
-    targetConditionalStatement.{u} := by
-  apply targetConditionalStatement_of_tailAndCoreSuccessorDirectedInputs
-    G hDirected hCore hTailGenerators
-  intro hStrongLimit
-  let hEscape : GeneratorAtMostIdealEscapesCanonicalUltrafilters G :=
-    generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-      G hDirected
-  let hCapture : GeneratorCapturesCanonicalUltrafilters G :=
-    generatorCapturesCanonicalUltrafilters_of_atMostIdealEscape
-      (cardinalProductRepresentation.pcf_is_setOfRegulars alephSuccSet)
-      G hEscape
-  let hLocal : SuccessorAlephHasMaxPcfBelow
-      (alephSuccSetAtMostIdealEscapeMaxAlephIndex G hEscape) :=
-    successorAlephHasMaxPcfBelow_of_atMostIdealEscape G hEscape hCore
-  have h2430 : SuccessorAlephLocalCorollary2430 hLocal :=
-    successorAlephLocalCorollary2430_of_generators
-      hLocal G hCapture hCore
-  let M := alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape
-  have hMlt : M.theta < targetAlephOmega4.{u} :=
-    coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
-      hLocal
-      (successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
-        hLocal h2430 hStrongLimit)
-      (alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit_tailDirectedGenerators
-        hStrongLimit hTailGenerators)
-      hCore M
-      (alephSuccSetAtMostIdealEscapeMax_eq_alephIndex G hEscape)
-  exact continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
-    hStrongLimit M hMlt
-
-#print axioms
-  targetConditionalStatement_of_tailAndCoreSuccessorDirectedInputs_noContinuum
 
 /-! Under the target's own strong-limit premise, the continuum is below
 `aleph_omega`. The proved no-holes theorem above the continuum, together

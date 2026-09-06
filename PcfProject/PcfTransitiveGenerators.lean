@@ -602,62 +602,6 @@ theorem cardinalProduct_exactUpperBound_eventuallyLe_upperBound
 
 #print axioms cardinalProduct_exactUpperBound_eventuallyLe_upperBound
 
-/-- Two exact-upper-bound descriptions of the same initial scale produce the
-cofinal characteristic agreement needed by the transitive-path constructor. -/
-theorem exists_transitive_generators_of_characteristic_exactUpperBounds
-    {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A))
-    (hPower : forall a, A a ->
-      (2 : Cardinal.{u + 1}) ^ Cardinal.mk (CardinalIndex A) < Cardinal.lift.{u + 1} a)
-    (G : GeneratorSystem cardinalProductRepresentation A)
-    (hFixed : cardinalProductRepresentation.pcf A = A)
-    (hDirected : GeneratorAtMostIdealSuccessorDirected G)
-    (f : forall j : CardinalIndex A, j.1.ord.ToType -> forall i : CardinalIndex A, i.1.ord.ToType)
-    (hCharacteristics : forall seed : forall i : CardinalIndex A, i.1.ord.ToType,
-      exists chi : forall i : CardinalIndex A, i.1.ord.ToType,
-        (forall i, seed i <= chi i) /\
-        (forall lambda : CardinalIndex A,
-          Nonempty (Set.Iio (chi lambda)) /\
-          let J0 := (G.belowIdeal lambda.1).restrictAlong (fun i : CardinalIndex A => i.1)
-          let J := J0.localize (fun i => G.generator lambda.1 i.1)
-          let d : Set.Iio (chi lambda) -> ProductElement (cardinalProductFrame A J) :=
-            fun alpha i => f lambda alpha.1 i
-          (cardinalProductFrame A J).IsPointwiseStrictExactUpperBound d
-              (f lambda (chi lambda)) /\
-            (cardinalProductFrame A J).IsPointwiseStrictExactUpperBound d chi)) :
-    exists H : GeneratorSystem cardinalProductRepresentation A, TransitiveGeneratorSystem H := by
-  apply exists_transitive_generators_of_cofinally_characteristic_agreement
-    hRegulars hSmall hInfinite hPower G hFixed hDirected f
-  intro seed
-  obtain ⟨chi, hSeed, hExact⟩ := hCharacteristics seed
-  refine ⟨chi, hSeed, ?_⟩
-  intro lambda
-  obtain ⟨hNonempty, hF, hChi⟩ := hExact lambda
-  let J0 := (G.belowIdeal lambda.1).restrictAlong (fun i : CardinalIndex A => i.1)
-  let J := J0.localize (fun i => G.generator lambda.1 i.1)
-  let d : Set.Iio (chi lambda) -> ProductElement (cardinalProductFrame A J) :=
-    fun alpha i => f lambda alpha.1 i
-  have hEq : J.Eventually (fun i => f lambda (chi lambda) i = chi i) :=
-    cardinalProduct_exactUpperBounds_eventually_eq d _ _ hF hChi
-  have hSmall : J0.Small (fun i =>
-      Not (f lambda (chi lambda) i = chi i) /\
-        G.generator lambda.1 i.1) := by
-    exact (Ideal.localize_eventually_iff J0
-      (fun i => G.generator lambda.1 i.1)
-      (fun i => f lambda (chi lambda) i = chi i)).mp hEq
-  change J0.Small (fun i => Not (G.generator lambda.1 i.1 ->
-    f lambda (chi lambda) i = chi i))
-  apply J0.subset_small hSmall
-  intro i hi
-  constructor
-  · intro hValue
-    exact hi (fun _ => hValue)
-  · exact Classical.byContradiction (fun hNotGenerator =>
-      hi (fun hGenerator => False.elim (hNotGenerator hGenerator)))
-
-#print axioms exists_transitive_generators_of_characteristic_exactUpperBounds
-
 /-- A closed exact upper bound lying below an actual pointwise-strict upper
 bound cannot reach the coordinate top on a positive set. It therefore has a
 genuine product representative, which is a pointwise-strict exact upper bound. -/
@@ -750,26 +694,6 @@ theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
     (fun beta => s.increasing beta.2)
 
 #print axioms PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
-
-theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_two_power_lt
-    {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta kappa : Cardinal.{u}}
-    (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))
-    (hIndexInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A))
-    (hKappaRegular : Cardinal.IsRegular kappa)
-    (hKappaUncountable : Cardinal.aleph0 < kappa)
-    (hPower : (2 : Cardinal.{u + 1}) ^ Cardinal.mk (CardinalIndex A) <
-      Cardinal.lift.{u + 1} kappa)
-    (alpha : theta.ord.ToType) [Nonempty (Set.Iio alpha)]
-    (e : kappa.ord.ToType ≃o Set.Iio alpha) :
-    exists q : ProductElement (cardinalProductFrame A J),
-      (cardinalProductFrame A J).IsPointwiseStrictExactUpperBound
-        (fun beta : Set.Iio alpha => s.seq beta.1) q := by
-  apply s.initialSegment_exactUpperBound_of_closedPrinciple alpha e
-  simpa only [Ideal.pushforward_id] using
-    (pushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
-      (J := J) id hIndexInfinite hKappaRegular hKappaUncountable hPower)
-
-#print axioms PointwiseStrictScale.initialSegment_exactUpperBound_of_two_power_lt
 
 /-- Closed exactness on a strictly increasing cofinal subsequence is already
 closed exactness for the entire scale initial segment. -/

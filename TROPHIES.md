@@ -51,7 +51,7 @@ import PcfProject
 ## 信任与核验
 
 - 最近核验日期：2026-09-06。
-- 干净的默认 `lake build`：1025/1025 个任务通过。
+- 默认 `lake build`：1017/1017 个任务通过。
 - 核心定理公理：`propext`、`Classical.choice`、`Quot.sound`。
 - 禁止项扫描：无 `sorry`、`admit`、`native_decide`、`sorryAx`、顶层
   `axiom`。

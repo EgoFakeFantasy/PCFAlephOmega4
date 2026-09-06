@@ -889,20 +889,6 @@ noncomputable def canonicalSemanticGeneratorPointwiseScale
 
 #print axioms canonicalSemanticGeneratorPointwiseScale
 
-noncomputable def canonicalSemanticGeneratorScaleFunction
-    {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A))
-    (hPower : forall a, A a ->
-      (2 : Cardinal.{u + 1}) ^ Cardinal.mk (CardinalIndex A) < Cardinal.lift.{u + 1} a)
-    (hFixed : cardinalProductRepresentation.pcf A = A)
-    (lambda : CardinalIndex A) : lambda.1.ord.ToType ->
-      forall i : CardinalIndex A, i.1.ord.ToType :=
-  (canonicalSemanticGeneratorPointwiseScale hRegulars hSmall hInfinite hPower
-    (show cardinalProductRepresentation.pcf A lambda.1 from hFixed.symm ▸ lambda.2)).seq
-
-#print axioms canonicalSemanticGeneratorScaleFunction
-
 /-- Restrict directedness along a subset of the coordinates while retaining
 the same ambient ideal. No size or infinitude assumption on the subset is needed. -/
 theorem cardinalProduct_directed_restrict_subset
@@ -1033,34 +1019,5 @@ theorem pcf_two_power_below_coordinates_of_doublePower
     ((hDouble ⟨a, ha⟩).trans_le (Cardinal.lift_le.mpr haTheta))
 
 #print axioms pcf_two_power_below_coordinates_of_doublePower
-
-/-- Construct the spectrum's semantic generators and their all-subfamily
-directedness from the source double gap. Transitivity remains separate. -/
-theorem exists_pcf_generators_successorDirected_of_doublePower
-    {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A))
-    (hDouble : CardinalProductDoublePowerBelowCoordinates A) :
-    exists G : GeneratorSystem cardinalProductRepresentation (cardinalProductRepresentation.pcf A),
-      GeneratorAtMostIdealSuccessorDirected G := by
-  letI : Small.{u} (CardinalIndex A) := hSmall
-  have hPower : forall a, A a ->
-      (2 : Cardinal.{u + 1}) ^ Cardinal.mk (CardinalIndex A) < Cardinal.lift.{u + 1} a :=
-    fun a ha => (Cardinal.cantor _).trans (hDouble ⟨a, ha⟩)
-  let G := canonicalGeneratorSystemOfTwoPowerBelowCoordinates hRegulars hSmall hInfinite hPower
-  have hDir := generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
-    hRegulars hSmall hInfinite hPower G
-  have hPcfSmall : Small.{u} (CardinalIndex (cardinalProductRepresentation.pcf A)) :=
-    small_of_injective (generator_predicate_injective_of_successorDirected hRegulars G hDir)
-  have hPcfInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex (cardinalProductRepresentation.pcf A)) :=
-    hInfinite.trans (Cardinal.mk_subtype_mono
-      (fun _ h => cardinalProductRepresentation_mem_pcf_of_mem hRegulars h))
-  have hPcfPower := pcf_two_power_below_coordinates_of_doublePower hRegulars hSmall hInfinite hDouble
-  let H := canonicalGeneratorSystemOfTwoPowerBelowCoordinates
-    (cardinalProductRepresentation.pcf_is_setOfRegulars A) hPcfSmall hPcfInfinite hPcfPower
-  exact ⟨H, generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
-    (cardinalProductRepresentation.pcf_is_setOfRegulars A) hPcfSmall hPcfInfinite hPcfPower H⟩
-
-#print axioms exists_pcf_generators_successorDirected_of_doublePower
 
 end PcfProject

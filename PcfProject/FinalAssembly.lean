@@ -1,5 +1,4 @@
 import PcfProject.CofinalCore
-import PcfProject.PseudoPower
 import PcfProject.FinitePcf
 
 /-!
@@ -148,61 +147,6 @@ theorem alephSuccSet_tail_maxPcf_witness_mem_pcf_all_tails
       n hMax
   exact hPcf
 
-theorem alephSuccSet_tail_maxPcf_witness_has_full_prefix_tail_behavior
-    (n : Nat)
-    {theta : Cardinal.{u}}
-    (hMax : IsMaxPcf cardinalProductRepresentation
-      (natTailIUnionCardSet
-        (fun m : Nat =>
-          singletonCardSet (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n) theta) :
-    exists J : Ideal
-        (CardinalIndex
-          (iUnionCardSet
-            (fun m : Nat =>
-              singletonCardSet
-                (Cardinal.aleph ((m : Ordinal.{u}) + 1))))),
-      J.IsUltrafilterDual /\
-        HasTrueCofinality
-          (cardinalProductFrame
-            (iUnionCardSet
-              (fun m : Nat =>
-                singletonCardSet
-                  (Cardinal.aleph ((m : Ordinal.{u}) + 1)))) J)
-          (cardinalScaleLength theta) /\
-        (forall i,
-          Not (canonicalIUnionIndexIdeal
-            (fun m : Nat =>
-              singletonCardSet
-                (Cardinal.aleph ((m : Ordinal.{u}) + 1))) J =
-            Ideal.excludePoint i)) /\
-        (forall m : Nat,
-          J.Small
-            (fun k =>
-              natPrefixIUnionCardSet
-                (fun i : Nat =>
-                  singletonCardSet
-                    (Cardinal.aleph ((i : Ordinal.{u}) + 1))) m k.1)) /\
-        (forall m : Nat,
-          J.Eventually
-            (fun k =>
-              natTailIUnionCardSet
-                (fun i : Nat =>
-                  singletonCardSet
-                    (Cardinal.aleph ((i : Ordinal.{u}) + 1))) m k.1)) /\
-        (forall m : Nat,
-          cardinalProductRepresentation.pcf
-            (natTailIUnionCardSet
-              (fun k : Nat =>
-                singletonCardSet
-                  (Cardinal.aleph ((k : Ordinal.{u}) + 1))) m) theta) := by
-  obtain ⟨J, hUltra, hTcf, hNonprincipal, hTails, hPcf⟩ :=
-    alephSuccSet_tail_maxPcf_witness_has_full_witness_and_all_tail_eventuality
-      n hMax
-  refine ⟨J, hUltra, hTcf, hNonprincipal, ?_, hTails, hPcf⟩
-  intro m
-  exact (alephSuccSet_natTail_eventually_iff_natPrefix_small
-    (J := J) m).mp (hTails m)
-
 theorem alephSuccSet_tail_maxPcf_witness_isMaxPcf_all_deeper_tails
     (n : Nat)
     {theta : Cardinal.{u}}
@@ -238,24 +182,6 @@ theorem alephSuccSet_tail_maxPcf_witness_isMaxPcf_all_deeper_tails
         beta hBeta
     exact hMax.2 beta (by simpa [A] using hBetaAtN)
   exact ⟨by simpa [A] using hMem, hBounds⟩
-
-theorem alephSuccSet_tail_maxPcf_values_eq
-    (n m : Nat)
-    {theta beta : Cardinal.{u}}
-    (hThetaMax : IsMaxPcf cardinalProductRepresentation
-      (natTailIUnionCardSet
-        (fun k : Nat =>
-          singletonCardSet (Cardinal.aleph ((k : Ordinal.{u}) + 1))) n) theta)
-    (hBetaMax : IsMaxPcf cardinalProductRepresentation
-      (natTailIUnionCardSet
-        (fun k : Nat =>
-          singletonCardSet (Cardinal.aleph ((k : Ordinal.{u}) + 1))) m) beta) :
-    theta = beta := by
-  apply le_antisymm
-  · exact hBetaMax.2 theta
-      (alephSuccSet_tail_maxPcf_witness_mem_pcf_all_tails n hThetaMax m)
-  · exact hThetaMax.2 beta
-      (alephSuccSet_tail_maxPcf_witness_mem_pcf_all_tails m hBetaMax n)
 
 theorem alephSuccSet_tail_maxPcf_theta_ge_targetAlephOmega
     (n : Nat)
@@ -295,23 +221,6 @@ theorem alephSuccSet_tail_maxPcf_theta_gt_targetAlephOmega
     rw [hEq]
     exact cardinalProductRepresentation.mem_pcf_regular hMax.left
   exact lt_of_le_of_ne hLower hNe
-
-theorem alephSuccSet_tail_maxPcf_witness_not_mem
-    (n : Nat)
-    {theta : Cardinal.{u}}
-    (hMax : IsMaxPcf cardinalProductRepresentation
-      (natTailIUnionCardSet
-        (fun m : Nat =>
-          singletonCardSet (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n) theta) :
-    Not (natTailIUnionCardSet
-      (fun m : Nat =>
-        singletonCardSet (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n theta) := by
-  intro hThetaMem
-  have hThetaBelow : theta < targetAlephOmega :=
-    (alephSuccSet_tail_alephOmegaCore n).belowAlephOmega theta hThetaMem
-  exact (not_lt_of_ge
-    (le_of_lt (alephSuccSet_tail_maxPcf_theta_gt_targetAlephOmega n hMax)))
-    hThetaBelow
 
 theorem alephSuccSet_eq_first_union_zero_tail :
     alephSuccSet.{u} =
@@ -594,21 +503,6 @@ theorem alephSuccSet_cardinalIndex_small :
   exact @small_lift.{u + 1, u, 0} _ _
 
 #print axioms alephSuccSet_cardinalIndex_small
-
-/-! Consequently the actual eventual-equality quotient of any
-successor-aleph product has cofinality equal to the lift of a cardinal in the
-canonical cardinal universe. This represents the order cofinality but does
-not yet prove that the represented cardinal is regular. -/
-theorem alephSuccSet_cardinalProductQuotient_exists_cof_eq_lift
-    (J : Ideal (CardinalIndex alephSuccSet.{u})) :
-    exists theta : Cardinal.{u},
-      Order.cof (CardinalProductQuotient alephSuccSet J) =
-        Cardinal.lift.{u + 1} theta := by
-  letI : Small.{u} (CardinalIndex alephSuccSet.{u}) :=
-    alephSuccSet_cardinalIndex_small
-  exact cardinalProductQuotient_exists_cof_eq_lift_of_small_cardinalIndex
-
-#print axioms alephSuccSet_cardinalProductQuotient_exists_cof_eq_lift
 
 theorem alephSuccSet_cardinalIndex_infinite :
     Infinite (CardinalIndex alephSuccSet.{u}) := by

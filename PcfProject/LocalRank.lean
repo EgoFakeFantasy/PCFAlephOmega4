@@ -17,16 +17,6 @@ universe u
 open Cardinal Set
 open scoped Cardinal
 
-theorem successorAlephHasMaxPcfBelow_mono
-    {kappa theta : Ordinal.{u}}
-    (hKappaTheta : kappa <= theta)
-    (hMax : SuccessorAlephHasMaxPcfBelow theta) :
-    SuccessorAlephHasMaxPcfBelow kappa := by
-  intro X hX hXNonempty
-  exact hMax X (hX.trans fun _ hx => hx.trans_le hKappaTheta) hXNonempty
-
-#print axioms successorAlephHasMaxPcfBelow_mono
-
 /-! Every displayed PCF maximum has an aleph index because it is regular,
 hence at least `aleph0`.  No successor-index claim is used here. -/
 noncomputable def maxPcfWitnessAlephIndex

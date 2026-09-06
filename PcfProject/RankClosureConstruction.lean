@@ -1,6 +1,5 @@
 import PcfProject.LocalRank
 import PcfProject.StationaryIdeal
-import PcfProject.PseudoPower
 
 open Cardinal Set
 open scoped Cardinal
@@ -1151,12 +1150,6 @@ noncomputable def successorAlephCardinalIndexRank
     (k : CardinalIndex (successorAlephCardSet (Set.Iio eta))) :
     Ordinal.{u} :=
   Classical.choose k.2
-
-theorem successorAlephCardinalIndexRank_lt
-    (eta : Ordinal.{u})
-    (k : CardinalIndex (successorAlephCardSet (Set.Iio eta))) :
-    successorAlephCardinalIndexRank eta k < eta :=
-  (Classical.choose_spec k.2).1
 
 theorem successorAlephCardinalIndexRank_value
     (eta : Ordinal.{u})
@@ -2338,68 +2331,5 @@ theorem coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
 
 /-! 核心端点直接使用上面的局部秩界；这里省去不参与主证明的替代输入适配层。 -/
 
-/-! Source-accurate endpoint with PCF idempotence removed as an independent
-premise.  Under the strong-limit assumption, the double-power argument
-selects a sufficiently high finite tail; transitive, successor-directed
-generators on such tails yield full-core localization by finite-prefix
-transport.  The full-core generator is retained only for maximum existence,
-Corollary 24.30, and the core initial segment. -/
-theorem targetConditionalStatement_of_tailAndCoreSuccessorDirectedInputs
-    (G : GeneratorSystem cardinalProductRepresentation
-      (cardinalProductRepresentation.pcf alephSuccSet.{u}))
-    (hDirected : GeneratorAtMostIdealSuccessorDirected G)
-    (hCore : SuccessorAlephInitialSegmentInCorePcf
-      (alephSuccSetAtMostIdealEscapeMaxAlephIndex G
-        (generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-          G hDirected)))
-    (hTailGenerators : forall n : Nat,
-      CardinalProductDoublePowerBelowCoordinates
-          (natTailIUnionCardSet
-            (fun m : Nat =>
-              singletonCardSet
-                (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n) ->
-        exists Gt : GeneratorSystem cardinalProductRepresentation
-            (cardinalProductRepresentation.pcf
-              (natTailIUnionCardSet
-                (fun m : Nat =>
-                  singletonCardSet
-                    (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n)),
-          TransitiveGeneratorSystem Gt /\
-            GeneratorAtMostIdealSuccessorDirected Gt)
-    (hContinuum : Cardinal.IsStrongLimit targetAlephOmega.{u} ->
-      ContinuumAtAlephOmega.{u} <=
-        (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G
-          (generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-            G hDirected)).theta) :
-    targetConditionalStatement.{u} := by
-  intro hStrongLimit
-  let hEscape : GeneratorAtMostIdealEscapesCanonicalUltrafilters G :=
-    generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-      G hDirected
-  let hCapture : GeneratorCapturesCanonicalUltrafilters G :=
-    generatorCapturesCanonicalUltrafilters_of_atMostIdealEscape
-      (cardinalProductRepresentation.pcf_is_setOfRegulars alephSuccSet)
-      G hEscape
-  let hLocal : SuccessorAlephHasMaxPcfBelow
-      (alephSuccSetAtMostIdealEscapeMaxAlephIndex G hEscape) :=
-    successorAlephHasMaxPcfBelow_of_atMostIdealEscape G hEscape hCore
-  have h2430 : SuccessorAlephLocalCorollary2430 hLocal :=
-    successorAlephLocalCorollary2430_of_generators
-      hLocal G hCapture hCore
-  exact continuum_bound_of_maxPcfWitness_lt
-    (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape)
-    (hContinuum hStrongLimit)
-    (coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
-      hLocal
-      (successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
-        hLocal h2430 hStrongLimit)
-      (alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit_tailDirectedGenerators
-        hStrongLimit hTailGenerators)
-      hCore
-      (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape)
-      (alephSuccSetAtMostIdealEscapeMax_eq_alephIndex G hEscape))
-
-#print axioms
-  targetConditionalStatement_of_tailAndCoreSuccessorDirectedInputs
 
 end PcfProject
