@@ -25,26 +25,31 @@ namespace PcfProject
 
 universe u v w x
 
+/-- Every member of `A` lies strictly below `bound`. -/
 def BoundedBy
     (A : CardSet.{u})
     (bound : Cardinal.{u}) : Prop :=
   forall theta, A theta -> theta < bound
 
+/-- Every represented PCF value of `A` lies strictly below `bound`. -/
 def PcfBoundedBy
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u})
     (bound : Cardinal.{u}) : Prop :=
   forall theta, R.pcf A theta -> theta < bound
 
+/-- The cardinal set is pointwise bounded below `aleph_omega`. -/
 def BelowAlephOmega
     (A : CardSet.{u}) : Prop :=
   BoundedBy A targetAlephOmega
 
+/-- The represented PCF spectrum is pointwise bounded below `aleph_(omega_4)`. -/
 def PcfBelowAlephOmega4
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u}) : Prop :=
   PcfBoundedBy R A targetAlephOmega4
 
+/-- The subtype of cardinals selected by `A` has cardinality at most `aleph_0`. -/
 def CountableCardSet
     (A : CardSet.{u}) : Prop :=
   Cardinal.mk { theta : Cardinal.{u} // A theta } <= Cardinal.aleph0

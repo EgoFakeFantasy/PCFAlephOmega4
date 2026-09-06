@@ -23,23 +23,27 @@ open scoped Cardinal
 Mathlib as the initial ordinal of the fourth infinite cardinal.
 -/
 
+/-- The ordinal index `omega` used in `aleph_omega`. -/
 abbrev targetIndexOmega : Ordinal.{u} :=
   Ordinal.omega0
 
+/-- The initial ordinal `omega_4`, used as the index of the target bound. -/
 abbrev targetIndexOmega4 : Ordinal.{u} :=
   (Cardinal.aleph (4 : Ordinal)).ord
 
+/-- The singular cardinal `aleph_omega` whose power set is bounded below. -/
 abbrev targetAlephOmega : Cardinal.{u} :=
   Cardinal.aleph targetIndexOmega
 
+/-- The target upper bound `aleph_(omega_4)`. -/
 abbrev targetAlephOmega4 : Cardinal.{u} :=
   Cardinal.aleph targetIndexOmega4
 
--- The target proposition, proved in `PcfTransitiveApplications`.
+/-- The final inequality `2^(aleph_omega) < aleph_(omega_4)`. -/
 def targetUpperBoundStatement : Prop :=
   (2 : Cardinal.{u}) ^ targetAlephOmega < targetAlephOmega4
 
--- The standard strong-limit form of Shelah's bound, proved downstream.
+/-- The final inequality under the explicit strong-limit hypothesis used by the proof. -/
 def targetConditionalStatement : Prop :=
   Cardinal.IsStrongLimit targetAlephOmega.{u} ->
     targetUpperBoundStatement.{u}

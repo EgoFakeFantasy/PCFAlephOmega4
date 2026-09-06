@@ -17,9 +17,12 @@ namespace PcfProject
 
 universe u v w x
 
+/-- Intersection of cardinal sets, expressed by conjunction of membership predicates. -/
 def interCardSet (A B : CardSet.{u}) : CardSet.{u} :=
   fun theta => A theta /\ B theta
 
+/-- A PCF generator system whose ideals have the canonical below/at-most
+semantics and whose generator converts one ideal into the other. -/
 structure GeneratorSystem
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u}) where
@@ -127,17 +130,20 @@ theorem generator_pcf_le
 
 end GeneratorSystem
 
+/-- `theta` belongs to `pcf(A)` and bounds every other member of that spectrum. -/
 def IsMaxPcf
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u})
     (theta : Cardinal.{u}) : Prop :=
   R.pcf A theta /\ forall beta, R.pcf A beta -> beta <= theta
 
+/-- The represented PCF spectrum of `A` has a maximum. -/
 def HasMaxPcf
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u}) : Prop :=
   exists theta, IsMaxPcf R A theta
 
+/-- Bundled data of a maximum PCF cardinal together with its maximality proof. -/
 structure MaxPcfWitness
     (R : PcfRepresentation.{u, v, w, x})
     (A : CardSet.{u}) where

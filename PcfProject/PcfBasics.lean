@@ -19,12 +19,15 @@ namespace PcfProject
 
 universe u v w x
 
+/-- A cardinal set, represented extensionally by its membership predicate. -/
 abbrev CardSet : Type (u + 1) :=
   Cardinal.{u} -> Prop
 
+/-- Pointwise inclusion of cardinal sets: every member of `B` belongs to `A`. -/
 def SubsetOf (B A : CardSet.{u}) : Prop :=
   forall theta, B theta -> A theta
 
+/-- Every cardinal selected by `A` is regular. -/
 def SetOfRegulars (A : CardSet.{u}) : Prop :=
   forall theta, A theta -> Cardinal.IsRegular theta
 
@@ -36,6 +39,8 @@ theorem setOfRegulars_of_subset
   intro theta hTheta
   exact hRegulars theta (hBA theta hTheta)
 
+/-- Abstract semantics connecting cardinal sets, reduced products, scale lengths,
+and the regular cardinals represented by those scales. -/
 structure PcfRepresentation where
   IsProductOver :
     CardSet.{u} -> ReducedProductFrame.{v, w} -> Prop
@@ -54,6 +59,7 @@ namespace PcfRepresentation
 
 variable (R : PcfRepresentation.{u, v, w, x})
 
+/-- The PCF spectrum witnessed by a represented reduced product with true cofinality. -/
 def pcf (A : CardSet.{u}) : CardSet.{u} :=
   fun theta =>
     exists F : ReducedProductFrame.{v, w},
