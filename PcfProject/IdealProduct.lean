@@ -24,6 +24,7 @@ namespace PcfProject
 
 universe u v w
 
+/-- A finitely additive ideal of predicates on `I`; improper ideals are allowed. -/
 structure Ideal (I : Type u) where
   Small : (I -> Prop) -> Prop
   empty_small : Small (fun _ => False)
@@ -78,9 +79,11 @@ def excludePoint (i0 : I) : Ideal I where
     | inl hAi => exact hA hAi
     | inr hBi => exact hB hBi
 
+/-- Inclusion of ideals: every `J1`-small predicate is `J2`-small. -/
 def Le (J1 J2 : Ideal I) : Prop :=
   forall S, J1.Small S -> J2.Small S
 
+/-- Extensional equivalence of ideals, expressed by mutual inclusion. -/
 def Equivalent (J1 J2 : Ideal I) : Prop :=
   Le J1 J2 /\ Le J2 J1
 
@@ -98,6 +101,7 @@ def Equivalent (J1 J2 : Ideal I) : Prop :=
           subst Small2
           rfl
 
+/-- An ideal is proper when the constantly true predicate is not small. -/
 def IsProper (J : Ideal I) : Prop :=
   Not (J.Small (fun _ => True))
 
@@ -235,6 +239,7 @@ theorem pushforward_mono
 
 #print axioms pushforward_mono
 
+/-- `P` holds eventually modulo `J` when its complement is `J`-small. -/
 def Eventually (P : I -> Prop) : Prop :=
   J.Small (fun i => Not (P i))
 
@@ -933,6 +938,7 @@ theorem IsUltrafilterDual.exists_eventually_of_finset_cover
 
 end Ideal
 
+/-- The coordinate preorders and ideal needed to form an abstract reduced product. -/
 structure ReducedProductFrame where
   Index : Type u
   Coord : Index -> Type v
@@ -942,6 +948,7 @@ structure ReducedProductFrame where
     forall i {a b c : Coord i}, le i a b -> le i b c -> le i a c
   J : Ideal Index
 
+/-- A choice of one element from each coordinate of a reduced-product frame. -/
 abbrev ProductElement (F : ReducedProductFrame.{u, v}) : Type (max u v) :=
   (i : F.Index) -> F.Coord i
 
@@ -949,6 +956,7 @@ namespace ReducedProductFrame
 
 variable (F : ReducedProductFrame.{u, v})
 
+/-- Pointwise comparison outside a set that is small for the frame's ideal. -/
 def eventuallyLe (x y : ProductElement F) : Prop :=
   F.J.Eventually (fun i => F.le i (x i) (y i))
 

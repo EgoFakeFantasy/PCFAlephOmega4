@@ -20,10 +20,11 @@ namespace ReducedProductFrame
 
 variable (F : ReducedProductFrame.{u, v})
 
+/-- The asymmetric strict part of the reduced product's eventual preorder. -/
 def eventuallyLt (x y : ProductElement F) : Prop :=
   F.eventuallyLe x y /\ Not (F.eventuallyLe y x)
 
-/-! The source-level strict order used in PCF scale constructions: on an
+/-- The source-level strict order used in PCF scale constructions: on an
 eventual set of coordinates, `x` is below `y` and `y` is not below `x`.
 Unlike preorder asymmetry, this relation is preserved when the ideal is
 enlarged. -/
@@ -95,7 +96,8 @@ def IsCofinalFamily
     (d : ι -> ProductElement F) : Prop :=
   forall g : ProductElement F, exists i, F.eventuallyLe g (d i)
 
-/-! Source-level upper-bound notions for the exact-upper-bound argument in
+/-- A family is pointwise-strictly below `g` at every index. This is the
+source-level upper-bound notion used in the exact-upper-bound argument of
 Jech 24.10--24.12.  Pointwise eventual strictness is used because it is the
 comparison that survives localization or enlargement of a non-maximal ideal. -/
 def IsPointwiseStrictUpperBound
@@ -104,6 +106,7 @@ def IsPointwiseStrictUpperBound
     (g : ProductElement F) : Prop :=
   forall i, F.eventuallyPointwiseLt (d i) g
 
+/-- Every product element strictly below `g` is eventually dominated by the family. -/
 def IsPointwiseStrictCofinalBelow
     {ι : Type w}
     (d : ι -> ProductElement F)
@@ -112,6 +115,7 @@ def IsPointwiseStrictCofinalBelow
     F.eventuallyPointwiseLt h g ->
       exists i, F.eventuallyLe h (d i)
 
+/-- The family has a strict upper bound which itself lies strictly below `g`. -/
 def IsPointwiseStrictBoundedBelow
     {ι : Type w}
     (d : ι -> ProductElement F)
@@ -120,6 +124,7 @@ def IsPointwiseStrictBoundedBelow
     F.IsPointwiseStrictUpperBound d h /\
       F.eventuallyPointwiseLt h g
 
+/-- `g` is a strict upper bound and the family is cofinal among elements below it. -/
 def IsPointwiseStrictExactUpperBound
     {ι : Type w}
     (d : ι -> ProductElement F)
@@ -394,11 +399,13 @@ theorem exists_finset_pointwise_cover_of_forall_ultrafilterDual_isCofinalFamily
 
 end ReducedProductFrame
 
+/-- A type equipped with a specified well-order, used to index a scale. -/
 structure ScaleLength where
   Level : Type w
   lt : Level -> Level -> Prop
   isWellOrder : IsWellOrder Level lt
 
+/-- An increasing family cofinal in the eventual preorder of a reduced product. -/
 structure Scale
     (F : ReducedProductFrame.{u, v})
     (L : ScaleLength.{w}) where
