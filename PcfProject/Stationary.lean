@@ -1007,7 +1007,8 @@ theorem exists_club_with_initial_segments_mk_lt_cof
   obtain ⟨q, hFundamental, hNormal⟩ :=
     exists_normal_isFundamentalSeq (o := o) (a := o.cof.ord)
       rfl (Cardinal.isSuccLimit_ord
-        (Ordinal.aleph0_le_cof.mpr hLimit))
+        (Ordinal.aleph0_le_cof_iff.mpr
+          (Ordinal.one_lt_cof_iff.mpr hLimit)))
   refine ⟨Set.range q,
     isClub_range_of_isNormal_of_isCofinal
       hNormal hFundamental.isCofinal_range, ?_⟩

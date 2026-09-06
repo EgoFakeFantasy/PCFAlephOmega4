@@ -30,7 +30,7 @@ import PcfProject
 
 | ID | Lean 声明 | 数学内容 | 复用边界 | 源码 |
 | --- | --- | --- | --- | --- |
-| PCF-101 | `exists_pcf_transitive_successorDirected_generators_of_successorDoublePower` | 在 PCF 谱上构造传递且后继有向的生成元系统 | 需要正则性、小指标、指标无限及逐坐标双幂集间隙 | [PcfTransitiveGenerators.lean](PcfProject/PcfTransitiveGenerators.lean#L2015) |
+| PCF-101 | `exists_pcf_transitive_successorDirected_generators_of_successorDoublePower` | 在 PCF 谱上构造传递且后继有向的生成元系统 | 需要正则性、小指标、指标无限及逐坐标双幂集间隙 | [PcfTransitiveGenerators.lean](PcfProject/PcfTransitiveGenerators.lean#L2016) |
 | PCF-102 | `alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit` | 对完整后继 aleph 核心证明 Localization 24.32 所需输出 | 需要 `aleph_omega` 强极限；尾部生成元在证明内构造 | [PcfTransitiveApplications.lean](PcfProject/PcfTransitiveApplications.lean#L713) |
 | PCF-103 | `successorAlephLocalLemma2410ExactUpperBounds` | 对推前非稳理想及其局部化给出 Lemma 24.10 的闭精确上界 | 保留源共尾度与幂集间隙前提 | [RankClosureConstruction.lean](PcfProject/RankClosureConstruction.lean#L1398) |
 | PCF-104 | `exists_omegaOneClubGuessingAtAlephThree` | 在 `omega_3` 以下构造同时猜测俱乐部的 `omega_1` 梯系统 | 结论在项目基础理论中直接证明，不把猜测系统作为假设 | [LocalRank.lean](PcfProject/LocalRank.lean#L1225) |

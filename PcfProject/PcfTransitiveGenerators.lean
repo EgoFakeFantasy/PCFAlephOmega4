@@ -334,7 +334,8 @@ theorem mk_universalGeneratorPathChoices_le_two_power
     Cardinal.mk (UniversalGeneratorPathChoices A) <=
         Cardinal.mk (CardinalIndex A × (CardinalIndex A -> Option (List (CardinalIndex A)))) := hCode
     _ <= Cardinal.mk (CardinalIndex A) * ((2 : Cardinal.{u + 1}) ^ Cardinal.mk (CardinalIndex A)) := by
-      simpa only [Cardinal.mk_prod, Cardinal.lift_id] using mul_le_mul_left' hArrow (Cardinal.mk (CardinalIndex A))
+      simpa only [Cardinal.mk_prod, Cardinal.lift_id] using
+        mul_le_mul_right hArrow (Cardinal.mk (CardinalIndex A))
     _ = _ := by
       rw [Cardinal.mul_eq_max_of_aleph0_le_left hInfinite
         (ne_of_gt ((zero_le : (0 : Cardinal.{u + 1}) <= Cardinal.mk (CardinalIndex A)).trans_lt (Cardinal.cantor _)))]

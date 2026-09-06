@@ -58,12 +58,11 @@ theorem continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
   obtain ⟨s, hsCof, hsCard⟩ := Order.exists_cof_eq α
   have hα : #α = targetAlephOmega := by
     change #(targetAlephOmega.ord.ToType) = targetAlephOmega
-    simp [Cardinal.mk_ord_toType]
+    simp
   have hcof : #s = Cardinal.aleph0 := by
     rw [hsCard]
     change Order.cof α = Cardinal.aleph0
-    simpa [α, targetAlephOmega, targetIndexOmega] using
-      (Ordinal.cof_toType targetAlephOmega.ord).trans Ordinal.cof_omega0
+    simp [α, targetAlephOmega, targetIndexOmega]
   let B : s → Type u := fun i => Set (Set.Iic (i : α))
   have hB : ∀ i : s, #(B i) ≤ targetAlephOmega := by
     intro i
@@ -117,7 +116,7 @@ theorem continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
     exact (Cardinal.prod_le_prod _ _ hB).trans_eq
       (Cardinal.prod_const' s targetAlephOmega)
   have hSet : #(Set α) = (2 : Cardinal.{u}) ^ targetAlephOmega := by
-    simpa [Cardinal.mk_set, hα]
+    simp [Cardinal.mk_set, hα]
   have hLeft : (2 : Cardinal.{u}) ^ targetAlephOmega ≤ #(Set α) := hSet.ge
   calc
     (2 : Cardinal.{u}) ^ targetAlephOmega ≤ #(Set α) := hLeft

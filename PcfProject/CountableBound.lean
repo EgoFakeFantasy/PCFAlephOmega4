@@ -102,9 +102,7 @@ theorem countableCardSet_singleton
     (theta : Cardinal.{u}) :
     CountableCardSet (singletonCardSet theta) := by
   rw [countableCardSet_iff_set_countable]
-  simpa [singletonCardSet] using
-    (Set.countable_singleton theta :
-      ({theta : Cardinal.{u} | theta = theta}).Countable)
+  simp [singletonCardSet]
 
 /-! A countable set of coordinates below `aleph_omega` has a genuine ambient
     product bound.  This is only a cardinality estimate for the concrete
