@@ -1661,29 +1661,6 @@ theorem cardinalProductFrame_exists_cofinalFamily_of_quotient
   rw [he i]
   exact hgi
 
-/-! In the universe of the quotient itself, the least quotient cofinality is
-realized by a raw-product cofinal family of exactly that cardinality. This does
-not furnish a well-ordered or strictly increasing family. -/
-theorem cardinalProductFrame_exists_cofinalFamily_of_mk_eq_quotient_cof
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)} :
-    exists (ι : Type (u + 1))
-      (d : ι -> ProductElement (cardinalProductFrame A J)),
-        (cardinalProductFrame A J).IsCofinalFamily d /\
-          Cardinal.mk ι = Order.cof (CardinalProductQuotient A J) := by
-  obtain ⟨s, hSetCofinal, hCard⟩ :=
-    Order.exists_cof_eq (CardinalProductQuotient A J)
-  let dQuotient : s -> CardinalProductQuotient A J := fun q => q
-  have hQuotientCofinal :
-      cardinalProductQuotientIsCofinalFamily dQuotient := by
-    intro q
-    obtain ⟨r, hr, hqr⟩ := hSetCofinal q
-    exact ⟨⟨r, hr⟩, hqr⟩
-  obtain ⟨d, hRawCofinal⟩ :=
-    cardinalProductFrame_exists_cofinalFamily_of_quotient
-      dQuotient hQuotientCofinal
-  exact ⟨s, d, hRawCofinal, hCard⟩
-
 /-! An already supplied scale becomes a strictly increasing, cofinal chain in
 the antisymmetric quotient order. This transports a scale witness; it does
 not construct one for a nonprincipal product. -/
