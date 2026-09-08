@@ -186,15 +186,6 @@ theorem nonstationaryIdeal_le_restrictAlong_of_isNormal_of_isCofinal
   exact J.restrictAlong_eventually_of_eventually_image
     f hf.strictMono.injective (fun a => a ∈ C) hImage
 
-noncomputable def regularCardinalNonstationaryIdeal
-    (c : Cardinal.{u})
-    (hRegular : c.IsRegular)
-    (hUncountable : Cardinal.aleph0 < c) :
-    Ideal c.ord.ToType :=
-  nonstationaryIdeal c.ord.ToType
-    (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
-      hRegular hUncountable)
-
 theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
     {alpha : Type u}
     [LinearOrder alpha]
