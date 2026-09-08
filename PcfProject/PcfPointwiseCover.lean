@@ -402,30 +402,6 @@ theorem alephSuccSet_mk_allUltrafilterFiniteMaxIndex_le_maxPcf
       hStrongLimit M
   · exact Cardinal.aleph0_le_lift.mpr M.isRegular.aleph0_le
 
-/-! Canonical successor-aleph specialization of Lemma 24.21's pointwise
-cover conclusion. -/
-theorem alephSuccSet_exists_finset_allUltrafilterScaleFamily_pointwise_cover :
-    forall g : ProductElement
-        (cardinalProductFrame alephSuccSet.{u}
-          (Ideal.emptyOnly (CardinalIndex alephSuccSet.{u}))),
-      exists s : Finset
-          (CardinalProductAllUltrafilterScaleIndex
-            alephSuccSet.{u} alephSuccSet_regulars
-            alephSuccSet_cardinalIndex_small
-            (fun _ hTheta => alephSuccSet_aleph0_lt _ hTheta)),
-        forall i, exists k, k ∈ s /\
-          (cardinalProductFrame alephSuccSet.{u}
-            (Ideal.emptyOnly (CardinalIndex alephSuccSet.{u}))).le i
-              (g i)
-              (cardinalProductAllUltrafilterScaleFamily
-                alephSuccSet.{u} alephSuccSet_regulars
-                alephSuccSet_cardinalIndex_small
-                (fun _ hTheta => alephSuccSet_aleph0_lt _ hTheta) k i) :=
-  exists_finset_cardinalProductAllUltrafilterScaleFamily_pointwise_cover
-    alephSuccSet.{u} alephSuccSet_regulars
-    alephSuccSet_cardinalIndex_small
-    (fun _ hTheta => alephSuccSet_aleph0_lt _ hTheta)
-
 theorem alephSuccSet_allUltrafilterFiniteMaxFamily_pointwise_cofinal :
     forall g : ProductElement
         (cardinalProductFrame alephSuccSet.{u}
