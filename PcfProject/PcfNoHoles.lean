@@ -325,32 +325,6 @@ theorem cardinalReindexedProduct_exists_fiber_bound
   choose b hb using hBound
   exact ⟨b, fun i => hb (p i) i rfl⟩
 
-theorem cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
-    {A : CardSet.{u}} {I : Type v} (J : Ideal I)
-    (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
-    (hFibers : forall k : CardinalIndex A,
-      Cardinal.lift.{u} (Cardinal.mk {i : I // p i = k}) <
-        Cardinal.lift.{v} k.1)
-    {theta : Cardinal.{u}} (hTheta : Cardinal.IsRegular theta)
-    (s : PointwiseStrictScale (cardinalReindexedProductFrame J p)
-      (cardinalScaleLength theta)) :
-    (cardinalProductFrame A (J.pushforward p)).PointwiseStrictDirectedBelow theta := by
-  classical
-  intro K hK d
-  choose stage hStage using fun a : K => s.cofinal (fun i => d a (p i))
-  obtain ⟨beta, hBeta⟩ := exists_strict_upper_bound_of_mk_lt_regular hTheta hK stage
-  obtain ⟨b, hb⟩ := cardinalReindexedProduct_exists_fiber_bound J p hRegulars
-    hFibers (s.seq beta)
-  refine ⟨b, ?_⟩
-  intro a
-  have hStrict := (cardinalReindexedProductFrame J p).eventuallyLe_eventuallyPointwiseLt_trans
-    (hStage a) (s.increasing (hBeta a))
-  exact J.eventually_mono hStrict (by
-    intro i hi
-    have hlt : (show (p i).1.ord.ToType from d a (p i)) < b (p i) :=
-      hi.1.trans_lt (hb i)
-    exact ⟨hlt.le, not_le_of_gt hlt⟩)
-
 /-! A cofinal order representation below an exact bound carries a genuine
 scale of the original regular length. Regularity bounds all stage choices
 for each short family; exactness supplies cofinality and strictification
