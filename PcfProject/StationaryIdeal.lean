@@ -207,18 +207,6 @@ theorem regularCardinalNonstationaryIdeal_isProper
       (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
         hRegular hUncountable)
 
-theorem regularCardinalNonstationaryIdeal_eventually_iff_contains_club
-    (c : Cardinal.{u})
-    (hRegular : c.IsRegular)
-    (hUncountable : Cardinal.aleph0 < c)
-    (P : c.ord.ToType -> Prop) :
-    (regularCardinalNonstationaryIdeal c hRegular hUncountable).Eventually P ↔
-      exists C : Set c.ord.ToType,
-        IsClub C /\ forall i, i ∈ C -> P i :=
-  nonstationaryIdeal_eventually_iff_contains_club
-    (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
-      hRegular hUncountable) P
-
 theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
     {alpha : Type u}
     [LinearOrder alpha]
