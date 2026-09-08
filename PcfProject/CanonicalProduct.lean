@@ -161,36 +161,6 @@ theorem cardinalProduct_eventuallyPointwiseLt_iff_ordinalValue
       have hxy := (cardinalProductOrdinalValue_lt_iff x y k).mp hk
       exact ⟨hxy.le, not_le_of_gt hxy⟩)
 
-/-! Ordinal-valued specialization of the coordinate-extraction lemma used
-in Lemma 24.14. -/
-theorem cardinalProduct_exists_ordinalValue_strict_chain_of_not_eventuallyLe
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {s f h next : ProductElement (cardinalProductFrame A J)}
-    (hsf : (cardinalProductFrame A J).eventuallyPointwiseLt s f)
-    (hfh : (cardinalProductFrame A J).eventuallyPointwiseLt f h)
-    (hNotNextLe : Not ((cardinalProductFrame A J).eventuallyLe next h)) :
-    exists k : CardinalIndex A,
-      cardinalProductOrdinalValue s k < cardinalProductOrdinalValue f k /\
-      cardinalProductOrdinalValue f k < cardinalProductOrdinalValue h k /\
-      cardinalProductOrdinalValue h k < cardinalProductOrdinalValue next k := by
-  obtain ⟨k, hsfk, hfhk, hhnk⟩ :=
-    (cardinalProductFrame A J).exists_pointwiseStrict_chain_of_not_eventuallyLe
-      (by
-        intro k x y
-        change (show k.1.ord.ToType from x) <=
-            (show k.1.ord.ToType from y) \/
-          (show k.1.ord.ToType from y) <=
-            (show k.1.ord.ToType from x)
-        exact le_total _ _)
-      hsf hfh hNotNextLe
-  refine ⟨k, (cardinalProductOrdinalValue_lt_iff s f k).mpr ?_,
-    (cardinalProductOrdinalValue_lt_iff f h k).mpr ?_,
-    (cardinalProductOrdinalValue_lt_iff h next k).mpr ?_⟩
-  · exact lt_of_le_of_ne hsfk.1 (fun hEq => hsfk.2 hEq.ge)
-  · exact lt_of_le_of_ne hfhk.1 (fun hEq => hfhk.2 hEq.ge)
-  · exact lt_of_le_of_ne hhnk.1 (fun hEq => hhnk.2 hEq.ge)
-
 /-! A closed ordinal function can occur on the left of the rapidity
 comparison even when it reaches a coordinate top off the eventual set. -/
 def CardinalProductClosedEventuallyLtProduct
