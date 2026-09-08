@@ -196,23 +196,6 @@ theorem IsPointwiseStrictExactUpperBound.localize
         simpa only [h', if_pos hk.2] using hk.1
       exact this)
 
-/-! If `f` is exact and another bound `g` is eventually below `f`, then the
-family is cofinal below `g`.  A test function strictly below `g` is strictly
-below `f` by transitivity, so exactness applies. -/
-theorem IsPointwiseStrictExactUpperBound.cofinalBelow_of_eventuallyLe
-    {ι : Type w}
-    {d : ι -> ProductElement F}
-    {f g : ProductElement F}
-    (hExact : F.IsPointwiseStrictExactUpperBound d f)
-    (hgf : F.eventuallyLe g f) :
-    F.IsPointwiseStrictCofinalBelow d g := by
-  intro h hhg
-  apply IsPointwiseStrictExactUpperBound.cofinalBelow F hExact h
-  exact F.J.eventually_mono (F.J.eventually_and hhg hgf) (by
-    intro k hk
-    refine ⟨F.le_trans k hk.1.1 hk.2, ?_⟩
-    intro hfh
-    exact hk.1.2 (F.le_trans k hk.2 hfh))
 
 /-! A finitely compatible family of coordinatewise comparison sets can be
     defeated in one ultrafilter-dual extension of the frame's ideal.  The

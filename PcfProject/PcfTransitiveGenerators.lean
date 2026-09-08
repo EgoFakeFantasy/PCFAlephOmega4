@@ -611,39 +611,6 @@ theorem exists_pointwiseStrictExactUpperBound_of_closed_of_upperBound
       intro k hk
       simpa only [hk.2] using hk.1)
 
-theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
-    {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta kappa : Cardinal.{u}}
-    (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))
-    (alpha : theta.ord.ToType) [Nonempty (Set.Iio alpha)]
-    (e : kappa.ord.ToType ≃o Set.Iio alpha)
-    (hPrinciple : CardinalProductClosedExactUpperBoundPrinciple A J kappa) :
-    exists q : ProductElement (cardinalProductFrame A J),
-      (cardinalProductFrame A J).IsPointwiseStrictExactUpperBound
-        (fun beta : Set.Iio alpha => s.seq beta.1) q := by
-  let d : kappa.ord.ToType -> ProductElement (cardinalProductFrame A J) :=
-    fun eta => s.seq (e eta).1
-  have hIncreasing : forall {eta zeta}, (cardinalScaleLength kappa).lt eta zeta ->
-      (cardinalProductFrame A J).eventuallyPointwiseLt (d eta) (d zeta) := by
-    intro eta zeta h
-    have h' : (show kappa.ord.ToType from eta) <
-        (show kappa.ord.ToType from zeta) := h
-    have he : e eta < e zeta := e.lt_iff_lt.mpr h'
-    exact s.increasing he
-  obtain ⟨c, hc⟩ := hPrinciple d hIncreasing
-  have hc' : CardinalProductClosedExactUpperBound J
-      (fun beta : Set.Iio alpha => s.seq beta.1) c := by
-    have hFamily : (fun beta : Set.Iio alpha => s.seq (e (e.symm beta)).1) =
-        (fun beta : Set.Iio alpha => s.seq beta.1) := by
-      funext beta
-      rw [e.apply_symm_apply]
-    rw [← hFamily]
-    simpa only [d] using hc.reindex e.toEquiv
-  exact exists_pointwiseStrictExactUpperBound_of_closed_of_upperBound
-    (fun beta : Set.Iio alpha => s.seq beta.1) c hc' (s.seq alpha)
-    (fun beta => s.increasing beta.2)
-
-/-- Closed exactness on a strictly increasing cofinal subsequence is already
-closed exactness for the entire scale initial segment. -/
 theorem PointwiseStrictScale.closedExactUpperBound_of_cofinal_subsequence
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta : Cardinal.{u}}
     (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))

@@ -1145,34 +1145,6 @@ theorem successorAlephCardinalIndexRank_fundamental
   apply (Ordinal.add_right_cancel 1).mp
   simpa using hs.symm
 
-/-! The fundamental-sequence product is directed for every family smaller
-than the singular limit `aleph eta`.  The coordinate cardinals eventually
-dominate the family's cardinality, and regularity then supplies a strict
-coordinatewise diagonal upper bound on that tail. -/
-theorem successorAlephFundamental_pointwiseStrictDirectedBelow_aleph
-    (eta : Ordinal.{u})
-    (hEtaLimit : Order.IsSuccLimit eta)
-    (hEtaCof : Cardinal.aleph0 < eta.cof)
-    {f : Set.Iio eta.cof.ord -> Set.Iio eta}
-    (hFundamental : Ordinal.IsFundamentalSeq f) :
-    ReducedProductFrame.PointwiseStrictDirectedBelow
-      (cardinalProductFrame
-      (successorAlephCardSet (Set.Iio eta))
-      ((nonstationaryIdeal (Set.Iio eta.cof.ord)
-        (cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof)).pushforward
-          (successorAlephFundamentalCardinalIndex eta f)))
-      (Cardinal.aleph eta) := by
-  apply
-    cardinalProductFrame_pointwiseStrictDirectedBelow_of_eventually_coordinate
-      (successorAlephCardSet_regulars (Set.Iio eta))
-  intro ι hSmall
-  obtain ⟨B, hB, hBound⟩ :=
-    successorAlephFundamental_eventually_unbounded
-      eta hEtaLimit hEtaCof hFundamental (Cardinal.mk ι) hSmall
-  exact ((nonstationaryIdeal (Set.Iio eta.cof.ord)
-    (cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof)).pushforward
-      (successorAlephFundamentalCardinalIndex eta f)).eventually_mono
-        hB hBound
 
 /-! The stronger directedness used by Theorem 24.16.  A family of size below
 `aleph (eta+1)` has size at most `aleph eta`, so encode it into the initial
@@ -1262,51 +1234,6 @@ theorem successorAlephFundamental_pointwiseStrictDirectedBelow_alephSucc
     exact hRankBeta.trans_le (Ordinal.omega_strictMono.monotone
       (hBetaFi.trans (hFundamental.strictMono.monotone hjl)))
 
-/-! This is the lower-bound half of Theorem 24.16.  Eventual coordinate
-unboundedness forces any regular scale length above `aleph eta`; the power
-hypothesis makes `aleph eta` singular, so the successor-cardinal property
-upgrades that strict inequality to `aleph (eta+1) <= theta`.  No scale is
-constructed here. -/
-theorem successorAlephFundamental_regularScaleLength_ge_alephSucc
-    (eta : Ordinal.{u})
-    (hEtaLimit : Order.IsSuccLimit eta)
-    (hEtaCof : Cardinal.aleph0 < eta.cof)
-    (hPower : (2 : Cardinal.{u}) ^ eta.cof < Cardinal.aleph eta)
-    {f : Set.Iio eta.cof.ord -> Set.Iio eta}
-    (hFundamental : Ordinal.IsFundamentalSeq f)
-    {theta : Cardinal.{u}}
-    (hThetaRegular : Cardinal.IsRegular theta)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame
-        (successorAlephCardSet (Set.Iio eta))
-        ((nonstationaryIdeal (Set.Iio eta.cof.ord)
-          (cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof)).pushforward
-            (successorAlephFundamentalCardinalIndex eta f)))
-      (cardinalScaleLength theta)) :
-    Cardinal.aleph (eta + 1) <= theta := by
-  let hSourceCofNe : Order.cof (Set.Iio eta.cof.ord) ≠
-      Cardinal.aleph0 :=
-    cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof
-  let NS : Ideal (Set.Iio eta.cof.ord) :=
-    nonstationaryIdeal (Set.Iio eta.cof.ord) hSourceCofNe
-  let coord := successorAlephFundamentalCardinalIndex eta f
-  letI : Nonempty (Set.Iio eta.cof.ord) :=
-    ⟨⟨0, Cardinal.ord_pos.mpr
-      (Cardinal.aleph0_pos.trans hEtaCof)⟩⟩
-  have hProper : (NS.pushforward coord).IsProper :=
-    (nonstationaryIdeal_isProper hSourceCofNe).pushforward coord
-  have hAlephEtaSingular : (Cardinal.aleph eta).IsSingular := by
-    rw [Cardinal.isSingular_aleph_iff]
-    exact ⟨hEtaLimit, (Cardinal.cantor eta.cof).trans hPower⟩
-  have hGt : Cardinal.aleph eta < theta := by
-    apply cardinalProductFrame_cardinalScaleLength_gt_of_eventually_unbounded_of_not_isRegular
-      (successorAlephCardSet_regulars (Set.Iio eta)) hProper hScale
-    · exact successorAlephFundamental_eventually_unbounded
-        eta hEtaLimit hEtaCof hFundamental
-    · exact hAlephEtaSingular.not_isRegular
-    · exact hThetaRegular
-  rw [← Cardinal.succ_aleph]
-  exact Order.succ_le_iff.mpr hGt
 
 /-! The predicates on the literal cofinality index have exactly the powerset
 cardinality appearing in Theorem 24.16.  The universe lift is unavoidable
