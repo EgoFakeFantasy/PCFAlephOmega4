@@ -186,29 +186,6 @@ theorem nonstationaryIdeal_le_restrictAlong_of_isNormal_of_isCofinal
   exact J.restrictAlong_eventually_of_eventually_image
     f hf.strictMono.injective (fun a => a ∈ C) hImage
 
-theorem nonstationaryIdeal_iUnion_small
-    {alpha : Type u}
-    [LinearOrder alpha]
-    [WellFoundedLT alpha]
-    {index : Type v}
-    (hCof : Order.cof alpha ≠ Cardinal.aleph0)
-    (hIndex :
-      Cardinal.lift.{u, v} (Cardinal.mk index) <
-        Cardinal.lift.{v, u} (Order.cof alpha))
-    (S : index -> alpha -> Prop)
-    (hSmall : forall i, (nonstationaryIdeal alpha hCof).Small (S i)) :
-    (nonstationaryIdeal alpha hCof).Small
-      (fun a => exists i, S i a) := by
-  change Nonstationary {a | exists i, S i a}
-  have hUnion : Nonstationary (Set.iUnion fun i => {a | S i a}) :=
-    nonstationary_iUnion_of_small hCof hIndex hSmall
-  have hEq : {a | exists i, S i a} =
-      Set.iUnion fun i => {a | S i a} := by
-    ext a
-    simp only [Set.mem_setOf_eq, Set.mem_iUnion]
-  rw [hEq]
-  exact hUnion
-
 noncomputable def regularCardinalNonstationaryIdeal
     (c : Cardinal.{u})
     (hRegular : c.IsRegular)
