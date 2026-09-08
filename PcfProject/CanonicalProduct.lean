@@ -4971,27 +4971,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotientScale
     (isCardinalProductOver_cardinalProductFrame J hUltra)
     ⟨rfl, hRegular⟩
     (cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s)
-
-
-
-/-! Exact lifted quotient cofinality for a regular cardinal gives canonical
-PCF membership by constructing the corresponding quotient scale. It does not
-establish the displayed cofinality equality for any Zorn-produced ideal. -/
-theorem cardinalProductRepresentation_mem_pcf_of_quotient_cof_eq_lift
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (J : Ideal (CardinalIndex A))
-    (hUltra : J.IsUltrafilterDual)
-    (hRegular : Cardinal.IsRegular theta)
-    (hCofEq : Order.cof (CardinalProductQuotient A J) =
-      Cardinal.lift.{u + 1} theta) :
-    cardinalProductRepresentation.pcf A theta := by
-  obtain ⟨s⟩ := cardinalProductQuotientScale_of_cof_eq_lift
-    hRegulars hUltra hCofEq
-  exact cardinalProductRepresentation_mem_pcf_of_quotientScale
-    J hUltra hRegular s
-
 /-- Every regular cardinal belongs to the canonical `pcf` of its singleton
 set. Unlike the general membership theorem, this result constructs the scale. -/
 theorem cardinalProductRepresentation_mem_pcf_singleton
