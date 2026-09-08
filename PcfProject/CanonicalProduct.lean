@@ -5213,35 +5213,6 @@ theorem cardinalProductFrame_cardinalScaleLength_ge_of_eventually_unbounded
     cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
       hRegulars hProper hScale hUnbounded
 
-/-! If eventual coordinate unboundedness is measured below a nonregular
-cardinal, then a canonical scale of regular represented length must be
-strictly longer.  This is the order-theoretic upgrade of the preceding weak
-scale bound; it does not construct a scale. -/
-theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventually_unbounded_of_not_isRegular
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {lambda theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame A J) (cardinalScaleLength theta))
-    (hUnbounded : forall kappa : Cardinal.{u}, kappa < lambda ->
-      exists B : CardinalIndex A -> Prop,
-        J.Eventually B /\
-          forall i : CardinalIndex A, B i -> kappa < i.1)
-    (hLambdaNotRegular : Not (Cardinal.IsRegular lambda))
-    (hThetaRegular : Cardinal.IsRegular theta) :
-    lambda < theta := by
-  have hGe := cardinalProductFrame_cardinalScaleLength_ge_of_eventually_unbounded
-    hRegulars hProper hScale hUnbounded
-  have hNe : Not (lambda = theta) := by
-    intro hEq
-    apply hLambdaNotRegular
-    rw [hEq]
-    exact hThetaRegular
-  exact lt_of_le_of_ne hGe hNe
-
-
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
 `aleph0`-length scale by an equivalence with `Nat`, so the obstruction is a
