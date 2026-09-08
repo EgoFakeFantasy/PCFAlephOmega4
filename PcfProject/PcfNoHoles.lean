@@ -377,21 +377,6 @@ theorem cardinalReindexedProduct_pushforward_scale
   intro i hi
   exact hi.trans (hd a i).le
 
-theorem cardinalReindexedProduct_pushforward_hasTrueCofinality
-    {A : CardSet.{u}} {I : Type v} (J : Ideal I)
-    (hProper : J.IsProper)
-    (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
-    (hFibers : forall k : CardinalIndex A,
-      Cardinal.lift.{u} (Cardinal.mk {i : I // p i = k}) <
-        Cardinal.lift.{v} k.1)
-    {theta : Cardinal.{u}} (hTheta : Cardinal.IsRegular theta)
-    (s : PointwiseStrictScale (cardinalReindexedProductFrame J p)
-      (cardinalScaleLength theta)) :
-    HasTrueCofinality (cardinalProductFrame A (J.pushforward p))
-      (cardinalScaleLength theta) := by
-  obtain ⟨t⟩ := cardinalReindexedProduct_pushforward_scale J p hRegulars hFibers hTheta s
-  exact cardinalScaleLength_hasTrueCofinality hTheta (t.toScale (hProper.pushforward p))
-
 /-! A cofinal order representation below an exact bound carries a genuine
 scale of the original regular length. Regularity bounds all stage choices
 for each short family; exactness supplies cofinality and strictification
