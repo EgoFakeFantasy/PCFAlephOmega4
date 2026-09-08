@@ -5130,29 +5130,6 @@ theorem cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
     · exact hEventual
   exact hNoCofinal s.isCofinalFamily_seq
 
-/-! Eventual coordinate unboundedness already constrains every cofinal
-family, without assuming that the product has a scale. -/
-theorem cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {lambda : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (hUnbounded : forall kappa : Cardinal.{u}, kappa < lambda ->
-      exists B : CardinalIndex A -> Prop,
-        J.Eventually B /\
-          forall i : CardinalIndex A, B i -> kappa < i.1)
-    {ι : Type u}
-    (d : ι -> ProductElement (cardinalProductFrame A J))
-    (hCofinal : (cardinalProductFrame A J).IsCofinalFamily d) :
-    lambda <= Cardinal.mk ι := by
-  by_contra hNot
-  have hSmall : Cardinal.mk ι < lambda := lt_of_not_ge hNot
-  obtain ⟨B, hEventual, hCoordinate⟩ :=
-    hUnbounded (Cardinal.mk ι) hSmall
-  exact (cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
-    hRegulars hCoordinate hProper hEventual d) hCofinal
-
 /-! Specializing the generic eventual-coordinate scale bound to
 `cardinalScaleLength theta` replaces the level cardinality by `theta`. -/
 theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
