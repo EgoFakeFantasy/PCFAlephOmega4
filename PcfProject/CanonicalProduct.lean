@@ -17,7 +17,9 @@ as input. From such a scale and regularity of its cardinal length, however,
 this file proves the genuine true-cofinality minimality statement: every
 cofinal family has cardinality at least that length. For a singleton regular
 cardinal set, it constructs the scale and proves `pcf {theta} = {theta}`.
-The general scale, generator, no-holes, and max-pcf theorems remain open.
+The later modules build general scales and generators from additional PCF
+hypotheses, then prove the no-holes and max-pcf results.  This module stops at
+the concrete reduced-product interface and the singleton computation.
 -/
 
 namespace PcfProject
