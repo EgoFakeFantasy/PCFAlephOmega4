@@ -56,14 +56,6 @@ def mapEquiv
     obtain ⟨x, hx, rfl⟩ := hy
     exact hi hx
 
-theorem index_cardinal_le_of_two_power_le
-    {α : Type u}
-    {mu : Cardinal.{u}}
-    (C : UniformSubsetCover α mu)
-    (hPower : (2 : Cardinal.{u}) ^ mu <= Cardinal.mk α) :
-    Cardinal.mk C.Index <= Cardinal.mk α := by
-  exact C.index_cardinal.trans (max_eq_right hPower).le
-
 end UniformSubsetCover
 
 /-! The bounded-subset dichotomy used at every non-base stage of the
