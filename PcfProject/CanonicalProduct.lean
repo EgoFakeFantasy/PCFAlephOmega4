@@ -5155,40 +5155,6 @@ theorem cardinalProductRepresentation_mem_pcf_iff
     exact ⟨cardinalProductFrame A J, cardinalScaleLength theta,
       ⟨J, hUltra, rfl⟩, ⟨rfl, hRegular⟩, hTcf⟩
 
-/-! A canonical PCF value outside its generating set must be represented by
-a nonprincipal ultrafilter-dual ideal.  A principal representation has true
-cofinality exactly equal to its focused coordinate. -/
-theorem cardinalProductRepresentation_mem_pcf_not_mem_has_nonprincipal_ideal
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta : Cardinal.{u}}
-    (hPcf : cardinalProductRepresentation.pcf A theta)
-    (hNotMem : Not (A theta)) :
-    exists J : Ideal (CardinalIndex A),
-      J.IsUltrafilterDual /\
-        HasTrueCofinality
-          (cardinalProductFrame A J)
-          (cardinalScaleLength theta) /\
-        forall i, Not (J = Ideal.excludePoint i) := by
-  obtain ⟨_hRegular, J, hUltra, hTcf⟩ :=
-    (cardinalProductRepresentation_mem_pcf_iff (A := A) (theta := theta)).mp hPcf
-  refine ⟨J, hUltra, hTcf, ?_⟩
-  intro i hPrincipal
-  apply hNotMem
-  have hFocusedTcf : HasTrueCofinality
-      (cardinalProductFrame A (Ideal.excludePoint i))
-      (cardinalScaleLength theta) := by
-    rw [← hPrincipal]
-    exact hTcf
-  have hThetaEq : theta = i.1 :=
-    (cardinalProductFrame_excludePoint_hasTrueCofinality_iff
-      hRegulars i).mp hFocusedTcf
-  rw [hThetaEq]
-  exact i.2
-
-
-
-
 theorem cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
     {A : CardSet.{u}}
     {theta : Cardinal.{u}} :
