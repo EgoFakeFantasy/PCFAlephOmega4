@@ -200,59 +200,6 @@ def CardinalProductClosedEventuallyLtProduct
     (f : ProductElement (cardinalProductFrame A J)) : Prop :=
   J.Eventually (fun k => (s k).1 < cardinalProductOrdinalValue f k)
 
-/-! Closed-envelope version of the four-term coordinate extraction.  It
-converts the closed function to a product member only on the eventual set
-where it is genuinely below `f`; outside that set `f` itself is used as a
-filler.  The selected strict coordinate is therefore automatically in the
-conversion set. -/
-theorem cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventuallyLe
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {s : CardinalProductClosedElement A}
-    {f h next : ProductElement (cardinalProductFrame A J)}
-    (hsf : CardinalProductClosedEventuallyLtProduct J s f)
-    (hfh : (cardinalProductFrame A J).eventuallyPointwiseLt f h)
-    (hNotNextLe : Not ((cardinalProductFrame A J).eventuallyLe next h)) :
-    exists k : CardinalIndex A,
-      (s k).1 < cardinalProductOrdinalValue f k /\
-      cardinalProductOrdinalValue f k < cardinalProductOrdinalValue h k /\
-      cardinalProductOrdinalValue h k < cardinalProductOrdinalValue next k := by
-  classical
-  let X : CardinalIndex A -> Prop := fun k =>
-    (s k).1 < cardinalProductOrdinalValue f k
-  have hXTop : forall k, X k -> (s k).1 < k.1.ord := by
-    intro k hk
-    exact hk.trans (cardinalProductOrdinalValue_lt f k)
-  let sProduct : ProductElement (cardinalProductFrame A J) :=
-    cardinalProductClosedToProductOn f s X hXTop
-  have hsProductF : (cardinalProductFrame A J).eventuallyPointwiseLt
-      sProduct f := by
-    apply (cardinalProduct_eventuallyPointwiseLt_iff_ordinalValue
-      sProduct f).mpr
-    exact J.eventually_mono hsf (by
-      intro k hk
-      rw [cardinalProductOrdinalValue_closedToProductOn f s X hXTop k hk]
-      exact hk)
-  obtain ⟨k, hsfk, hfhk, hhnk⟩ :=
-    cardinalProduct_exists_ordinalValue_strict_chain_of_not_eventuallyLe
-      hsProductF hfh hNotNextLe
-  have hkX : X k := by
-    by_contra hk
-    have hEq : sProduct k = f k := by
-      simp only [sProduct, cardinalProductClosedToProductOn, dif_neg hk]
-    have hValueEq : cardinalProductOrdinalValue sProduct k =
-        cardinalProductOrdinalValue f k := by
-      unfold cardinalProductOrdinalValue
-      rw [hEq]
-    exact (ne_of_lt hsfk) hValueEq
-  rw [cardinalProductOrdinalValue_closedToProductOn f s X hXTop k hkX]
-    at hsfk
-  exact ⟨k, hsfk, hfhk, hhnk⟩
-
-/-! Coordinate extraction with a prescribed eventual support.  The witness
-can be chosen inside that support because the two strict comparisons and
-the support predicate may be intersected before refuting eventual
-domination by the final function. -/
 theorem cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventuallyLe_of_eventually
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -719,123 +666,6 @@ theorem cardinalProduct_mem_rapidPointwiseSup_support
           (C ∩ Set.Iio alpha) := by
   exact ⟨xi, ⟨hXiC, hXiAlpha⟩, rfl⟩
 
-/-! The full failure-recursion pattern used in Jech Lemma 24.14, up to the
-later rapidity comparison.  A counterexample above every stage supplies an
-intermediate function and a requested later stage.  Regularity of `lambda`
-then supports a `gamma`-long recursion which clears every earlier request,
-and coordinate extraction gives the four strict ordinal inequalities at
-each recursive stage. -/
-theorem exists_cardinalProduct_failureStagePattern
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {gamma lambda : Cardinal.{u}}
-    (hLambda : lambda.IsRegular)
-    (hGammaLambda : gamma < lambda)
-    (f s : Set.Iio lambda.ord ->
-      ProductElement (cardinalProductFrame A J))
-    (hStart : forall alpha,
-      (cardinalProductFrame A J).eventuallyPointwiseLt
-        (s alpha) (f alpha))
-    (hFail : forall alpha : Set.Iio lambda.ord,
-      exists h : ProductElement (cardinalProductFrame A J),
-        (cardinalProductFrame A J).eventuallyPointwiseLt (f alpha) h /\
-          exists next : Set.Iio lambda.ord, alpha < next /\
-            Not ((cardinalProductFrame A J).eventuallyLe (f next) h)) :
-    exists stage next : gamma.ord.ToType -> Set.Iio lambda.ord,
-      exists h : gamma.ord.ToType ->
-          ProductElement (cardinalProductFrame A J),
-        exists coordinate : gamma.ord.ToType -> CardinalIndex A,
-          StrictMono stage /\
-          (forall i, stage i < next i) /\
-          (forall i j, i < j -> next i < stage j) /\
-          forall i,
-            cardinalProductOrdinalValue (s (stage i)) (coordinate i) <
-                cardinalProductOrdinalValue (f (stage i)) (coordinate i) /\
-              cardinalProductOrdinalValue (f (stage i)) (coordinate i) <
-                cardinalProductOrdinalValue (h i) (coordinate i) /\
-              cardinalProductOrdinalValue (h i) (coordinate i) <
-                cardinalProductOrdinalValue (f (next i)) (coordinate i) := by
-  classical
-  choose counter hCounter next hStageNext hNotNext using hFail
-  obtain ⟨stage, hStageStrict, hNextBeforeLater⟩ :=
-    exists_strictMono_advance_sequence hLambda hGammaLambda next hStageNext
-  let h : gamma.ord.ToType -> ProductElement (cardinalProductFrame A J) :=
-    fun i => counter (stage i)
-  have hChain : forall i, exists k : CardinalIndex A,
-      cardinalProductOrdinalValue (s (stage i)) k <
-          cardinalProductOrdinalValue (f (stage i)) k /\
-        cardinalProductOrdinalValue (f (stage i)) k <
-          cardinalProductOrdinalValue (h i) k /\
-        cardinalProductOrdinalValue (h i) k <
-          cardinalProductOrdinalValue (f (next (stage i))) k := by
-    intro i
-    exact cardinalProduct_exists_ordinalValue_strict_chain_of_not_eventuallyLe
-      (hStart (stage i)) (hCounter (stage i)) (hNotNext (stage i))
-  let coordinate : gamma.ord.ToType -> CardinalIndex A :=
-    fun i => Classical.choose (hChain i)
-  refine ⟨stage, fun i => next (stage i), h, coordinate,
-    hStageStrict, fun i => hStageNext (stage i), ?_, ?_⟩
-  · intro i j hij
-    exact hNextBeforeLater i j hij
-  · intro i
-    exact Classical.choose_spec (hChain i)
-
-/-! For regular `gamma`, the same failure pattern has a terminal supremum
-below `lambda` whose cofinality is exactly `gamma`.  This is the ordinal
-`beta` to which the rapid family is applied in the source proof. -/
-theorem exists_cardinalProduct_failureStagePattern_with_terminalCofinality
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {gamma lambda : Cardinal.{u}}
-    (hGamma : gamma.IsRegular)
-    (hLambda : lambda.IsRegular)
-    (hGammaLambda : gamma < lambda)
-    (f s : Set.Iio lambda.ord ->
-      ProductElement (cardinalProductFrame A J))
-    (hStart : forall alpha,
-      (cardinalProductFrame A J).eventuallyPointwiseLt
-        (s alpha) (f alpha))
-    (hFail : forall alpha : Set.Iio lambda.ord,
-      exists h : ProductElement (cardinalProductFrame A J),
-        (cardinalProductFrame A J).eventuallyPointwiseLt (f alpha) h /\
-          exists next : Set.Iio lambda.ord, alpha < next /\
-            Not ((cardinalProductFrame A J).eventuallyLe (f next) h)) :
-    exists stage next : gamma.ord.ToType -> Set.Iio lambda.ord,
-      exists h : gamma.ord.ToType ->
-          ProductElement (cardinalProductFrame A J),
-        exists coordinate : gamma.ord.ToType -> CardinalIndex A,
-          StrictMono stage /\
-          (forall i, stage i < next i) /\
-          (forall i j, i < j -> next i < stage j) /\
-          (forall i,
-            cardinalProductOrdinalValue (s (stage i)) (coordinate i) <
-                cardinalProductOrdinalValue (f (stage i)) (coordinate i) /\
-              cardinalProductOrdinalValue (f (stage i)) (coordinate i) <
-                cardinalProductOrdinalValue (h i) (coordinate i) /\
-              cardinalProductOrdinalValue (h i) (coordinate i) <
-                cardinalProductOrdinalValue (f (next i)) (coordinate i)) /\
-          (iSup fun i => (stage i).1) < lambda.ord /\
-          (iSup fun i => (stage i).1).cof = gamma := by
-  obtain ⟨stage, next, h, coordinate, hStageStrict, hStageNext,
-    hNextBeforeLater, hChain⟩ :=
-    exists_cardinalProduct_failureStagePattern hLambda hGammaLambda
-      f s hStart hFail
-  have hStageValueStrict : StrictMono (fun i => (stage i).1) := by
-    intro i j hij
-    exact hStageStrict hij
-  obtain ⟨hSupLt, hSupCof⟩ :=
-    cardinalScaleLength_strictSequence_iSup_lt_and_cof_eq
-      hGamma hLambda hGammaLambda (fun i => (stage i).1)
-        hStageValueStrict (fun i => (stage i).2)
-  exact ⟨stage, next, h, coordinate, hStageStrict, hStageNext,
-    hNextBeforeLater, hChain, hSupLt, hSupCof⟩
-
-/-! Jech Lemma 24.14 in its source-level form.  A normal failure recursion
-is pulled back along the club witnessing rapidity.  Inside that club we use
-the next club index as the fixed endpoint of each failure, and then restrict
-to strict limit points; hence every such endpoint belongs to the pointwise
-supremum supporting every later retained stage.  The two small-cardinal
-pigeonhole arguments then contradict `|S k| < gamma`. -/
 theorem exists_eventualDominatingStage_of_gammaRapid_of_smallSets_of_support
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -1447,43 +1277,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid_of_
   exact (ReducedProductFrame.eventuallyLt_of_eventually_pointwiseStrict
     hBProper hHNextStrict).2 hNextH
 
-/-! Corollary 24.15 with all coordinates as the support. -/
-theorem CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {gamma lambda : Cardinal.{u}}
-    (hGamma : gamma.IsRegular)
-    (hGammaUncountable : Cardinal.aleph0 < gamma)
-    (hLambda : lambda.IsRegular)
-    (hGammaLambda : gamma < lambda)
-    (hIndexSmall : Cardinal.lift.{u, u + 1}
-        (Cardinal.mk (CardinalIndex A)) < Cardinal.lift.{u + 1} gamma)
-    (f : Set.Iio lambda.ord ->
-      ProductElement (cardinalProductFrame A J))
-    (hIncreasing : forall {alpha beta : Set.Iio lambda.ord},
-      alpha < beta ->
-        (cardinalProductFrame A J).eventuallyPointwiseLt
-          (f alpha) (f beta))
-    (hRapid : CardinalProductGammaRapid J gamma lambda f)
-    (g : CardinalProductClosedElement A)
-    (hExact : CardinalProductClosedExactUpperBound J f g) :
-    J.Eventually (fun k => gamma <= (g k).1.cof) := by
-  let e : {k : CardinalIndex A // True} ≃ CardinalIndex A :=
-    { toFun := fun k => k.1
-      invFun := fun k => ⟨k, True.intro⟩
-      left_inv := fun _ => rfl
-      right_inv := fun _ => rfl }
-  apply hExact.eventually_cof_ge_of_gammaRapid_of_support
-    hGamma hGammaUncountable hLambda hGammaLambda (fun _ => True)
-  · rw [Cardinal.mk_congr e]
-    exact hIndexSmall
-  · exact J.eventually_of_forall (fun _ => True.intro)
-  · exact hIncreasing
-  · exact hRapid
-
-/-! Closed exact-upper-bound decomposition at the coordinatewise top.  It
-is the top-valued form of Jech 24.11: the family is strictly bounded, is
-cofinal, or splits across two positive localizations into those two cases. -/
 theorem cardinalProductClosedExactUpperBound_top_decomposition
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -4904,29 +4697,6 @@ theorem cardinalProductQuotient_cardinal_le_of_regular_quotientScale
       cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
         hRegular hUltra s
 
-/-! If the lower-bound cardinal is singular while the supplied quotient-scale
-length is regular, the preceding weak lower bound is strict. This is a
-comparison of supplied data, not a quotient-scale construction. -/
-theorem cardinalProductQuotient_cardinal_lt_of_regular_quotientScale
-    {A : CardSet.{u}}
-    {kappa theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hCofLower : Cardinal.lift.{u + 1} kappa <=
-      Order.cof (CardinalProductQuotient A J))
-    (hNotRegular : Not (Cardinal.IsRegular kappa))
-    (hRegular : Cardinal.IsRegular theta)
-    (hUltra : J.IsUltrafilterDual)
-    (s : CardinalProductQuotientScale A J (cardinalScaleLength theta)) :
-    kappa < theta := by
-  have hLe := cardinalProductQuotient_cardinal_le_of_regular_quotientScale
-    hCofLower hRegular hUltra s
-  have hNe : Not (kappa = theta) := by
-    intro hEq
-    apply hNotRegular
-    rw [hEq]
-    exact hRegular
-  exact lt_of_le_of_ne hLe hNe
-
 noncomputable def singletonCardinalScaleSeq
     (theta : Cardinal.{u})
     (J : Ideal (CardinalIndex (singletonCardSet theta)))
@@ -5635,53 +5405,6 @@ theorem cardinalProductRepresentation_exists_pcf_mem_gt_of_small_cardinalIndex
     cardinalProductRepresentation_mem_pcf_iff.mpr
       ⟨hRegular, J, hUltra, hTcf⟩,
     hThetaGt⟩
-
-/-! A quotient-cofinality lower bound also gives a non-strict PCF lower
-bound, without requiring the lower-bound cardinal itself to be singular.  The
-strict version above is useful for the `aleph_omega` diagonal argument, but
-the final continuum bridge only asks for `continuumAtAlephOmega <= theta`.
-This theorem obtains the regular quotient scale from the small-index
-construction, computes its exact quotient cofinality, and transports the
-displayed lower bound across that equality.  The quotient lower bound remains
-an explicit input. -/
-theorem cardinalProductRepresentation_exists_pcf_mem_ge_of_small_cardinalIndex_of_cof_lower
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {lambda : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hLambdaAleph0 : Cardinal.aleph0 < lambda)
-    (hCofLower : Cardinal.lift.{u + 1} lambda <=
-      Order.cof (CardinalProductQuotient A J)) :
-    exists theta : Cardinal.{u},
-      cardinalProductRepresentation.pcf A theta /\
-        lambda <= theta := by
-  have hCofAleph0 : Cardinal.aleph0 <
-      Order.cof (CardinalProductQuotient A J) := by
-    calc
-      Cardinal.aleph0 = Cardinal.lift.{u + 1} Cardinal.aleph0 := by
-        rw [Cardinal.lift_aleph0]
-      _ < Cardinal.lift.{u + 1} lambda :=
-        Cardinal.lift_lt.mpr hLambdaAleph0
-      _ <= Order.cof (CardinalProductQuotient A J) := hCofLower
-  obtain ⟨theta, hRegular, hTcf, _hThetaGt⟩ :=
-    cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt_cof
-      hRegulars hUltra hSmall hCofAleph0
-  obtain ⟨s⟩ := hTcf.hasScaleWitness
-  have hCofEq : Order.cof (CardinalProductQuotient A J) =
-      Cardinal.lift.{u + 1} theta :=
-    cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
-      hRegular hUltra (CardinalProductQuotientScale.ofScale s)
-  have hLambdaThetaLift : Cardinal.lift.{u + 1} lambda <=
-      Cardinal.lift.{u + 1} theta := by
-    exact hCofLower.trans_eq hCofEq
-  have hLambdaTheta : lambda <= theta :=
-    Cardinal.lift_le.mp hLambdaThetaLift
-  exact ⟨theta,
-    cardinalProductRepresentation_mem_pcf_iff.mpr
-      ⟨hRegular, J, hUltra, hTcf⟩,
-    hLambdaTheta⟩
 
 theorem cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
     {A : CardSet.{u}}
