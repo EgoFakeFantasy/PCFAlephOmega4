@@ -5194,25 +5194,6 @@ theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
     cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
       hRegulars hProper hScale hEventual hCoordinate
 
-/-! The canonical cardinal-length specialization of eventual scale-length
-unboundedness. -/
-theorem cardinalProductFrame_cardinalScaleLength_ge_of_eventually_unbounded
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {lambda theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame A J) (cardinalScaleLength theta))
-    (hUnbounded : forall kappa : Cardinal.{u}, kappa < lambda ->
-      exists B : CardinalIndex A -> Prop,
-        J.Eventually B /\
-          forall i : CardinalIndex A, B i -> kappa < i.1) :
-    lambda <= theta := by
-  simpa only [mk_cardinalScaleLength_level] using
-    cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
-      hRegulars hProper hScale hUnbounded
-
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
 `aleph0`-length scale by an equivalence with `Nat`, so the obstruction is a
