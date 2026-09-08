@@ -4462,28 +4462,8 @@ theorem cardinalProductQuotientScale_of_cofinalFamily_of_lift_le
     (cardinalProductQuotient_cof_eq_lift_of_cofinalFamily_of_lift_le
       d hCofinal hCofLower)
 
-/-! The preceding low-universe quotient-chain construction immediately gives
-a raw scale witness after choosing representatives. It remains conditional on
-the displayed cofinal family and quotient-cofinality equality. -/
-theorem hasScaleWitness_of_quotientCofinalFamily_of_cof_eq_lift
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    {theta : Cardinal.{u}}
-    (d : (cardinalScaleLength theta).Level -> CardinalProductQuotient A J)
-    (hCofinal : cardinalProductQuotientIsCofinalFamily d)
-    (hCofEq : Order.cof (CardinalProductQuotient A J) =
-      Cardinal.lift.{u + 1} theta) :
-    HasScaleWitness
-      (cardinalProductFrame A J)
-      (cardinalScaleLength theta) := by
-  obtain ⟨s⟩ :=
-    cardinalProductQuotientScale_of_cofinalFamily_of_cof_eq_lift
-      hRegulars hUltra d hCofinal hCofEq
-  exact s.exists_scale
-
-/-! The lower-bound form of the preceding raw-scale witness constructor. -/
+/-! Projecting the lower-bound quotient-scale constructor gives a raw scale
+witness with the same length. -/
 theorem hasScaleWitness_of_quotientCofinalFamily_of_lift_le
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
