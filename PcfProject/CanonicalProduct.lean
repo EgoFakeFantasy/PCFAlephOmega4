@@ -641,31 +641,6 @@ theorem CardinalProductGammaRapid.localize
   exact J.le_localize X _ (hC alpha hAlphaLimit)
 
 
-theorem cardinalProduct_mem_rapidPointwiseSup_support
-    {lambda : Cardinal.{u}}
-    {beta : Set.Iio lambda.ord}
-    {C : Set (Set.Iio beta.1)}
-    {xi alpha : Set.Iio beta.1}
-    (hXiC : xi ∈ C)
-    (hXiAlpha : xi < alpha) :
-    (⟨xi.1, by
-      have hXi : xi.1 < beta.1 := by
-        simpa only [Set.mem_Iio] using xi.2
-      have hBeta : beta.1 < lambda.ord := by
-        simpa only [Set.mem_Iio] using beta.2
-      exact hXi.trans hBeta⟩ :
-        Set.Iio lambda.ord) ∈
-      (fun zeta : Set.Iio beta.1 =>
-        (⟨zeta.1, by
-          have hZeta : zeta.1 < beta.1 := by
-            simpa only [Set.mem_Iio] using zeta.2
-          have hBeta : beta.1 < lambda.ord := by
-            simpa only [Set.mem_Iio] using beta.2
-          exact hZeta.trans hBeta⟩ :
-          Set.Iio lambda.ord)) ''
-          (C ∩ Set.Iio alpha) := by
-  exact ⟨xi, ⟨hXiC, hXiAlpha⟩, rfl⟩
-
 theorem exists_eventualDominatingStage_of_gammaRapid_of_smallSets_of_support
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
