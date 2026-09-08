@@ -5153,31 +5153,8 @@ theorem cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounde
   exact (cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
     hRegulars hCoordinate hProper hEventual d) hCofinal
 
-
-/-! If the coordinates are eventually unbounded below a cardinal `lambda`,
-then a supplied cofinal scale has cardinality at least `lambda`. This fixes one
-concrete product ideal, so it applies directly to the nonprincipal branch of a
-given witness. -/
-theorem cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {lambda : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {L : ScaleLength.{u}}
-    (hProper : J.IsProper)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame A J) L)
-    (hUnbounded : forall kappa : Cardinal.{u}, kappa < lambda ->
-      exists B : CardinalIndex A -> Prop,
-        J.Eventually B /\
-          forall i : CardinalIndex A, B i -> kappa < i.1) :
-    lambda <= Cardinal.mk L.Level := by
-  obtain ⟨s⟩ := hScale
-  exact cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
-    hRegulars hProper hUnbounded s.seq s.isCofinalFamily_seq
-
-/-! The canonical cardinal-length specialization of the preceding generic
-scale-cardinality bound. -/
+/-! Specializing the generic eventual-coordinate scale bound to
+`cardinalScaleLength theta` replaces the level cardinality by `theta`. -/
 theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
