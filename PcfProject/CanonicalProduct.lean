@@ -1480,25 +1480,9 @@ instance cardinalProductQuotientPartialOrder
       | h y =>
         exact Quotient.sound ⟨hqr, hrq⟩
 
-/-! If the canonical coordinate index is small in the cardinal universe, then
-the raw dependent product is small there as well. The coordinate types already
-live in that universe, so this is a direct dependent-product smallness fact. -/
-theorem cardinalProductFrame_productElement_small_of_small_cardinalIndex
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    [Small.{u} (CardinalIndex A)] :
-    Small.{u} (ProductElement (cardinalProductFrame A J)) := by
-  letI : Small.{u} (cardinalProductFrame A J).Index := by
-    change Small.{u} (CardinalIndex A)
-    infer_instance
-  letI : forall i : (cardinalProductFrame A J).Index,
-      Small.{u} ((cardinalProductFrame A J).Coord i) :=
-    fun _ => small_self _
-  exact small_Pi _
-
-/-! Under the same small-index hypothesis, the eventual-equality quotient is
-small in the cardinal universe. This is only universe bookkeeping; it does
-not select a cofinal chain or produce a scale. -/
+/-! If the canonical coordinate index is small, its eventual-equality quotient
+is small in the cardinal universe as well. This is only universe bookkeeping;
+it does not select a cofinal chain or produce a scale. -/
 theorem cardinalProductQuotient_small_of_small_cardinalIndex
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
