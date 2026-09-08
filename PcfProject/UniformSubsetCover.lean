@@ -351,27 +351,6 @@ noncomputable def uniformSubsetCoverOfLtAleph
       cardinal_ord_cof_ne_of_two_power_lt_of_lt_aleph
         hMu hPower (hGamma.trans_lt hAlpha))
 
-/-! Exact family form of Lemma 24.23 on the canonical representative of an
-ambient cardinal. -/
-theorem exists_uniformSubsetCover_family_of_two_power_le_of_lt_aleph
-    {mu alpha : Cardinal.{u}}
-    (hMu : Cardinal.IsRegular mu)
-    (hPower : (2 : Cardinal.{u}) ^ mu <= alpha)
-    (hAlpha : alpha < Cardinal.aleph mu.ord) :
-    exists I : Type u, exists F : I -> Set alpha.ord.ToType,
-      Cardinal.mk I <= alpha /\
-      (forall i, Cardinal.mk (F i) = mu) /\
-      (forall Z : Set alpha.ord.ToType, Cardinal.mk Z = mu ->
-        exists i, F i ⊆ Z) := by
-  let C := uniformSubsetCoverOfLtAleph hMu hAlpha
-  refine ⟨C.Index, C.member, ?_, C.member_cardinal,
-    C.downward_cofinal⟩
-  have hPower' : (2 : Cardinal.{u}) ^ mu <=
-      Cardinal.mk alpha.ord.ToType := by
-    simpa only [Cardinal.mk_ord_toType] using hPower
-  exact (C.index_cardinal_le_of_two_power_le hPower').trans_eq
-    (Cardinal.mk_ord_toType alpha)
-
 /-! Abstract final compression pattern of the proof of Theorem 24.18.
 `witness a` is the `mu`-sized set of dominating functions attached to a
 countable set `a`; any `mu`-sized subfamily determines its characteristic.
