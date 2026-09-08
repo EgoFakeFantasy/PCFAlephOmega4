@@ -60,17 +60,6 @@ theorem countableCardSet_iff_countable
       Countable { theta : Cardinal.{u} // A theta } :=
   Cardinal.mk_le_aleph0_iff
 
-/-! A countable cardinal set has a canonical coordinate index small in the
-cardinal universe.  This is the universe bridge needed by the concrete
-quotient-to-scale construction; it does not assert any PCF upper bound. -/
-theorem cardinalIndex_small_of_countableCardSet
-    {A : CardSet.{u}}
-    (hCountable : CountableCardSet A) :
-    Small.{u} (CardinalIndex A) := by
-  letI : Countable (CardinalIndex A) :=
-    countableCardSet_iff_countable.mp hCountable
-  exact Countable.toSmall _
-
 theorem countableCardSet_iff_set_countable
     {A : CardSet.{u}} :
     CountableCardSet A <->
