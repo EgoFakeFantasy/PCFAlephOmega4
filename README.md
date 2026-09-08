@@ -17,7 +17,7 @@ import PcfProject
 #print axioms PcfProject.two_power_alephOmega_lt_alephOmega4
 ```
 
-定理的假设没有被隐藏在项目公理或结果型结构中。当前公理审计输出仅包含
+当前公理审计输出仅包含
 `propext`、`Classical.choice` 与 `Quot.sound`，即本项目通过 Mathlib 使用的标准
 基础设施；源码中没有 `sorry`、`admit`、`native_decide`、`sorryAx` 或项目级
 `axiom`。
@@ -36,7 +36,7 @@ import PcfProject
 | 层次 | 主要模块 | 作用 |
 | --- | --- | --- |
 | 基础 | `CardinalArithmetic`, `IdealProduct`, `TcfScale` | 基数记号、理想约化积与真共尾度 |
-| PCF 表示 | `CanonicalProduct`, `CanonicalPcf`, `CofinalCore` | 标准乘积表示、PCF 谱与核心性质 |
+| PCF 表示 | `CanonicalProduct`, `CanonicalPcf`, `CofinalCore` | 标准乘积表示、PCF 谱与共尾核心性质 |
 | 生成元 | `Generators`, `PcfGeneratorConstruction`, `PcfTransitiveGenerators` | 生成元构造、有向性与传递化 |
 | 秩与稳集 | `Stationary`, `StationaryIdeal`, `LocalRank`, `RankClosureConstruction` | club猜测、非稳理想与局部秩闭包 |
 | 连续统桥 | `PcfCharacteristicModels`, `PcfContinuumBridge` | 特征模型计数与 `aleph_omega ^ aleph_0` 上界 |
