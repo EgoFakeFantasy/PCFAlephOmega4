@@ -1454,26 +1454,4 @@ def SuccessorAlephLocalOmegaFourTargetReflectionPrinciple
           hMax targetIndexOmega4 delta
 
 
-/-! 最终路径只保留目标有界反射原则，并直接定义最大见证的阿列夫指标。 -/
-
-noncomputable def alephSuccSetAtMostIdealEscapeMaxAlephIndex
-    (G : GeneratorSystem cardinalProductRepresentation
-      (cardinalProductRepresentation.pcf alephSuccSet.{u}))
-    (hEscape : GeneratorAtMostIdealEscapesCanonicalUltrafilters G) :
-    Ordinal.{u} :=
-  maxPcfWitnessAlephIndex
-    (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape)
-
-theorem alephSuccSetAtMostIdealEscapeMax_eq_alephIndex
-    (G : GeneratorSystem cardinalProductRepresentation
-      (cardinalProductRepresentation.pcf alephSuccSet.{u}))
-    (hEscape : GeneratorAtMostIdealEscapesCanonicalUltrafilters G) :
-    (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape).theta =
-      Cardinal.aleph
-        (alephSuccSetAtMostIdealEscapeMaxAlephIndex G hEscape) :=
-  (aleph_maxPcfWitnessAlephIndex_eq
-    (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape)).symm
-
-/-! 核心只需把最大 PCF 见证写成阿列夫形式；其后的输入套餐适配不参与最终证明。 -/
-
 end PcfProject
