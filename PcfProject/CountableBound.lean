@@ -54,12 +54,6 @@ def CountableCardSet
     (A : CardSet.{u}) : Prop :=
   Cardinal.mk { theta : Cardinal.{u} // A theta } <= Cardinal.aleph0
 
-theorem countableCardSet_iff_countable
-    {A : CardSet.{u}} :
-    CountableCardSet A <->
-      Countable { theta : Cardinal.{u} // A theta } :=
-  Cardinal.mk_le_aleph0_iff
-
 theorem countableCardSet_iff_set_countable
     {A : CardSet.{u}} :
     CountableCardSet A <->
