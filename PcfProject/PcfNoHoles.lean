@@ -325,27 +325,6 @@ theorem cardinalReindexedProduct_exists_fiber_bound
   choose b hb using hBound
   exact ⟨b, fun i => hb (p i) i rfl⟩
 
-theorem cardinalReindexedProduct_isCofinalFamily_pullback_iff
-    {A : CardSet.{u}} {I : Type v} (J : Ideal I)
-    (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
-    (hFibers : forall k : CardinalIndex A,
-      Cardinal.lift.{u} (Cardinal.mk {i : I // p i = k}) <
-        Cardinal.lift.{v} k.1)
-    {K : Type w}
-    (d : K -> ProductElement (cardinalProductFrame A (J.pushforward p))) :
-    (cardinalReindexedProductFrame J p).IsCofinalFamily
-      (fun a i => d a (p i)) <->
-    (cardinalProductFrame A (J.pushforward p)).IsCofinalFamily d := by
-  constructor
-  · intro h g
-    exact h (fun i => g (p i))
-  · intro h g
-    obtain ⟨b, hb⟩ := cardinalReindexedProduct_exists_fiber_bound J p hRegulars hFibers g
-    obtain ⟨a, ha⟩ := h b
-    refine ⟨a, J.eventually_mono ha ?_⟩
-    intro i hi
-    exact (hb i).le.trans hi
-
 theorem cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
     (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
