@@ -54,33 +54,6 @@ theorem eventuallyLe_eventuallyPointwiseLt_trans
     exact ⟨F.le_trans i h.1 h.2.1, fun hzx =>
       h.2.2 (F.le_trans i hzx h.1)⟩)
 
-/-! Coordinate extraction used in the contradiction argument of Jech Lemma
-24.14.  Two eventual pointwise-strict comparisons can be intersected; if
-the next family member is not eventually below the last function, one
-coordinate in that intersection must complete a four-term strict chain. -/
-theorem exists_pointwiseStrict_chain_of_not_eventuallyLe
-    (hTotal : forall (k : F.Index) (x y : F.Coord k),
-      F.le k x y \/ F.le k y x)
-    {s f h next : ProductElement F}
-    (hsf : F.eventuallyPointwiseLt s f)
-    (hfh : F.eventuallyPointwiseLt f h)
-    (hNotNextLe : Not (F.eventuallyLe next h)) :
-    exists k : F.Index,
-      (F.le k (s k) (f k) /\ Not (F.le k (f k) (s k))) /\
-      (F.le k (f k) (h k) /\ Not (F.le k (h k) (f k))) /\
-      (F.le k (h k) (next k) /\ Not (F.le k (next k) (h k))) := by
-  classical
-  by_contra hNoChain
-  apply hNotNextLe
-  have hGood := F.J.eventually_and hsf hfh
-  exact F.J.eventually_mono hGood (by
-    intro k hk
-    by_contra hNextNotLe
-    have hLast : F.le k (h k) (next k) /\
-        Not (F.le k (next k) (h k)) :=
-      ⟨(hTotal k (h k) (next k)).resolve_right hNextNotLe, hNextNotLe⟩
-    exact hNoChain ⟨k, hk.1, hk.2, hLast⟩)
-
 /-- A family is cofinal in the reduced product when every product element is
 eventually below one of its members. -/
 def IsCofinalFamily
