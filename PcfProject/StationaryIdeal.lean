@@ -27,16 +27,12 @@ theorem cof_Iio_ne_aleph0_of_aleph0_lt_cof
   rw [Cardinal.lift_aleph0] at hlt
   exact ne_of_gt hlt
 
-#print axioms cof_Iio_ne_aleph0_of_aleph0_lt_cof
-
 theorem cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof
     {eta : Ordinal.{u}}
     (hEtaCof : Cardinal.aleph0 < eta.cof) :
     Order.cof (Set.Iio eta.cof.ord) ≠ Cardinal.aleph0 := by
   apply cof_Iio_ne_aleph0_of_aleph0_lt_cof
   simpa only [Ordinal.cof_ord_cof] using hEtaCof
-
-#print axioms cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof
 
 theorem exists_ultrafilterDual_ideal_extending
     {I : Type u}
@@ -60,8 +56,6 @@ theorem exists_ultrafilterDual_ideal_extending
         rw [Ideal.extendBy_isProper_iff_not_eventually]
         exact hProper.not_eventually_false)
   exact ⟨J, hUltra, hLe⟩
-
-#print axioms exists_ultrafilterDual_ideal_extending
 
 theorem Ideal.eventually_iff_forall_ultrafilterDual_extension
     {I : Type u}
@@ -87,8 +81,6 @@ theorem Ideal.eventually_iff_forall_ultrafilterDual_extension
     have hNotJEventually : ¬ J.Eventually P :=
       (hUltra.small_iff_not_eventually P).mp hPSmall
     exact hNotJEventually (hAll J hUltra hBaseLe)
-
-#print axioms Ideal.eventually_iff_forall_ultrafilterDual_extension
 
 def nonstationaryIdeal
     (alpha : Type u)
@@ -127,8 +119,6 @@ theorem nonstationaryIdeal_isProper
   exact (nonstationary_iff_not_stationary Set.univ).mp hNonstationary
     (univ_stationary hCof)
 
-#print axioms nonstationaryIdeal_isProper
-
 theorem nonstationaryIdeal_eventually_iff_contains_club
     {alpha : Type u}
     [LinearOrder alpha]
@@ -145,8 +135,6 @@ theorem nonstationaryIdeal_eventually_iff_contains_club
     exact hAvoid i hiC hi
   · rintro ⟨C, hC, hCP⟩
     exact ⟨C, hC, fun i hiC hiNot => hiNot (hCP i hiC)⟩
-
-#print axioms nonstationaryIdeal_eventually_iff_contains_club
 
 theorem nonstationaryIdeal_le_iff_eventually_of_isClub
     {alpha : Type u}
@@ -166,8 +154,6 @@ theorem nonstationaryIdeal_le_iff_eventually_of_isClub
     exact J.subset_small (hClubs C hC) (by
       intro i hiS hiC
       exact hAvoid i hiC hiS)
-
-#print axioms nonstationaryIdeal_le_iff_eventually_of_isClub
 
 /-! Restricting an ideal which contains every target club along a normal
 cofinal map produces an ideal containing the source nonstationary ideal.
@@ -200,9 +186,6 @@ theorem nonstationaryIdeal_le_restrictAlong_of_isNormal_of_isCofinal
   exact J.restrictAlong_eventually_of_eventually_image
     f hf.strictMono.injective (fun a => a ∈ C) hImage
 
-#print axioms
-  nonstationaryIdeal_le_restrictAlong_of_isNormal_of_isCofinal
-
 theorem nonstationaryIdeal_iUnion_small
     {alpha : Type u}
     [LinearOrder alpha]
@@ -226,8 +209,6 @@ theorem nonstationaryIdeal_iUnion_small
   rw [hEq]
   exact hUnion
 
-#print axioms nonstationaryIdeal_iUnion_small
-
 noncomputable def regularCardinalNonstationaryIdeal
     (c : Cardinal.{u})
     (hRegular : c.IsRegular)
@@ -249,8 +230,6 @@ theorem regularCardinalNonstationaryIdeal_isProper
       (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
         hRegular hUncountable)
 
-#print axioms regularCardinalNonstationaryIdeal_isProper
-
 theorem regularCardinalNonstationaryIdeal_eventually_iff_contains_club
     (c : Cardinal.{u})
     (hRegular : c.IsRegular)
@@ -262,9 +241,6 @@ theorem regularCardinalNonstationaryIdeal_eventually_iff_contains_club
   nonstationaryIdeal_eventually_iff_contains_club
     (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
       hRegular hUncountable) P
-
-#print axioms
-  regularCardinalNonstationaryIdeal_eventually_iff_contains_club
 
 theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
     {alpha : Type u}
@@ -283,9 +259,6 @@ theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
   exact
     (Ideal.eventually_iff_forall_ultrafilterDual_extension
       (nonstationaryIdeal alpha hCof) P).mpr hAll
-
-#print axioms
-  exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
 
 /-! If every ultrafilter extending the club filter contains a set, then that
 set itself contains a club.  This is the compactness step used in Corollary
@@ -310,8 +283,5 @@ theorem exists_club_subset_of_forall_ultrafilterDual_extension_eventually
     (Ideal.eventually_iff_forall_ultrafilterDual_extension
       (regularCardinalNonstationaryIdeal c hRegular hUncountable) P).mpr
       hAll
-
-#print axioms
-  exists_club_subset_of_forall_ultrafilterDual_extension_eventually
 
 end PcfProject

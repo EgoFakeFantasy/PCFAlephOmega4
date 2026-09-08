@@ -55,8 +55,9 @@ lake update
 lake build
 ```
 
-完整构建会编译根模块 `PcfProject.lean` 及其传递依赖，并同时执行源码中的
-`#print axioms` 审计点。2026-09-07 的默认构建通过了 1017 个构建任务。
+完整构建会编译根模块 `PcfProject.lean` 及其传递依赖，并在
+`PcfProject.AxiomAudit` 中集中审计 `TROPHIES.md` 列出的九个公开成果。
+2026-09-08 的默认构建通过了 1018 个构建任务。
 
 ## 仓库范围
 

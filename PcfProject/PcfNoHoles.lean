@@ -48,8 +48,6 @@ theorem CardinalProductClosedExactUpperBound.lift_cardinal_le_of_cofinalBelow
     hProper (hIncreasing (hBeta ⟨stage i, i, rfl⟩))
   exact hLt.2 ((cardinalProductFrame A J).eventuallyLe_trans hi (hStage i))
 
-#print axioms CardinalProductClosedExactUpperBound.lift_cardinal_le_of_cofinalBelow
-
 /-! Coordinatewise cofinal sets below an exact bound give an actual product
 family. The lower cardinal bound counts that family, including its larger
 universe, and does not assume a cofinality-profile transport theorem. -/
@@ -105,8 +103,6 @@ theorem CardinalProductClosedExactUpperBound.lift_cardinal_le_coordinateSets
   have H := hExact.lift_cardinal_le_of_cofinalBelow hRegular hProper hIncreasing
     e heBelow heCofinal
   exact H.trans_eq (Cardinal.lift_id'.{u, u + 1} _)
-
-#print axioms CardinalProductClosedExactUpperBound.lift_cardinal_le_coordinateSets
 
 /-! The small-profile obstruction in Jech 24.19. If `kappa^|A|` is smaller
 than the regular sequence length, the cofinality of its exact bound exceeds
@@ -219,8 +215,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_cof_gt_of_power_lt
     hRegular hProper hLocalIncreasing S hSNonempty hSTop hSBelow hSCofinal
   exact (hLower.trans hProductSize).not_gt hPower
 
-#print axioms CardinalProductClosedExactUpperBound.eventually_cof_gt_of_power_lt
-
 theorem CardinalProductClosedExactUpperBound.eventually_regular_cof_of_power_lt
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)}
     {theta kappa : Cardinal.{u}}
@@ -247,8 +241,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_regular_cof_of_power_lt
     (f k).1.cof <= (f k).1.card := Ordinal.cof_le_card _
     _ <= k.1.ord.card := Ordinal.card_le_card (f k).2
     _ = k.1 := Cardinal.card_ord _
-
-#print axioms CardinalProductClosedExactUpperBound.eventually_regular_cof_of_power_lt
 
 /-! In the countable-coordinate application, the profile is above the
 continuum because `(2^aleph0)^aleph0 = 2^aleph0`. This is the exact lower
@@ -285,8 +277,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_cof_gt_continuum_of_coun
         ← Cardinal.power_mul, Cardinal.aleph0_mul_aleph0]
     _ < Cardinal.lift.{u + 1} theta := Cardinal.lift_lt.mpr hContinuum
 
-#print axioms CardinalProductClosedExactUpperBound.eventually_cof_gt_continuum_of_countable
-
 /-! A profile map need not be injective. Regularity bounds all values in each
 small fiber simultaneously, so pullback along the map is cofinal. This is the
 fiber synchronization step, not an assumption of PCF interpolation. -/
@@ -303,8 +293,6 @@ theorem exists_strict_upper_bound_of_lift_mk_lt_regular
   obtain ⟨b, hb⟩ := exists_strict_upper_bound_of_mk_lt_regular hRegular hRange
     (fun i : Set.range d => i.1)
   exact ⟨b, fun i => hb ⟨d i, i, rfl⟩⟩
-
-#print axioms exists_strict_upper_bound_of_lift_mk_lt_regular
 
 noncomputable abbrev cardinalReindexedProductFrame
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
@@ -337,8 +325,6 @@ theorem cardinalReindexedProduct_exists_fiber_bound
   choose b hb using hBound
   exact ⟨b, fun i => hb (p i) i rfl⟩
 
-#print axioms cardinalReindexedProduct_exists_fiber_bound
-
 theorem cardinalReindexedProduct_isCofinalFamily_pullback_iff
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
     (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
@@ -359,8 +345,6 @@ theorem cardinalReindexedProduct_isCofinalFamily_pullback_iff
     refine ⟨a, J.eventually_mono ha ?_⟩
     intro i hi
     exact (hb i).le.trans hi
-
-#print axioms cardinalReindexedProduct_isCofinalFamily_pullback_iff
 
 theorem cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
@@ -388,8 +372,6 @@ theorem cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
       hi.1.trans_lt (hb i)
     exact ⟨hlt.le, not_le_of_gt hlt⟩)
 
-#print axioms cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
-
 /-- A regular-length pointwise-strict scale on repeated coordinates gives a
 scale of the same length on the pushforward ideal. The fiber bounds and the
 recursive strictification are constructed, not supplied as hypotheses. -/
@@ -416,8 +398,6 @@ theorem cardinalReindexedProduct_pushforward_scale
   intro i hi
   exact hi.trans (hd a i).le
 
-#print axioms cardinalReindexedProduct_pushforward_scale
-
 theorem cardinalReindexedProduct_pushforward_hasTrueCofinality
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
     (hProper : J.IsProper)
@@ -432,8 +412,6 @@ theorem cardinalReindexedProduct_pushforward_hasTrueCofinality
       (cardinalScaleLength theta) := by
   obtain ⟨t⟩ := cardinalReindexedProduct_pushforward_scale J p hRegulars hFibers hTheta s
   exact cardinalScaleLength_hasTrueCofinality hTheta (t.toScale (hProper.pushforward p))
-
-#print axioms cardinalReindexedProduct_pushforward_hasTrueCofinality
 
 theorem cardinalReindexedProduct_mem_pcf_of_scale
     {A : CardSet.{u}} {I : Type v} (J : Ideal I)
@@ -450,8 +428,6 @@ theorem cardinalReindexedProduct_mem_pcf_of_scale
     ⟨hTheta, J.pushforward p, hUltra.pushforward p,
       cardinalReindexedProduct_pushforward_hasTrueCofinality J hUltra.isProper
         p hRegulars hFibers hTheta s⟩
-
-#print axioms cardinalReindexedProduct_mem_pcf_of_scale
 
 /-! A cofinal order representation below an exact bound carries a genuine
 scale of the original regular length. Regularity bounds all stage choices
@@ -499,8 +475,6 @@ theorem CardinalProductClosedExactUpperBound.scale_of_cofinal_orderMap
   obtain ⟨alpha, hAlpha⟩ := hExact.2 (e x) (hBelow x)
   exact ⟨alpha, hReflectLe x (c alpha)
     ((cardinalProductFrame A J).eventuallyLe_trans hAlpha (hc alpha))⟩
-
-#print axioms CardinalProductClosedExactUpperBound.scale_of_cofinal_orderMap
 
 theorem CardinalProductClosedExactUpperBound.scale_of_eventually_cof_profile
     {A B : CardSet.{u}} {J : Ideal (CardinalIndex A)}
@@ -597,8 +571,6 @@ theorem CardinalProductClosedExactUpperBound.scale_of_eventually_cof_profile
       have hLt := (hqMono k hg).lt_iff_lt.mp hxyk
       exact ⟨hLt.le, not_le_of_gt hLt⟩)
 
-#print axioms CardinalProductClosedExactUpperBound.scale_of_eventually_cof_profile
-
 theorem CardinalProductClosedExactUpperBound.mem_pcf_of_eventually_cof_mem
     {A B : CardSet.{u}} {J : Ideal (CardinalIndex A)}
     (hUltra : J.IsUltrafilterDual)
@@ -633,8 +605,6 @@ theorem CardinalProductClosedExactUpperBound.mem_pcf_of_eventually_cof_mem
     (J.pushforward p) (hUltra.pushforward p) hTheta
     (s.toScale (hUltra.isProper.pushforward p))
 
-#print axioms CardinalProductClosedExactUpperBound.mem_pcf_of_eventually_cof_mem
-
 theorem cardinalProductFrame_eventuallyPointwiseLt_of_ultrafilter_eventuallyLt
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)}
     (hUltra : J.IsUltrafilterDual)
@@ -647,8 +617,6 @@ theorem cardinalProductFrame_eventuallyPointwiseLt_of_ultrafilter_eventuallyLt
       Not ((cardinalProductFrame A J).le k (y k) (x k))) := by
     simpa only [Ideal.Eventually, not_not] using hSmall
   exact J.eventually_and hxy.1 hNot
-
-#print axioms cardinalProductFrame_eventuallyPointwiseLt_of_ultrafilter_eventuallyLt
 
 /-- Countable no-holes above the continuum for a regular set closed under
 regular profiles below its coordinates. Both the exact bound and the new
@@ -712,8 +680,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_countable_profile_closed
       (hf.eventually_cof_gt_continuum_of_countable hTheta hCountable hContinuum hIncreasing)
       (fun k hk => hClosed k.1 k.2 _ hk.1 hk.2.1 hk.2.2)
 
-#print axioms cardinalProductRepresentation_mem_pcf_of_countable_profile_closed
-
 theorem alephSuccSet_mem_pcf_of_regular_above_continuum_le_pcf
     {theta mu : Cardinal.{u}} (hTheta : Cardinal.IsRegular theta)
     (hContinuum : (2 : Cardinal.{u}) ^ Cardinal.aleph0 < theta)
@@ -729,7 +695,5 @@ theorem alephSuccSet_mem_pcf_of_regular_above_continuum_le_pcf
   exact alephSuccSet_of_aleph0_lt_of_lt_targetAlephOmega
     ((Cardinal.cantor Cardinal.aleph0).trans hContinuumRho)
     (hRhoA.trans_lt (alephSuccSet_belowAlephOmega a ha))
-
-#print axioms alephSuccSet_mem_pcf_of_regular_above_continuum_le_pcf
 
 end PcfProject

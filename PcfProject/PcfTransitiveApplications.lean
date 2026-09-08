@@ -74,9 +74,6 @@ theorem GeneratorCapturesCanonicalUltrafilters.eventually_of_eventually_subset
     simpa only [f, cardinalIndexMap] using hCaptureV
   simpa only [hPush] using hViaPush
 
-#print axioms
-  GeneratorCapturesCanonicalUltrafilters.eventually_of_eventually_subset
-
 /-- Under the strong-limit hypothesis, a finite successor-aleph tail lies
 strictly above the successor of its double-powerset index bound. -/
 theorem exists_alephSuccSet_tail_successorDoublePowerBelow_of_strongLimit
@@ -129,9 +126,6 @@ theorem exists_alephSuccSet_tail_successorDoublePowerBelow_of_strongLimit
   rw [hShrinkEq]
   exact (Order.succ_le_iff.mpr (Cardinal.cantor delta)).trans_lt hEpsilonA
 
-#print axioms
-  exists_alephSuccSet_tail_successorDoublePowerBelow_of_strongLimit
-
 /-- The selected tail carries transitive, successor-directed generators on
 its PCF spectrum, with no generator premise left to the caller. -/
 theorem exists_alephSuccSet_tail_pcf_transitiveGenerators_of_strongLimit
@@ -163,9 +157,6 @@ theorem exists_alephSuccSet_tail_pcf_transitiveGenerators_of_strongLimit
     exists_pcf_transitive_successorDirected_generators_of_successorDoublePower
       (alephSuccSet_tail_alephOmegaCore n).regulars hInfinite hSuccessorDouble
   exact ⟨n, G, hSuccessorDouble, hTransitive, hDirected⟩
-
-#print axioms
-  exists_alephSuccSet_tail_pcf_transitiveGenerators_of_strongLimit
 
 /-! Above the omitted finite prefix, every successor aleph already known to
 belong to the full core spectrum belongs to the spectrum of the selected
@@ -227,8 +218,6 @@ theorem successorAleph_mem_tailPcf_of_mem_corePcf
   | inr hTail =>
       exact hTail
 
-#print axioms successorAleph_mem_tailPcf_of_mem_corePcf
-
 /-! Every club-extending ultrafilter on an uncountable-cofinality initial
 segment is eventually supported by the PCF spectrum of any fixed strict
 finite tail. -/
@@ -259,8 +248,6 @@ theorem successorAlephIio_eventually_mem_tailPcf
     successorAleph_mem_tailPcf_of_mem_corePcf n
       (hCore j.1 (j.2.trans hEtaTheta)) hnj
 
-#print axioms successorAlephIio_eventually_mem_tailPcf
-
 /-- Maximum PCF witnesses combine across a binary union of regular sets. -/
 theorem cardinalProductRepresentation_hasMaxPcf_union_of_hasMaxPcf
     {B C : CardSet.{u}} (hRegularsB : SetOfRegulars B)
@@ -290,9 +277,6 @@ theorem cardinalProductRepresentation_hasMaxPcf_union_of_hasMaxPcf
       exact hDelta.elim
         (fun h => hBetaMax delta h)
         (fun h => (hGammaMax delta h).trans hGammaBeta)
-
-#print axioms
-  cardinalProductRepresentation_hasMaxPcf_union_of_hasMaxPcf
 
 /-- Compact generators on one strict tail prove maximum existence for every
 nonempty successor-aleph subfamily whose coordinates lie in the full core
@@ -436,9 +420,6 @@ theorem successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
       · exact fun h => h.1
     rw [hWXT]
     exact hMaxXT
-
-#print axioms
-  successorAlephHasMaxPcfBelow_of_tailGeneratorCompactCover
 
 /-! Corollary 24.30 only needs generators on a sufficiently high finite tail.
 The club ultrafilters occurring in Theorem 24.16 eventually lie in that tail
@@ -599,9 +580,6 @@ theorem successorAlephLocalCorollary2430UltrafilterData_of_tailGenerators
         Order.succ_le_iff.mpr hEtaLtIndex
     exact le_antisymm hUpper hLower
 
-#print axioms
-  successorAlephLocalCorollary2430UltrafilterData_of_tailGenerators
-
 theorem successorAlephLocalCorollary2430_of_tailGenerators
     (n : Nat)
     (G : GeneratorSystem cardinalProductRepresentation
@@ -626,8 +604,6 @@ theorem successorAlephLocalCorollary2430_of_tailGenerators
   successorAlephLocalCorollary2430_of_ultrafilterData hMax
     (successorAlephLocalCorollary2430UltrafilterData_of_tailGenerators
       n G hCapture hPcfFixed hMax hCore)
-
-#print axioms successorAlephLocalCorollary2430_of_tailGenerators
 
 /-- Construct all generator and maximum data available on the strong-limit
 branch from one selected strict tail. The existential form keeps the package
@@ -705,8 +681,6 @@ theorem exists_alephSuccSet_strongLimitTailPackage
   exact ⟨n, G, hSuccessorDouble, hTransitive, hDirected, hCapture, hCompact,
     tailMax, coreMax, rfl, hCoreInitial, hLocalMax⟩
 
-#print axioms exists_alephSuccSet_strongLimitTailPackage
-
 /-- Localization Lemma 24.32 for the full successor-aleph core is now a
 theorem under the strong-limit hypothesis: the required tail generators are
 constructed above and finite-prefix transport returns to the full core. -/
@@ -737,9 +711,6 @@ theorem alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit
   exact alephSuccSet_cardinalProductPcfLocalizationOutput_of_tail n
     (alephSuccSet_tail_cardinalProductPcfLocalizationOutput_of_doublePowerBelow
       n hDouble G hTransitive hCapture)
-
-#print axioms
-  alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit
 
 /-! The complete PCF argument.  The strong-limit hypothesis constructs one
 sufficiently high tail, its transitive successor-directed generators, the
@@ -789,14 +760,10 @@ theorem targetConditionalStatement_of_strongLimit :
   change continuumAtAlephOmega.{u} < targetAlephOmega4.{u}
   exact hContinuumLe.trans_lt hMlt
 
-#print axioms targetConditionalStatement_of_strongLimit
-
 /-- Shelah's `aleph_omega` bound in its direct cardinal-arithmetic form. -/
 theorem two_power_alephOmega_lt_alephOmega4
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u}) :
     (2 : Cardinal.{u}) ^ targetAlephOmega < targetAlephOmega4 :=
   targetConditionalStatement_of_strongLimit hStrongLimit
-
-#print axioms two_power_alephOmega_lt_alephOmega4
 
 end PcfProject

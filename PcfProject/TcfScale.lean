@@ -43,8 +43,6 @@ theorem eventuallyPointwiseLt_trans
     exact ⟨F.le_trans i h.1.1 h.2.1, fun hzx =>
       h.1.2 (F.le_trans i h.2.1 hzx)⟩)
 
-#print axioms ReducedProductFrame.eventuallyPointwiseLt_trans
-
 theorem eventuallyLe_eventuallyPointwiseLt_trans
     {x y z : ProductElement F}
     (hxy : F.eventuallyLe x y)
@@ -55,9 +53,6 @@ theorem eventuallyLe_eventuallyPointwiseLt_trans
     intro i h
     exact ⟨F.le_trans i h.1 h.2.1, fun hzx =>
       h.2.2 (F.le_trans i hzx h.1)⟩)
-
-#print axioms
-  ReducedProductFrame.eventuallyLe_eventuallyPointwiseLt_trans
 
 /-! Coordinate extraction used in the contradiction argument of Jech Lemma
 24.14.  Two eventual pointwise-strict comparisons can be intersected; if
@@ -85,9 +80,6 @@ theorem exists_pointwiseStrict_chain_of_not_eventuallyLe
         Not (F.le k (next k) (h k)) :=
       ⟨(hTotal k (h k) (next k)).resolve_right hNextNotLe, hNextNotLe⟩
     exact hNoChain ⟨k, hk.1, hk.2, hLast⟩)
-
-#print axioms
-  ReducedProductFrame.exists_pointwiseStrict_chain_of_not_eventuallyLe
 
 /-- A family is cofinal in the reduced product when every product element is
 eventually below one of its members. -/
@@ -148,11 +140,6 @@ theorem IsPointwiseStrictExactUpperBound.cofinalBelow
     F.IsPointwiseStrictCofinalBelow d g :=
   h.2
 
-#print axioms
-  ReducedProductFrame.IsPointwiseStrictExactUpperBound.isUpperBound
-#print axioms
-  ReducedProductFrame.IsPointwiseStrictExactUpperBound.cofinalBelow
-
 theorem eventuallyPointwiseLt_withLargerIdeal
     {x y : ProductElement F}
     (J : Ideal F.Index)
@@ -160,9 +147,6 @@ theorem eventuallyPointwiseLt_withLargerIdeal
     (hxy : F.eventuallyPointwiseLt x y) :
     (F.withIdeal J).eventuallyPointwiseLt x y :=
   hLe _ hxy
-
-#print axioms
-  ReducedProductFrame.eventuallyPointwiseLt_withLargerIdeal
 
 /-! An exact upper bound remains exact after localizing the ideal to any
 predicate.  To test local cofinality, splice the local test function with one
@@ -212,9 +196,6 @@ theorem IsPointwiseStrictExactUpperBound.localize
         simpa only [h', if_pos hk.2] using hk.1
       exact this)
 
-#print axioms
-  ReducedProductFrame.IsPointwiseStrictExactUpperBound.localize
-
 /-! If `f` is exact and another bound `g` is eventually below `f`, then the
 family is cofinal below `g`.  A test function strictly below `g` is strictly
 below `f` by transitivity, so exactness applies. -/
@@ -232,9 +213,6 @@ theorem IsPointwiseStrictExactUpperBound.cofinalBelow_of_eventuallyLe
     refine ⟨F.le_trans k hk.1.1 hk.2, ?_⟩
     intro hfh
     exact hk.1.2 (F.le_trans k hk.2 hfh))
-
-#print axioms
-  ReducedProductFrame.IsPointwiseStrictExactUpperBound.cofinalBelow_of_eventuallyLe
 
 /-! Exact-upper-bound decomposition (the order-theoretic content of Jech
 24.11).  With coordinatewise total comparison, an exact upper bound `f`
@@ -297,9 +275,6 @@ theorem exactUpperBound_bounded_or_cofinal_or_localized_split
           · exact hgf
           · exact False.elim (hk.2
               ⟨(hTotal k (f k) (g k)).resolve_right hgf, hgf⟩))
-
-#print axioms
-  ReducedProductFrame.exactUpperBound_bounded_or_cofinal_or_localized_split
 
 /-! A finitely compatible family of coordinatewise comparison sets can be
     defeated in one ultrafilter-dual extension of the frame's ideal.  The
@@ -390,13 +365,6 @@ theorem exists_finset_pointwise_cover_of_forall_ultrafilterDual_isCofinalFamily
     F0.exists_ultrafilterDual_ideal_not_isCofinalFamily d g hCompatible
   exact hNotCofinal (hCofinal J hUltra)
 
-#print axioms
-  ReducedProductFrame.exists_ultrafilterDual_ideal_not_isCofinalFamily
-#print axioms
-  ReducedProductFrame.exists_nonprincipal_ultrafilterDual_ideal_not_isCofinalFamily
-#print axioms
-  ReducedProductFrame.exists_finset_pointwise_cover_of_forall_ultrafilterDual_isCofinalFamily
-
 end ReducedProductFrame
 
 /-- A type equipped with a specified well-order, used to index a scale. -/
@@ -474,9 +442,6 @@ theorem ReducedProductFrame.PointwiseStrictDirectedBelow.withLargerIdeal
   intro i
   exact F.eventuallyPointwiseLt_withLargerIdeal J hLe (hg i)
 
-#print axioms
-  ReducedProductFrame.PointwiseStrictDirectedBelow.withLargerIdeal
-
 theorem ReducedProductFrame.eventuallyLt_of_eventually_pointwiseStrict
     {F : ReducedProductFrame.{u, v}}
     (hProper : F.J.IsProper)
@@ -492,9 +457,6 @@ theorem ReducedProductFrame.eventuallyLt_of_eventually_pointwiseStrict
       intro i hi
       exact hi.1.2 hi.2)
   exact hProper.not_eventually_false hFalse
-
-#print axioms
-  ReducedProductFrame.eventuallyLt_of_eventually_pointwiseStrict
 
 namespace PointwiseStrictScale
 
@@ -516,9 +478,6 @@ theorem not_exists_pointwiseStrictUpperBound
       intro i hi
       exact hi.2.2 hi.1)
   exact hProper.not_eventually_false hFalse
-
-#print axioms
-  PointwiseStrictScale.not_exists_pointwiseStrictUpperBound
 
 /-! Forgetting pointwise strictness gives an ordinary scale whenever the
 underlying ideal is proper. -/

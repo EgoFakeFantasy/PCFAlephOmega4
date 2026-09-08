@@ -74,8 +74,6 @@ theorem infinite_cardinalIndex_of_cofinalInAlephOmega
   · have hVal : (g n).1 < (g m).1 := hLess n m hgt
     exact (ne_of_lt hVal) (congrArg Subtype.val hmn).symm
 
-#print axioms infinite_cardinalIndex_of_cofinalInAlephOmega
-
 theorem cofinalBelow_union_iff
     {A B : CardSet.{u}}
     {bound : Cardinal.{u}} :
@@ -338,8 +336,6 @@ theorem alephSuccSet_aleph0_lt :
     ((zero_le : (0 : Ordinal.{u}) <= (n : Ordinal.{u})).trans_lt
       (lt_add_one _))
 
-#print axioms alephSuccSet_aleph0_lt
-
 theorem alephSuccSet_regulars :
     SetOfRegulars alephSuccSet.{u} := by
   intro theta hTheta
@@ -453,8 +449,5 @@ theorem cardinalProductFrame_exists_finset_pointwise_cover_of_forall_ultrafilter
   refine ⟨s, ?_⟩
   intro i
   exact hs i
-
-#print axioms
-  cardinalProductFrame_exists_finset_pointwise_cover_of_forall_ultrafilterDual_isCofinalFamily
 
 end PcfProject

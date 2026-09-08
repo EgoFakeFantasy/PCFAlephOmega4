@@ -85,8 +85,6 @@ theorem cardinalProductOrdinalValue_lt
   ((Ordinal.ToType.mk : Set.Iio k.1.ord ≃o k.1.ord.ToType).symm
     (x k)).2
 
-#print axioms cardinalProductOrdinalValue_lt
-
 noncomputable def cardinalProductClosedTop
     (A : CardSet.{u}) : CardinalProductClosedElement A :=
   fun k => ⟨k.1.ord,
@@ -126,8 +124,6 @@ theorem cardinalProductOrdinalValue_closedToProductOn
     ((Ordinal.ToType.mk : Set.Iio k.1.ord ≃o k.1.ord.ToType).symm_apply_apply
       ⟨(f k).1, hX k hk⟩)
 
-#print axioms cardinalProductOrdinalValue_closedToProductOn
-
 theorem cardinalProductOrdinalValue_lt_iff
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -138,8 +134,6 @@ theorem cardinalProductOrdinalValue_lt_iff
         (show k.1.ord.ToType from y k) := by
   exact
     ((Ordinal.ToType.mk : Set.Iio k.1.ord ≃o k.1.ord.ToType).symm.lt_iff_lt)
-
-#print axioms cardinalProductOrdinalValue_lt_iff
 
 def CardinalProductEventuallyLtClosed
     {A : CardSet.{u}}
@@ -166,8 +160,6 @@ theorem cardinalProduct_eventuallyPointwiseLt_iff_ordinalValue
       intro k hk
       have hxy := (cardinalProductOrdinalValue_lt_iff x y k).mp hk
       exact ⟨hxy.le, not_le_of_gt hxy⟩)
-
-#print axioms cardinalProduct_eventuallyPointwiseLt_iff_ordinalValue
 
 /-! Ordinal-valued specialization of the coordinate-extraction lemma used
 in Lemma 24.14. -/
@@ -198,9 +190,6 @@ theorem cardinalProduct_exists_ordinalValue_strict_chain_of_not_eventuallyLe
   · exact lt_of_le_of_ne hsfk.1 (fun hEq => hsfk.2 hEq.ge)
   · exact lt_of_le_of_ne hfhk.1 (fun hEq => hfhk.2 hEq.ge)
   · exact lt_of_le_of_ne hhnk.1 (fun hEq => hhnk.2 hEq.ge)
-
-#print axioms
-  cardinalProduct_exists_ordinalValue_strict_chain_of_not_eventuallyLe
 
 /-! A closed ordinal function can occur on the left of the rapidity
 comparison even when it reaches a coordinate top off the eventual set. -/
@@ -260,9 +249,6 @@ theorem cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventually
     at hsfk
   exact ⟨k, hsfk, hfhk, hhnk⟩
 
-#print axioms
-  cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventuallyLe
-
 /-! Coordinate extraction with a prescribed eventual support.  The witness
 can be chosen inside that support because the two strict comparisons and
 the support predicate may be intersected before refuting eventual
@@ -296,9 +282,6 @@ theorem cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventually
         (cardinalProductOrdinalValue_lt_iff h next k).mpr
           (lt_of_not_ge hNextNotLe)
       exact hNoChain ⟨k, hk.2, hk.1.1, hk.1.2, hLast⟩)
-
-#print axioms
-  cardinalProduct_exists_closedOrdinalValue_strict_chain_of_not_eventuallyLe_of_eventually
 
 /-! The literal pointwise supremum used in Definition 24.13.  It is a closed
 product because a supremum of values below a coordinate ordinal may equal
@@ -342,8 +325,6 @@ theorem cardinalProductOrdinalValue_le_closedPointwiseSup
   rw [if_pos hi] at hLe
   exact hLe
 
-#print axioms cardinalProductOrdinalValue_le_closedPointwiseSup
-
 /-! A pointwise supremum supported by fewer than `k` many family members
 stays strictly below the top of a regular coordinate `k`.  The support lives
 one universe above the ordinal values, so the lifted form of the cofinality
@@ -384,8 +365,6 @@ theorem cardinalProductClosedPointwiseSup_lt_of_mk_support_lt
   · rw [if_neg hi]
     exact bot_le
 
-#print axioms cardinalProductClosedPointwiseSup_lt_of_mk_support_lt
-
 /-! Arbitrary-type version of the small pointwise-supremum bound.  Unlike
 `cardinalProductClosedPointwiseSup`, the family index need not already be an
 ordinal initial segment.  This form is used when the family is indexed by a
@@ -411,8 +390,6 @@ theorem cardinalProduct_iSup_ordinalValue_lt_of_mk_lt
     (a := k.1.ord) hLiftSmall
   intro i
   exact cardinalProductOrdinalValue_lt (d i) k
-
-#print axioms cardinalProduct_iSup_ordinalValue_lt_of_mk_lt
 
 /-! The pointwise supremum of a family smaller than every regular coordinate,
 encoded back into the genuine canonical product. -/
@@ -448,8 +425,6 @@ noncomputable def cardinalProductPointwiseSupOfSmallFamily
         cardinalProduct_iSup_ordinalValue_lt_of_mk_lt
           hRegulars hSmall d k⟩)
 
-#print axioms cardinalProductOrdinalValue_pointwiseSupOfSmallFamily
-
 theorem cardinalProduct_le_pointwiseSupOfSmallFamily
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -474,8 +449,6 @@ theorem cardinalProduct_le_pointwiseSupOfSmallFamily
   refine ⟨k.1.ord, ?_⟩
   rintro _ ⟨j, rfl⟩
   exact (cardinalProductOrdinalValue_lt (d j) k).le
-
-#print axioms cardinalProduct_le_pointwiseSupOfSmallFamily
 
 /-! If the support of a closed pointwise supremum is eventually smaller than
 the regular coordinate, the closed supremum has a genuine product
@@ -510,9 +483,6 @@ theorem exists_cardinalProduct_eventually_eq_closedPointwiseSup_of_support_small
   exact cardinalProductOrdinalValue_closedToProductOn d0
     (cardinalProductClosedPointwiseSup f X) supportSmall hBelow k hk
 
-#print axioms
-  exists_cardinalProduct_eventually_eq_closedPointwiseSup_of_support_small
-
 /-! Pointwise-strict directedness simultaneously dominates any small family
 of closed pointwise suprema whose supports are eventually smaller than the
 regular coordinates.  Each closed supremum is first represented in the
@@ -546,9 +516,6 @@ theorem exists_cardinalProduct_strictUpperBound_of_closedPointwiseSups
     intro k hk
     rw [← hk.1]
     exact hk.2)
-
-#print axioms
-  exists_cardinalProduct_strictUpperBound_of_closedPointwiseSups
 
 /-! The canonical support used at global stage `alpha` for a terminal stage
 `beta`.  When `alpha < beta`, it is the image in `Iio lambda.ord` of the
@@ -590,8 +557,6 @@ theorem cardinalProductRapidSupport_eq
   classical
   rw [cardinalProductRapidSupport, dif_pos hAlphaBeta]
 
-#print axioms cardinalProductRapidSupport_eq
-
 theorem cardinalProductRapidSupport_mk_lt_cof
     {lambda : Cardinal.{u}}
     {beta alpha : Set.Iio lambda.ord}
@@ -603,8 +568,6 @@ theorem cardinalProductRapidSupport_mk_lt_cof
   exact Cardinal.mk_image_le.trans_lt
     (smallInitialClub_initial_mk_lt_cof hBetaLimit
       (⟨alpha.1, hAlphaBeta⟩ : Set.Iio beta.1))
-
-#print axioms cardinalProductRapidSupport_mk_lt_cof
 
 /-! Only terminal stages of cofinality below `kappa` are active in the
 simultaneous rapid recursion. -/
@@ -626,8 +589,6 @@ theorem cardinalProductRapidSupportBelow_eq
   classical
   rw [cardinalProductRapidSupportBelow, if_pos hBetaCof]
 
-#print axioms cardinalProductRapidSupportBelow_eq
-
 theorem cardinalProductRapidSupportBelow_mk_lt_cof
     {kappa lambda : Cardinal.{u}}
     {beta alpha : Set.Iio lambda.ord}
@@ -640,8 +601,6 @@ theorem cardinalProductRapidSupportBelow_mk_lt_cof
   rw [cardinalProductRapidSupportBelow_eq hBetaCof]
   exact cardinalProductRapidSupport_mk_lt_cof
     hBetaLimit hAlphaBeta
-
-#print axioms cardinalProductRapidSupportBelow_mk_lt_cof
 
 theorem cardinalProductRapidSupportBelow_subset_Iio
     {kappa lambda : Cardinal.{u}}
@@ -663,8 +622,6 @@ theorem cardinalProductRapidSupportBelow_subset_Iio
       exact hi.elim
   · rw [cardinalProductRapidSupportBelow, if_neg hBetaCof] at hi
     exact hi.elim
-
-#print axioms cardinalProductRapidSupportBelow_subset_Iio
 
 theorem cardinalProductClosedPointwiseSup_congr
     {A : CardSet.{u}}
@@ -688,8 +645,6 @@ theorem cardinalProductClosedPointwiseSup_congr
   by_cases hi : i ∈ X
   · rw [if_pos hi, if_pos hi, hfg hi]
   · rw [if_neg hi, if_neg hi]
-
-#print axioms cardinalProductClosedPointwiseSup_congr
 
 /-! Source-level Definition 24.13.  At every `gamma`-cofinal terminal
 ordinal `beta`, rapidity supplies a club `C` such that each limit-stage
@@ -738,8 +693,6 @@ theorem CardinalProductGammaRapid.localize
   intro alpha hAlphaLimit
   exact J.le_localize X _ (hC alpha hAlphaLimit)
 
-#print axioms CardinalProductGammaRapid.localize
-
 
 theorem cardinalProduct_mem_rapidPointwiseSup_support
     {lambda : Cardinal.{u}}
@@ -765,8 +718,6 @@ theorem cardinalProduct_mem_rapidPointwiseSup_support
           Set.Iio lambda.ord)) ''
           (C ∩ Set.Iio alpha) := by
   exact ⟨xi, ⟨hXiC, hXiAlpha⟩, rfl⟩
-
-#print axioms cardinalProduct_mem_rapidPointwiseSup_support
 
 /-! The full failure-recursion pattern used in Jech Lemma 24.14, up to the
 later rapidity comparison.  A counterexample above every stage supplies an
@@ -829,8 +780,6 @@ theorem exists_cardinalProduct_failureStagePattern
   · intro i
     exact Classical.choose_spec (hChain i)
 
-#print axioms exists_cardinalProduct_failureStagePattern
-
 /-! For regular `gamma`, the same failure pattern has a terminal supremum
 below `lambda` whose cofinality is exactly `gamma`.  This is the ordinal
 `beta` to which the rapid family is applied in the source proof. -/
@@ -880,9 +829,6 @@ theorem exists_cardinalProduct_failureStagePattern_with_terminalCofinality
         hStageValueStrict (fun i => (stage i).2)
   exact ⟨stage, next, h, coordinate, hStageStrict, hStageNext,
     hNextBeforeLater, hChain, hSupLt, hSupCof⟩
-
-#print axioms
-  exists_cardinalProduct_failureStagePattern_with_terminalCofinality
 
 /-! Abstract rapid-envelope form of Jech Lemma 24.14.  The comparison
 hypothesis is precisely the pointwise supremum fact supplied by a rapid
@@ -969,8 +915,6 @@ theorem exists_eventualDominatingStage_of_rapidComparison_of_small
       cardinalProductOrdinalValue (s (stage j)) (coordinate j) :=
     hMiddle.trans_eq (by rw [hCoordinateEq])
   exact (hFirst.trans_le hMiddle').trans hLast
-
-#print axioms exists_eventualDominatingStage_of_rapidComparison_of_small
 
 /-! Source-exact small-range form of Jech Lemma 24.14.  Here `S k` is the
 specified small set `S_a`, and the intermediate function is required to
@@ -1068,9 +1012,6 @@ theorem exists_eventualDominatingStage_of_rapidComparison_of_smallSets
     hMiddle.trans_eq (by rw [hCoordinateEq])
   exact (hFirst.trans_le hMiddle').trans hLast
 
-#print axioms
-  exists_eventualDominatingStage_of_rapidComparison_of_smallSets
-
 /-! Fully source-aligned form of Lemma 24.14: the rapid envelopes are closed
 ordinal functions, so they may reach a coordinate top away from the eventual
 set on which the rapidity inequality holds. -/
@@ -1163,9 +1104,6 @@ theorem exists_eventualDominatingStage_of_closedRapidComparison_of_smallSets
         (s (stage j) (coordinate j)).1 :=
     hMiddle.trans_eq (by rw [hCoordinateEq])
   exact (hFirst.trans_le hMiddle').trans hLast
-
-#print axioms
-  exists_eventualDominatingStage_of_closedRapidComparison_of_smallSets
 
 /-! Jech Lemma 24.14 in its source-level form.  A normal failure recursion
 is pulled back along the club witnessing rapidity.  Inside that club we use
@@ -1415,9 +1353,6 @@ theorem exists_eventualDominatingStage_of_gammaRapid_of_smallSets_of_support
   rw [hCoordinateEq] at hFirst ⊢
   exact (hFirst.trans_le hMiddle').trans hLast
 
-#print axioms
-  exists_eventualDominatingStage_of_gammaRapid_of_smallSets_of_support
-
 /-! The original all-coordinate form follows by taking the support to be
 the whole coordinate type. -/
 theorem exists_eventualDominatingStage_of_gammaRapid_of_smallSets
@@ -1462,9 +1397,6 @@ theorem exists_eventualDominatingStage_of_gammaRapid_of_smallSets
   · exact hIncreasing
   · exact hRapid
 
-#print axioms
-  exists_eventualDominatingStage_of_gammaRapid_of_smallSets
-
 theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyPointwiseLt
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
@@ -1478,9 +1410,6 @@ theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyPointwiseLt
   exact J.eventually_mono (J.eventually_and hxy' hyf) (by
     intro k hk
     exact hk.1.trans hk.2)
-
-#print axioms
-  CardinalProductEventuallyLtClosed.trans_of_eventuallyPointwiseLt
 
 theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyLe
     {A : CardSet.{u}}
@@ -1497,8 +1426,6 @@ theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyLe
       exact ((Ordinal.ToType.mk : Set.Iio k.1.ord ≃o k.1.ord.ToType).symm
         |>.monotone hk.1)
     exact hValueLe.trans_lt hk.2)
-
-#print axioms CardinalProductEventuallyLtClosed.trans_of_eventuallyLe
 
 /-! A closed exact upper bound: every family member is strictly below `f`,
 and every genuine product member below `f` is eventually dominated by the
@@ -1534,8 +1461,6 @@ theorem CardinalProductClosedExactUpperBound.reindex
     obtain ⟨i, hi⟩ := hExact.2 h hh
     exact ⟨e i, by simpa using hi⟩
 
-#print axioms CardinalProductClosedExactUpperBound.reindex
-
 /-! If a closed exact upper bound reaches the coordinate top almost
 everywhere, the original family is cofinal in the genuine product.  This is
 the final implication used in Theorem 24.16 after Corollary 24.15 forces the
@@ -1556,9 +1481,6 @@ theorem CardinalProductClosedExactUpperBound.isCofinalFamily_of_eventually_top
     intro k hk
     rw [show (f k).1 = k.1.ord from le_antisymm (f k).2 hk]
     exact cardinalProductOrdinalValue_lt h k)
-
-#print axioms
-  CardinalProductClosedExactUpperBound.isCofinalFamily_of_eventually_top
 
 /-! Closed exactness survives localization.  A local test is spliced with
 one fixed family member off the localizing predicate before global exactness
@@ -1603,8 +1525,6 @@ theorem CardinalProductClosedExactUpperBound.localize
       have : Not ((cardinalProductFrame A J).le k (h' k) (d i k)) := by
         simpa only [h', if_pos hk.2] using hk.1
       exact this)
-
-#print axioms CardinalProductClosedExactUpperBound.localize
 
 /-! Corollary 24.15.  A gamma-rapid increasing sequence cannot have a closed
 exact upper bound whose coordinate cofinality is below gamma on a positive
@@ -1846,9 +1766,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid_of_
   exact (ReducedProductFrame.eventuallyLt_of_eventually_pointwiseStrict
     hBProper hHNextStrict).2 hNextH
 
-#print axioms
-  CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid_of_support
-
 /-! Corollary 24.15 with all coordinates as the support. -/
 theorem CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid
     {A : CardSet.{u}}
@@ -1882,9 +1799,6 @@ theorem CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid
   · exact J.eventually_of_forall (fun _ => True.intro)
   · exact hIncreasing
   · exact hRapid
-
-#print axioms
-  CardinalProductClosedExactUpperBound.eventually_cof_ge_of_gammaRapid
 
 /-! Closed exact-upper-bound decomposition at the coordinatewise top.  It
 is the top-valued form of Jech 24.11: the family is strictly bounded, is
@@ -1969,8 +1883,6 @@ theorem cardinalProductClosedExactUpperBound_top_decomposition
         (J.localize_isProper_iff (fun k => Not (X k))).mpr hOffSmall,
         ⟨p, hUpperOnX⟩, hCofinalOffX⟩
 
-#print axioms cardinalProductClosedExactUpperBound_top_decomposition
-
 /-! An ultrafilter-dual ideal decides the eventual comparison of every two
 canonical product elements. This is totality of the reduced-product preorder,
 not antisymmetry of raw product functions and not a scale construction. -/
@@ -1994,8 +1906,6 @@ theorem cardinalProductFrame_eventuallyLe_total_of_isUltrafilterDual
       apply J.eventually_mono hNotLe
       intro i hi
       exact (not_le.mp hi).le
-
-#print axioms cardinalProductFrame_eventuallyLe_total_of_isUltrafilterDual
 
 /-! Every pair of canonical product elements has a common eventual upper
 bound, formed coordinatewise. This directedness holds for every ideal and is
@@ -2034,8 +1944,6 @@ theorem cardinalProductFrame_exists_common_eventual_upper_bound
         (show i.1.ord.ToType from x i) :=
         (not_le.mp hxy).le
       simpa only [z, if_neg hxy] using hyx
-
-#print axioms cardinalProductFrame_exists_common_eventual_upper_bound
 
 /-! The quotient of canonical product elements by mutual eventual domination.
 The raw product function type is only a preorder modulo an ideal; this
@@ -2098,8 +2006,6 @@ instance cardinalProductQuotientLE
         (cardinalProductFrame A J).eventuallyLe x y :=
   Iff.rfl
 
-#print axioms cardinalProductQuotient_mk_le_mk
-
 /-! The quotient relation is a genuine partial order for every ideal. -/
 instance cardinalProductQuotientPartialOrder
     {A : CardSet.{u}}
@@ -2125,8 +2031,6 @@ instance cardinalProductQuotientPartialOrder
       | h y =>
         exact Quotient.sound ⟨hqr, hrq⟩
 
-#print axioms cardinalProductQuotientPartialOrder
-
 /-! If the canonical coordinate index is small in the cardinal universe, then
 the raw dependent product is small there as well. The coordinate types already
 live in that universe, so this is a direct dependent-product smallness fact. -/
@@ -2143,9 +2047,6 @@ theorem cardinalProductFrame_productElement_small_of_small_cardinalIndex
     fun _ => small_self _
   exact small_Pi _
 
-#print axioms
-  cardinalProductFrame_productElement_small_of_small_cardinalIndex
-
 /-! Under the same small-index hypothesis, the eventual-equality quotient is
 small in the cardinal universe. This is only universe bookkeeping; it does
 not select a cofinal chain or produce a scale. -/
@@ -2161,8 +2062,6 @@ theorem cardinalProductQuotient_small_of_small_cardinalIndex
       Small.{u} ((cardinalProductFrame A J).Coord i) :=
     fun _ => small_self _
   exact small_quotient _
-
-#print axioms cardinalProductQuotient_small_of_small_cardinalIndex
 
 /-! The order cofinality of a small preorder in `Type (u + 1)` is the lift of
 some cardinal in `Type u`. This identifies the universe level of the least
@@ -2182,8 +2081,6 @@ theorem exists_cof_eq_lift_of_small
   obtain ⟨theta, hTheta⟩ := Cardinal.mem_range_lift_of_le hSmall
   exact ⟨theta, hTheta.symm⟩
 
-#print axioms exists_cof_eq_lift_of_small
-
 /-! A small canonical index therefore removes the quotient's universe gap at
 the level of cardinal representation. Regularity of this represented
 cofinality remains a separate theorem before it can yield canonical PCF
@@ -2199,9 +2096,6 @@ theorem cardinalProductQuotient_exists_cof_eq_lift_of_small_cardinalIndex
     cardinalProductQuotient_small_of_small_cardinalIndex
   exact exists_cof_eq_lift_of_small
 
-#print axioms
-  cardinalProductQuotient_exists_cof_eq_lift_of_small_cardinalIndex
-
 /-! Strict order between quotient representatives is precisely strict
 eventual comparison of the underlying product functions. -/
 @[simp] theorem cardinalProductQuotient_mk_lt_mk_iff
@@ -2213,8 +2107,6 @@ eventual comparison of the underlying product functions. -/
       Quotient.mk (cardinalProductFrameEventualSetoid A J) y <->
         (cardinalProductFrame A J).eventuallyLt x y :=
   Iff.rfl
-
-#print axioms cardinalProductQuotient_mk_lt_mk_iff
 
 /-! The quotient product is directed for every ideal. The upper bound is the
 class of the coordinatewise upper bound already constructed on raw functions. -/
@@ -2231,8 +2123,6 @@ theorem cardinalProductQuotient_exists_common_upper_bound
         cardinalProductFrame_exists_common_eventual_upper_bound x y
       exact ⟨Quotient.mk (cardinalProductFrameEventualSetoid A J) z, hxz, hyz⟩
 
-#print axioms cardinalProductQuotient_exists_common_upper_bound
-
 /-! An ultrafilter-dual ideal linearly orders the quotient product. This
 does not supply a well-ordered cofinal subset of that linear order. -/
 theorem cardinalProductQuotient_le_total_of_isUltrafilterDual
@@ -2248,16 +2138,12 @@ theorem cardinalProductQuotient_le_total_of_isUltrafilterDual
       exact cardinalProductFrame_eventuallyLe_total_of_isUltrafilterDual
         hUltra x y
 
-#print axioms cardinalProductQuotient_le_total_of_isUltrafilterDual
-
 theorem cardinalProductQuotient_isLinearOrder_of_isUltrafilterDual
     {A : CardSet.{u}}
     {J : Ideal (CardinalIndex A)}
     (hUltra : J.IsUltrafilterDual) :
     IsLinearOrder (CardinalProductQuotient A J) (fun q r => q <= r) where
   toTotal := ⟨cardinalProductQuotient_le_total_of_isUltrafilterDual hUltra⟩
-
-#print axioms cardinalProductQuotient_isLinearOrder_of_isUltrafilterDual
 
 /-! A family is cofinal in the eventual-equality quotient when it eventually
 bounds every quotient class. This definition is paired below with its exact
@@ -2302,8 +2188,6 @@ theorem cardinalProductQuotient_mk_isCofinalFamily_iff
       hCofinal (Quotient.mk (cardinalProductFrameEventualSetoid A J) g)
     exact ⟨i, hgi⟩
 
-#print axioms cardinalProductQuotient_mk_isCofinalFamily_iff
-
 /-! A cofinal family in the quotient can be represented pointwise by raw
 product functions without losing cofinality. The index universe is arbitrary;
 this remains a family conversion, not a scale construction. -/
@@ -2328,8 +2212,6 @@ theorem cardinalProductFrame_exists_cofinalFamily_of_quotient
   rw [he i]
   exact hgi
 
-#print axioms cardinalProductFrame_exists_cofinalFamily_of_quotient
-
 /-! In the universe of the quotient itself, the least quotient cofinality is
 realized by a raw-product cofinal family of exactly that cardinality. This does
 not furnish a well-ordered or strictly increasing family. -/
@@ -2353,8 +2235,6 @@ theorem cardinalProductFrame_exists_cofinalFamily_of_mk_eq_quotient_cof
       dQuotient hQuotientCofinal
   exact ⟨s, d, hRawCofinal, hCard⟩
 
-#print axioms cardinalProductFrame_exists_cofinalFamily_of_mk_eq_quotient_cof
-
 /-! An already supplied scale becomes a strictly increasing, cofinal chain in
 the antisymmetric quotient order. This transports a scale witness; it does
 not construct one for a nonprincipal product. -/
@@ -2375,8 +2255,6 @@ theorem cardinalProductQuotient_mk_strictly_increasing_and_cofinal_of_scale
     exact s.increasing hlt
   · exact cardinalProductQuotient_mk_isCofinalFamily_iff s.seq |>.mp
       s.isCofinalFamily_seq
-
-#print axioms cardinalProductQuotient_mk_strictly_increasing_and_cofinal_of_scale
 
 /-! Every raw product scale determines a quotient scale with exactly the same
 well-ordered index. This merely transports a supplied scale to the quotient. -/
@@ -2401,8 +2279,6 @@ theorem CardinalProductQuotientScale.nonempty_of_scale
     (s : Scale (cardinalProductFrame A J) L) :
     Nonempty (CardinalProductQuotientScale A J L) :=
   ⟨CardinalProductQuotientScale.ofScale s⟩
-
-#print axioms CardinalProductQuotientScale.nonempty_of_scale
 
 /-! A quotient scale can be represented pointwise by raw product functions
 while preserving strict growth and cofinality. Representative choice is used
@@ -2432,8 +2308,6 @@ theorem CardinalProductQuotientScale.exists_scale
     rw [he alpha]
     exact hAlpha
 
-#print axioms CardinalProductQuotientScale.exists_scale
-
 /-! Scale existence is equivalent before and after passing to the
 eventual-equality quotient, for any fixed well-ordered index. This is an
 existence equivalence for a specified index, not a theorem deriving such an
@@ -2450,8 +2324,6 @@ theorem hasScaleWitness_iff_nonempty_cardinalProductQuotientScale
   · rintro ⟨s⟩
     exact s.exists_scale
 
-#print axioms hasScaleWitness_iff_nonempty_cardinalProductQuotientScale
-
 theorem mk_cardinalProductFrame_productElement
     {A : CardSet.{u}}
     (J : Ideal (CardinalIndex A)) :
@@ -2461,8 +2333,6 @@ theorem mk_cardinalProductFrame_productElement
   congr 1
   funext i
   exact mk_cardinalProductFrame_coord J i
-
-#print axioms mk_cardinalProductFrame_productElement
 
 /-! A family shorter than a regular cardinal has a strict upper bound in
 the canonical coordinate order. This is the coordinatewise diagonal step
@@ -2517,9 +2387,6 @@ theorem cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt
   choose g hg using hCoordinate
   exact ⟨g, fun i k => hg k i⟩
 
-#print axioms
-  cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt
-
 /-! The same pointwise construction may be restricted to a chosen set of
     coordinates.  Outside that set an arbitrary zero coordinate is used; no
     smallness claim is made there. -/
@@ -2548,9 +2415,6 @@ theorem cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt_on
   intro i k hk
   simpa only [g, dif_pos hk] using hb k hk i
 
-#print axioms
-  cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt_on
-
 /-! If every small index type is eventually smaller than the coordinate
 cardinals, coordinatewise regularity upgrades this tail condition to genuine
 eventual pointwise-strict directedness.  This isolates the ideal-theoretic
@@ -2573,9 +2437,6 @@ theorem cardinalProductFrame_pointwiseStrictDirectedBelow_of_eventually_coordina
   exact J.eventually_mono (hEventually ι hSmall) (by
     intro k hk
     exact ⟨(hg i k hk).le, not_le_of_gt (hg i k hk)⟩)
-
-#print axioms
-  cardinalProductFrame_pointwiseStrictDirectedBelow_of_eventually_coordinate
 
 /-! Layered diagonalization.  The whole family may be as large as the limit
 of the coordinate cardinals: coordinate `k` only has to dominate the local
@@ -2610,9 +2471,6 @@ theorem cardinalProductFrame_exists_eventuallyPointwiseLt_of_layered
     have hlt : (show k.1.ord.ToType from d i k) < g k :=
       hg k ⟨i, hik⟩
     exact ⟨hlt.le, not_le_of_gt hlt⟩)
-
-#print axioms
-  cardinalProductFrame_exists_eventuallyPointwiseLt_of_layered
 
 /-! Every family whose index cardinal is below every coordinate cardinal has
 a common strict upper bound in the reduced product over a proper ideal. This
@@ -2704,9 +2562,6 @@ theorem
   simpa only [ReducedProductFrame.withIdeal, cardinalProductFrame] using
     hNotCofinal
 
-#print axioms
-  cardinalProductFrame_exists_nonprincipal_ultrafilterDual_ideal_not_isCofinalFamily_of_mk_lt
-
 /-! It is enough that the candidate family be smaller than the coordinates
     off a finite exceptional set.  The exceptional coordinates are already
     small in the finite-set ideal, while every reverse comparison is
@@ -2759,9 +2614,6 @@ theorem
   simpa only [ReducedProductFrame.withIdeal, cardinalProductFrame] using
     hNotCofinal
 
-#print axioms
-  cardinalProductFrame_exists_nonprincipal_ultrafilterDual_ideal_not_isCofinalFamily_of_mk_lt_off_finite
-
 /-! With regular coordinates and a proper ideal, the eventual-equality
 quotient has no maximal element. This is an order-theoretic consequence of
 the one-element diagonal bound, not a construction of a cofinal scale. -/
@@ -2785,8 +2637,6 @@ theorem cardinalProductQuotient_exists_lt_of_regulars
         hRegulars hSmall hProper d
     refine ⟨Quotient.mk (cardinalProductFrameEventualSetoid A J) g, ?_⟩
     simpa only [d] using hg (ULift.up Unit.unit)
-
-#print axioms cardinalProductQuotient_exists_lt_of_regulars
 
 /-! A coordinatewise diagonal bound only needs to hold on an eventual set of
     coordinates. This is the form used for nonprincipal countable-index
@@ -2836,8 +2686,6 @@ theorem cardinalProductQuotient_exists_lt_of_regulars
           exact (not_le_of_gt (hStrictAt k hk.1 i)) hk.2)
   exact ⟨g, hUpper⟩
 
-#print axioms cardinalProductFrame_exists_strict_upper_bound_of_mk_lt_of_eventually
-
 theorem cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
@@ -2855,8 +2703,6 @@ theorem cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
   intro hCofinal
   obtain ⟨i, hgi⟩ := hCofinal g
   exact (hUpper i).right hgi
-
-#print axioms cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
 
 theorem cardinalProductFrame_not_isCofinalFamily_nat_of_aleph0_lt
     {A : CardSet.{u}}
@@ -2881,9 +2727,6 @@ theorem cardinalProductFrame_not_isCofinalFamily_nat_of_aleph0_lt
       simpa only [Cardinal.mk_uLift, Cardinal.mk_nat,
         Cardinal.lift_aleph0] using hAleph0 theta hTheta)
     hProper dLift) hLiftCofinal
-
-#print axioms cardinalProductFrame_exists_strict_upper_bound_of_mk_lt
-#print axioms cardinalProductFrame_not_isCofinalFamily_nat_of_aleph0_lt
 
 /-! The order cofinality of the eventual-equality quotient is uncountable
 when all regular coordinates are above `aleph0`. A hypothetical countable
@@ -2938,8 +2781,6 @@ theorem cardinalProductQuotient_lift_lt_cof_of_regulars
     (fun theta hTheta => hShrinkLe.trans_lt (hCoordinate theta hTheta))
     hProper d) hRawCofinal
 
-#print axioms cardinalProductQuotient_lift_lt_cof_of_regulars
-
 /-! The same quotient-cofinality lower bound only needs the coordinate
 inequality on an eventual set. A small cofinal quotient family is represented
 by raw functions and contradicted by the eventual diagonal theorem; no
@@ -2993,8 +2834,6 @@ theorem cardinalProductQuotient_lift_lt_cof_of_regulars_of_eventually
     hRegulars
     (fun i hi => hShrinkLe.trans_lt (hCoordinate i hi))
     hProper hEventually d) hRawCofinal
-
-#print axioms cardinalProductQuotient_lift_lt_cof_of_regulars_of_eventually
 
 /-! If the regular coordinates eventually exceed every cardinal below
 `lambda`, then the quotient order has cofinality at least `lambda` (up to the
@@ -3052,9 +2891,6 @@ theorem cardinalProductQuotient_lift_le_cof_of_regulars_of_eventually_unbounded
     (fun i hi => hCoordinateAt i hi)
     hProper hEventually d) hRawCofinal
 
-#print axioms
-  cardinalProductQuotient_lift_le_cof_of_regulars_of_eventually_unbounded
-
 /-! The `aleph0` specialization of the general quotient-cofinality lower
 bound. This is an order-theoretic obstruction only; it does not construct a
 well-ordered quotient chain or a scale. -/
@@ -3068,8 +2904,6 @@ theorem cardinalProductQuotient_aleph0_lt_cof_of_regulars
   simpa only [Cardinal.lift_aleph0] using
     cardinalProductQuotient_lift_lt_cof_of_regulars
       hRegulars hAleph0 hProper
-
-#print axioms cardinalProductQuotient_aleph0_lt_cof_of_regulars
 
 def IsCardinalProductOver
     (A : CardSet.{u})
@@ -3168,9 +3002,6 @@ theorem exists_cardinalProduct_cofinalFamily_of_localizedScales_cover
       refine ⟨?_, hkY⟩
       intro hLe
       exact hk (hLe.trans (le_max_right _ _)))
-
-#print axioms
-  exists_cardinalProduct_cofinalFamily_of_localizedScales_cover
 
 theorem exists_cardinalProduct_strictIncreasing_rapidBelow_of_directed
     {A : CardSet.{u}}
@@ -3331,9 +3162,6 @@ theorem exists_cardinalProduct_strictIncreasing_rapidBelow_of_directed
     rw [← hSupEq]
     exact hChosen
 
-#print axioms
-  exists_cardinalProduct_strictIncreasing_rapidBelow_of_directed
-
 /-! A coloring of a regular uncountable canonical scale length by fewer
 colors is constant on a stationary, hence cofinal, set of stages.  This is
 the pigeonhole step in Jech Lemma 24.10 after functions have been rounded
@@ -3366,8 +3194,6 @@ theorem exists_cofinal_eqOn_const_cardinalScaleLength
       hCofNe hSmall' color
       (univ_stationary hCofNe)
   exact ⟨b, T, hTStationary, stationary_isCofinal hTStationary, hColor⟩
-
-#print axioms exists_cofinal_eqOn_const_cardinalScaleLength
 
 /-! Abstract elementary-hull core of Jech Lemma 24.10.  The hypotheses
 separate the three facts supplied by the hull construction: each stage has a
@@ -3424,9 +3250,6 @@ theorem exists_cardinalProductClosedExactUpperBound_of_small_roundingHull
       (Ordinal.ToType.mk ⟨0, hThetaRegular.ord_pos⟩)
     refine ⟨alpha, hRoundingMinimal h hHull alpha ?_⟩
     rwa [hCode hAlphaT]
-
-#print axioms
-  exists_cardinalProductClosedExactUpperBound_of_small_roundingHull
 
 /-! The exact-upper-bound principle isolated from Jech Lemma 24.10.  It is
 stated for a fixed canonical product and cardinal length: every
@@ -3654,8 +3477,6 @@ theorem pushforwardCardinalProductHull_reflect
   obtain ⟨alpha, hAlpha⟩ := hHull witness hWitnessHull hWitness.1
   exact hWitness.2 alpha hAlpha
 
-#print axioms pushforwardCardinalProductHull_reflect
-
 def pushforwardCardinalProductHullRoundingSet
     {I : Type (u + 1)}
     {A : CardSet.{u}}
@@ -3845,9 +3666,6 @@ theorem pushforwardCardinalProductHullClosed_roundingCode_value
     min_eq_left (pushforwardCardinalProductHullRoundedValue_le_top
       c d d0 alpha i)]
 
-#print axioms
-  pushforwardCardinalProductHullClosed_roundingCode_value
-
 theorem pushforwardCardinalProductHull_roundedUpper
     {I : Type (u + 1)}
     {A : CardSet.{u}}
@@ -3948,9 +3766,6 @@ theorem exists_pushforwardCardinalProductClosedExactUpperBound_of_hullCodeSmall
   · exact pushforwardCardinalProductHull_roundingMinimal c d d0
   · exact pushforwardCardinalProductHull_reflect c d d0
 
-#print axioms
-  exists_pushforwardCardinalProductClosedExactUpperBound_of_hullCodeSmall
-
 theorem mk_pushforwardCardinalProductHullCode_le_two_power
     {I : Type (u + 1)}
     (hIndexInfinite : Cardinal.aleph0 <= Cardinal.mk I) :
@@ -4041,9 +3856,6 @@ theorem pushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
     _ < Cardinal.lift.{u + 1} theta := hPower
   exact hIncreasing
 
-#print axioms
-  pushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
-
 theorem localizedPushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
     {I : Type (u + 1)}
     {A : CardSet.{u}}
@@ -4061,9 +3873,6 @@ theorem localizedPushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two
   rw [Ideal.pushforward_localize]
   exact pushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
     c hIndexInfinite hThetaRegular hThetaUncountable hPower
-
-#print axioms
-  localizedPushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
 
 /-! Canonical-size strict directedness is the boundary case immediately
 above `PointwiseStrictDirectedBelow theta`: it asks for a strict upper bound
@@ -4123,8 +3932,6 @@ theorem pointwiseStrictDirectedBelow_succ_of_directedAt
       rw [hZero]
       exact hThetaPos
     exact hBelow iota hEmptySmall d
-
-#print axioms pointwiseStrictDirectedBelow_succ_of_directedAt
 
 /-! A regular-length family can be recursively dominated by a
 pointwise-strict increasing sequence whenever the product is strictly
@@ -4207,8 +4014,6 @@ theorem pointwiseStrictDominatingSequence_of_directedBelow
     exact (Classical.choose_spec
       (hStep alpha (fun beta hbeta => seq beta))).1
 
-#print axioms pointwiseStrictDominatingSequence_of_directedBelow
-
 /-! Corollary 24.12 core.  Starting from an unbounded family of regular
 length, strict directedness recursively produces an increasing sequence
 which is still unbounded.  Lemma 24.10 supplies its closed exact upper bound,
@@ -4266,9 +4071,6 @@ theorem pointwiseStrictScale_or_localizedScale_of_unboundedFamily
       (J.le_localize (fun k => Not (X k)))
       (s.increasing hab)
 
-#print axioms
-  pointwiseStrictScale_or_localizedScale_of_unboundedFamily
-
 /-! Canonical Corollary 24.12 trichotomy: exact upper bounds and strict
 directedness below a regular `theta` imply strict directedness at `theta`, a
 global `theta`-scale, or a `theta`-scale on a positive localization. -/
@@ -4297,8 +4099,6 @@ theorem pointwiseStrictDirectedAt_or_scale_or_localizedScale
     exact pointwiseStrictScale_or_localizedScale_of_unboundedFamily
       hThetaRegular hDirected hExact d hd
 
-#print axioms pointwiseStrictDirectedAt_or_scale_or_localizedScale
-
 /-! Successor-directed form of the canonical trichotomy.  This is the
 cardinal-successor conclusion appearing in Corollary 24.12; the other two
 branches exhibit a global or positive-localized scale. -/
@@ -4325,9 +4125,6 @@ theorem pointwiseStrictDirectedBelow_succ_or_scale_or_localizedScale
       hThetaRegular.pos hDirected hAt)
   · exact Or.inr (Or.inl hScale)
   · exact Or.inr (Or.inr hLocalized)
-
-#print axioms
-  pointwiseStrictDirectedBelow_succ_or_scale_or_localizedScale
 
 /-! A target-size family absorbs the scales on every positive localization
 when each member of each such scale is eventually below some member of the
@@ -4409,9 +4206,6 @@ theorem exists_localizedScaleAbsorbingFamily_of_supportEmbedding
     rw [hPair]
   simpa only [hd] using hbeta
 
-#print axioms
-  exists_localizedScaleAbsorbingFamily_of_supportEmbedding
-
 /-! The powerset-size bound supplies the preceding injection.  The subtype
 of supports has no more elements than the full predicate type, and multiplying
 that bound by the infinite cardinal `theta` does not enlarge it. -/
@@ -4463,9 +4257,6 @@ theorem localizedScaleSupport_product_embedding_of_mk_predicates_le
   rw [hLiftProduct]
   exact hIndex
 
-#print axioms
-  localizedScaleSupport_product_embedding_of_mk_predicates_le
-
 /-! Hence the cardinality bound on the set of predicates constructs the
 absorbing family itself.  This is the enumeration step of Jech 24.12, with
 one chosen cofinal scale for each positive support. -/
@@ -4483,9 +4274,6 @@ theorem exists_localizedScaleAbsorbingFamily_of_mk_predicates_le
   obtain ⟨e⟩ := localizedScaleSupport_product_embedding_of_mk_predicates_le
     hThetaInfinite hPower
   exact exists_localizedScaleAbsorbingFamily_of_supportEmbedding d0 e
-
-#print axioms
-  exists_localizedScaleAbsorbingFamily_of_mk_predicates_le
 
 /-! For a product ideal obtained by pushforward, positive localizations are
 controlled by predicates on the source type.  This is the cardinal estimate
@@ -4568,9 +4356,6 @@ theorem pushforwardLocalizedScaleSupport_product_embedding_of_mk_predicates_le
   rw [hLiftProduct]
   exact hIndex
 
-#print axioms
-  pushforwardLocalizedScaleSupport_product_embedding_of_mk_predicates_le
-
 theorem exists_pushforwardLocalizedScaleAbsorbingFamily_of_supportEmbedding
     {I : Type (u + 1)} {A : CardSet.{u}} {J : Ideal I}
     {c : I -> CardinalIndex A} {theta : Cardinal.{u}}
@@ -4637,9 +4422,6 @@ theorem exists_pushforwardLocalizedScaleAbsorbingFamily_of_supportEmbedding
     exact hbeta
   simpa only [hd] using hout
 
-#print axioms
-  exists_pushforwardLocalizedScaleAbsorbingFamily_of_supportEmbedding
-
 theorem exists_pushforwardLocalizedScaleAbsorbingFamily_of_mk_predicates_le
     {I : Type (u + 1)} {A : CardSet.{u}} {J : Ideal I}
     {c : I -> CardinalIndex A} {theta : Cardinal.{u}}
@@ -4655,9 +4437,6 @@ theorem exists_pushforwardLocalizedScaleAbsorbingFamily_of_mk_predicates_le
       hThetaInfinite hPower
   exact exists_pushforwardLocalizedScaleAbsorbingFamily_of_supportEmbedding
     d0 e
-
-#print axioms
-  exists_pushforwardLocalizedScaleAbsorbingFamily_of_mk_predicates_le
 
 /-! Full order-theoretic Corollary 24.12 from its exact-upper-bound and
 enumeration ingredients.  The output is successor directedness, a global
@@ -4783,9 +4562,6 @@ theorem pointwiseStrictCorollary2412_of_exactUpperBounds_of_absorbingFamily
         exact False.elim
           (contradictScale ZW hWProper p hpK tW)
 
-#print axioms
-  pointwiseStrictCorollary2412_of_exactUpperBounds_of_absorbingFamily
-
 /-! Pushforward/source-cardinality form of Corollary 24.12.  This is the
 version suited to Theorem 24.16: the powerset bound is imposed on the source
 of the coordinate map, even when the ambient cardinal set is larger. -/
@@ -4825,9 +4601,6 @@ theorem pointwiseStrictCorollary2412_of_pushforward_exactUpperBounds
   exact pointwiseStrictCorollary2412_of_exactUpperBounds_of_absorbingFamily
     hThetaRegular hDirected hExact hExactLocalized d hd
 
-#print axioms
-  pointwiseStrictCorollary2412_of_pushforward_exactUpperBounds
-
 /-! Cardinal-bound form of Corollary 24.12.  Its enumeration hypothesis is
 the cardinality of the full predicate type, i.e. the powerset of the product
 index.  The previous theorem constructs the absorbing family internally. -/
@@ -4861,9 +4634,6 @@ theorem pointwiseStrictCorollary2412_of_exactUpperBounds_of_mk_predicates_le
   exact pointwiseStrictCorollary2412_of_exactUpperBounds_of_absorbingFamily
     hThetaRegular hDirected hExact hExactLocalized d hd
 
-#print axioms
-  pointwiseStrictCorollary2412_of_exactUpperBounds_of_mk_predicates_le
-
 /-! If both global and positive-localized scales are excluded, the preceding
 trichotomy leaves canonical-size directedness.  This is the form used when
 Corollary 24.12 is applied contrapositively. -/
@@ -4889,8 +4659,6 @@ theorem pointwiseStrictDirectedAt_of_no_scale
   · exact False.elim (hNoScale hScale)
   · obtain ⟨X, hProper, hScale⟩ := hLocalized
     exact False.elim (hNoLocalizedScale X hProper hScale)
-
-#print axioms pointwiseStrictDirectedAt_of_no_scale
 
 /-! A cofinal family of regular cardinal length can be strictified whenever
 the reduced product has pointwise-strict upper bounds for every shorter
@@ -4921,8 +4689,6 @@ theorem pointwiseStrictScale_of_directedBelow_of_cofinalFamily
   refine ⟨alpha,
     (cardinalProductFrame A J).eventuallyLe_trans hga ?_⟩
   exact J.eventually_mono (s.dominates alpha) (fun _ hi => hi.1)
-
-#print axioms pointwiseStrictScale_of_directedBelow_of_cofinalFamily
 
 theorem cardinalScaleLength_le_mk_of_cofinalFamily
     {A : CardSet.{u}}
@@ -5015,9 +4781,6 @@ theorem CardinalProductClosedExactUpperBound.cardinal_le_of_cofinalBelow
   exact hStrict.right
     ((cardinalProductFrame A J).eventuallyLe_trans hBetaLe (hStage i))
 
-#print axioms
-  CardinalProductClosedExactUpperBound.cardinal_le_of_cofinalBelow
-
 theorem cardinalScaleLength_hasTrueCofinality
     {A : CardSet.{u}}
     {theta : Cardinal.{u}}
@@ -5051,8 +4814,6 @@ theorem cardinalScaleLength_hasTrueCofinality_of_quotientScale
       (cardinalScaleLength theta) := by
   obtain ⟨t⟩ := s.exists_scale
   exact cardinalScaleLength_hasTrueCofinality hRegular t
-
-#print axioms cardinalScaleLength_hasTrueCofinality_of_quotientScale
 
 /-! A supplied quotient scale of regular canonical length computes the order
 cofinality of the quotient exactly. The chain is already part of the input;
@@ -5094,9 +4855,6 @@ theorem cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
         Cardinal.lift.{u + 1} theta
       rw [Ordinal.cof_toType, hRegular.cof_ord]
 
-#print axioms
-  cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
-
 /-! In a quotient ordered by an ultrafilter-dual ideal, every family whose
 index cardinal is strictly below the order cofinality has a common strict
 upper bound. This is an order-theoretic consequence of smallness; it does not
@@ -5124,8 +4882,6 @@ theorem cardinalProductQuotient_exists_strict_upper_bound_of_mk_lt_cof
   refine ⟨q, ?_⟩
   intro i
   exact hq (d i) ⟨i, rfl⟩
-
-#print axioms cardinalProductQuotient_exists_strict_upper_bound_of_mk_lt_cof
 
 /-! A cofinal quotient family indexed by the canonical lower-universe length
 provides the upper half of the quotient-cofinality equality. Hence an explicit
@@ -5161,8 +4917,6 @@ theorem cardinalProductQuotient_cof_eq_lift_of_cofinalFamily_of_lift_le
       _ = Cardinal.lift.{u + 1} theta := by
         rw [mk_cardinalScaleLength_level]
   · exact hCofLower
-
-#print axioms cardinalProductQuotient_cof_eq_lift_of_cofinalFamily_of_lift_le
 
 /-! An explicit cofinal family indexed by the literal lower-universe canonical
 length can be recursively strictified into a quotient scale when the quotient
@@ -5248,8 +5002,6 @@ theorem cardinalProductQuotientScale_of_cofinalFamily_of_cof_eq_lift
     rw [hSeqEq alpha]
     exact (Classical.choose_spec (hStep alpha (fun beta hbeta => seq beta))).1.le
 
-#print axioms cardinalProductQuotientScale_of_cofinalFamily_of_cof_eq_lift
-
 /-! If the quotient cofinality is exactly the lift of a lower-universe
 cardinal, a cofinal family can be reindexed by the literal canonical length.
 This uses a least cofinal subset and a cardinal equivalence; it does not show
@@ -5281,8 +5033,6 @@ theorem cardinalProductQuotient_exists_cofinalFamily_of_cof_eq_lift
   refine ⟨e ⟨r, hr⟩, ?_⟩
   simpa [e] using hqr
 
-#print axioms cardinalProductQuotient_exists_cofinalFamily_of_cof_eq_lift
-
 /-! Exact lifted quotient cofinality supplies the low-universe cofinal family
 needed by the recursive scale construction. The equality is an explicit input;
 this theorem does not prove it for a nonprincipal ideal. -/
@@ -5299,8 +5049,6 @@ theorem cardinalProductQuotientScale_of_cof_eq_lift
     cardinalProductQuotient_exists_cofinalFamily_of_cof_eq_lift hCofEq
   exact cardinalProductQuotientScale_of_cofinalFamily_of_cof_eq_lift
     hRegulars hUltra d hCofinal hCofEq
-
-#print axioms cardinalProductQuotientScale_of_cof_eq_lift
 
 /-! Exact lifted cofinality of an ultrafilter quotient is represented by a
 regular cardinal once it is infinite. The proof strictifies a cofinal family,
@@ -5351,8 +5099,6 @@ theorem cardinalProductQuotient_isRegular_of_cof_eq_lift
         Cardinal.lift_lt.mpr hSingular.cof_ord_lt
   simp only [Q, hCofEq] at hStrict
   exact (lt_irrefl _) hStrict
-
-#print axioms cardinalProductQuotient_isRegular_of_cof_eq_lift
 
 /-! A small canonical index removes the remaining universe obstruction in a
 concrete quotient-cofinality lower bound.  If that lower-bound cardinal is
@@ -5405,9 +5151,6 @@ theorem cardinalProductFrame_exists_trueCofinality_gt_of_small_cardinalIndex
     exact lt_of_le_of_ne hThetaLower hNe
   exact ⟨theta, hRegular, hTcf, hThetaGt⟩
 
-#print axioms
-  cardinalProductFrame_exists_trueCofinality_gt_of_small_cardinalIndex
-
 /-! For a small canonical index, any ultrafilter quotient whose order
 cofinality is uncountable has a genuine represented regular true cofinality.
 Smallness gives an exact lifted cardinal for the quotient cofinality, and the
@@ -5451,9 +5194,6 @@ theorem cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_ale
         _ < Order.cof (CardinalProductQuotient A J) := hCofAleph0
         _ = Cardinal.lift.{u + 1} theta := hCofEq)⟩
 
-#print axioms
-  cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt_cof
-
 /-! If every regular coordinate is uncountable, the diagonal quotient
 obstruction supplies the uncountable quotient cofinality needed above. Thus
 on a small canonical index every ultrafilter-dual product has a genuine true
@@ -5476,9 +5216,6 @@ theorem cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_ale
   exact cardinalProductQuotient_aleph0_lt_cof_of_regulars
     hRegulars hAleph0 hUltra.isProper
 
-#print axioms
-  cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt
-
 /-! The recursive quotient-scale construction with its exact-cofinality input
 derived from a same-length lower bound. The low-universe cofinal family and
 the lower bound remain explicit; this theorem does not obtain either from the
@@ -5498,8 +5235,6 @@ theorem cardinalProductQuotientScale_of_cofinalFamily_of_lift_le
     hRegulars hUltra d hCofinal
     (cardinalProductQuotient_cof_eq_lift_of_cofinalFamily_of_lift_le
       d hCofinal hCofLower)
-
-#print axioms cardinalProductQuotientScale_of_cofinalFamily_of_lift_le
 
 /-! The preceding low-universe quotient-chain construction immediately gives
 a raw scale witness after choosing representatives. It remains conditional on
@@ -5522,8 +5257,6 @@ theorem hasScaleWitness_of_quotientCofinalFamily_of_cof_eq_lift
       hRegulars hUltra d hCofinal hCofEq
   exact s.exists_scale
 
-#print axioms hasScaleWitness_of_quotientCofinalFamily_of_cof_eq_lift
-
 /-! The lower-bound form of the preceding raw-scale witness constructor. -/
 theorem hasScaleWitness_of_quotientCofinalFamily_of_lift_le
     {A : CardSet.{u}}
@@ -5542,8 +5275,6 @@ theorem hasScaleWitness_of_quotientCofinalFamily_of_lift_le
     hRegulars hUltra d hCofinal hCofLower
   exact s.exists_scale
 
-#print axioms hasScaleWitness_of_quotientCofinalFamily_of_lift_le
-
 /-! Exact lifted quotient cofinality also yields a raw scale witness after
 selecting representatives. The equality remains an explicit quotient-order
 hypothesis rather than a consequence of the Zorn ideal. -/
@@ -5561,8 +5292,6 @@ theorem hasScaleWitness_of_quotientCof_eq_lift
   obtain ⟨s⟩ := cardinalProductQuotientScale_of_cof_eq_lift
     hRegulars hUltra hCofEq
   exact s.exists_scale
-
-#print axioms hasScaleWitness_of_quotientCof_eq_lift
 
 /-! At a regular canonical length, true cofinality is exactly equivalent to
 the existence of a lower-universe quotient cofinal family of that length with
@@ -5595,9 +5324,6 @@ theorem cardinalScaleLength_hasTrueCofinality_iff_exists_quotientCofinalFamily_o
       hRegulars hUltra d hCofinal hCofLower
     exact cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s
 
-#print axioms
-  cardinalScaleLength_hasTrueCofinality_iff_exists_quotientCofinalFamily_of_lift_le
-
 /-! For a regular represented cardinal, true cofinality is exactly the
 statement that the quotient order cofinality is its lifted cardinal. The
 reverse implication uses a least quotient cofinal subset and the recursive
@@ -5625,8 +5351,6 @@ theorem cardinalScaleLength_hasTrueCofinality_iff_quotient_cof_eq_lift
       hRegulars hUltra hCofEq
     exact cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s
 
-#print axioms cardinalScaleLength_hasTrueCofinality_iff_quotient_cof_eq_lift
-
 /-! A lower bound on the order cofinality of a quotient transfers directly
 to the length of an already supplied regular quotient scale. This consumes the
 scale; it does not create one from the order-cofinality bound. -/
@@ -5647,9 +5371,6 @@ theorem cardinalProductQuotient_cardinal_le_of_regular_quotientScale
     _ = Cardinal.lift.{u + 1} theta :=
       cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
         hRegular hUltra s
-
-#print axioms
-  cardinalProductQuotient_cardinal_le_of_regular_quotientScale
 
 /-! If the lower-bound cardinal is singular while the supplied quotient-scale
 length is regular, the preceding weak lower bound is strict. This is a
@@ -5673,9 +5394,6 @@ theorem cardinalProductQuotient_cardinal_lt_of_regular_quotientScale
     rw [hEq]
     exact hRegular
   exact lt_of_le_of_ne hLe hNe
-
-#print axioms
-  cardinalProductQuotient_cardinal_lt_of_regular_quotientScale
 
 noncomputable def singletonCardinalScaleSeq
     (theta : Cardinal.{u})
@@ -6129,8 +5847,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotientScale
     ⟨rfl, hRegular⟩
     (cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s)
 
-#print axioms cardinalProductRepresentation_mem_pcf_of_quotientScale
-
 /-! A low-universe cofinal quotient family yields canonical PCF membership
 when its quotient cofinality is explicitly identified with the represented
 regular cardinal. The proof uses the recursive quotient-scale construction;
@@ -6153,9 +5869,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_cof_eq
   exact cardinalProductRepresentation_mem_pcf_of_quotientScale
     J hUltra hRegular s
 
-#print axioms
-  cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_cof_eq_lift
-
 /-! The lower-bound form of the preceding PCF constructor. A low-universe
 cofinal family of canonical length supplies the reverse cofinality inequality,
 so the displayed lower bound suffices to construct the required scale. -/
@@ -6176,9 +5889,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_lift_l
   exact cardinalProductRepresentation_mem_pcf_of_quotientScale
     J hUltra hRegular s
 
-#print axioms
-  cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_lift_le
-
 /-! Exact lifted quotient cofinality for a regular cardinal gives canonical
 PCF membership by constructing the corresponding quotient scale. It does not
 establish the displayed cofinality equality for any Zorn-produced ideal. -/
@@ -6196,8 +5906,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotient_cof_eq_lift
     hRegulars hUltra hCofEq
   exact cardinalProductRepresentation_mem_pcf_of_quotientScale
     J hUltra hRegular s
-
-#print axioms cardinalProductRepresentation_mem_pcf_of_quotient_cof_eq_lift
 
 /-- Every regular cardinal belongs to the canonical `pcf` of its singleton
 set. Unlike the general membership theorem, this result constructs the scale. -/
@@ -6285,8 +5993,6 @@ theorem cardinalProductRepresentation_mem_pcf_not_mem_has_nonprincipal_ideal
   rw [hThetaEq]
   exact i.2
 
-#print axioms cardinalProductRepresentation_mem_pcf_not_mem_has_nonprincipal_ideal
-
 /-! A canonical PCF member is either one of the original regular coordinates,
 or has a representation by a nonprincipal ultrafilter-dual ideal with a real
 true-cofinality scale.  This classifies an already displayed PCF witness; it
@@ -6320,9 +6026,6 @@ theorem cardinalProductRepresentation_mem_pcf_iff_mem_or_exists_nonprincipal_tru
     · exact cardinalProductRepresentation_mem_pcf_iff.mpr
         ⟨hRegular, J, hUltra, hTcf⟩
 
-#print axioms
-  cardinalProductRepresentation_mem_pcf_iff_mem_or_exists_nonprincipal_trueCofinality
-
 /-! A small canonical index and uncountable regular coordinates make every
 specified ultrafilter-dual canonical product realize a regular PCF value
 above `aleph0`.  This constructs the scale from the quotient cofinality;
@@ -6345,9 +6048,6 @@ theorem cardinalProductRepresentation_exists_pcf_mem_gt_aleph0_of_small_cardinal
     cardinalProductRepresentation_mem_pcf_iff.mpr
       ⟨hRegular, J, hUltra, hTcf⟩,
     hThetaGt⟩
-
-#print axioms
-  cardinalProductRepresentation_exists_pcf_mem_gt_aleph0_of_small_cardinalIndex
 
 /-! On an infinite small canonical index, Zorn supplies a nonprincipal
 ultrafilter-dual ideal and the preceding quotient argument constructs its
@@ -6379,9 +6079,6 @@ theorem cardinalProductRepresentation_exists_nonprincipal_pcf_mem_gt_aleph0_of_s
       ⟨hRegular, J, hUltra, hTcf⟩,
     hThetaGt⟩
 
-#print axioms
-  cardinalProductRepresentation_exists_nonprincipal_pcf_mem_gt_aleph0_of_small_cardinalIndex
-
 /-! The small-index quotient construction expressed directly as canonical
 PCF membership.  It still needs the displayed ultrafilter-dual ideal and
 quotient lower bound; it does not manufacture those inputs. -/
@@ -6406,9 +6103,6 @@ theorem cardinalProductRepresentation_exists_pcf_mem_gt_of_small_cardinalIndex
     cardinalProductRepresentation_mem_pcf_iff.mpr
       ⟨hRegular, J, hUltra, hTcf⟩,
     hThetaGt⟩
-
-#print axioms
-  cardinalProductRepresentation_exists_pcf_mem_gt_of_small_cardinalIndex
 
 /-! A quotient-cofinality lower bound also gives a non-strict PCF lower
 bound, without requiring the lower-bound cardinal itself to be singular.  The
@@ -6456,9 +6150,6 @@ theorem cardinalProductRepresentation_exists_pcf_mem_ge_of_small_cardinalIndex_o
     cardinalProductRepresentation_mem_pcf_iff.mpr
       ⟨hRegular, J, hUltra, hTcf⟩,
     hLambdaTheta⟩
-
-#print axioms
-  cardinalProductRepresentation_exists_pcf_mem_ge_of_small_cardinalIndex_of_cof_lower
 
 theorem cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
     {A : CardSet.{u}}
@@ -6508,8 +6199,6 @@ theorem cardinalProductRepresentation_mem_pcf_iff_exists_quotientScale
       (A := A) (theta := theta)).mpr
         ⟨hRegular, J, hUltra, s.exists_scale⟩
 
-#print axioms cardinalProductRepresentation_mem_pcf_iff_exists_quotientScale
-
 /-! Canonical PCF membership is equivalently witnessed by a regular cardinal
 and an ultrafilter-dual quotient whose order cofinality is exactly that
 cardinal after lifting. The reverse direction is a proved scale construction,
@@ -6535,9 +6224,6 @@ theorem cardinalProductRepresentation_mem_pcf_iff_exists_quotient_cof_eq_lift
   · rintro ⟨hRegular, J, hUltra, hCofEq⟩
     exact cardinalProductRepresentation_mem_pcf_of_quotient_cof_eq_lift
       hRegulars J hUltra hRegular hCofEq
-
-#print axioms
-  cardinalProductRepresentation_mem_pcf_iff_exists_quotient_cof_eq_lift
 
 /-! The canonical scale sequence is injective: strict eventual growth rules
     out equality at two distinct ordinal indices. This gives the correct
@@ -6577,8 +6263,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_productCardinal
     · simp only [mk_cardinalScaleLength_level]
     · exact (Cardinal.lift_id'.{u, u + 1} _).symm⟩
 
-#print axioms cardinalProductRepresentation_pcf_theta_le_productCardinal
-
 theorem cardinalProductRepresentation_pcf_theta_le_coordinateProduct
     {A : CardSet.{u}}
     {theta : Cardinal.{u}}
@@ -6592,8 +6276,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_coordinateProduct
   refine ⟨J, hUltra, ?_⟩
   rw [← mk_cardinalProductFrame_productElement J]
   exact hBound
-
-#print axioms cardinalProductRepresentation_pcf_theta_le_coordinateProduct
 
 /-! The preceding product bound can be combined with Mathlib's exact
     cardinal-arithmetic calculation for an infinite index type.  The two
@@ -6621,8 +6303,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_two_power_of_coordinateProduc
           Cardinal.lift.{u} (Cardinal.mk (CardinalIndex A)) := by
     exact Cardinal.prod_eq_two_power hTwo hIndexBound
   exact ⟨J, hUltra, hProduct.trans_eq hArithmetic⟩
-
-#print axioms cardinalProductRepresentation_pcf_theta_le_two_power_of_coordinateProduct
 
 /-! A coordinatewise bound on the ambient product gives a power bound for
     every canonical PCF value. The bound is stated with `Cardinal.lift`
@@ -6662,8 +6342,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_power_of_coordinate_bound
     exact hProductBound.trans_eq hProductPower
   exact hProduct.trans hProductLift
 
-#print axioms cardinalProductRepresentation_pcf_theta_le_power_of_coordinate_bound
-
 /-! Every canonical PCF value dominates at least one member of the underlying
 regular-cardinal set. Otherwise its scale would be shorter than every
 coordinate, so the coordinatewise diagonal theorem would give a strict upper
@@ -6691,8 +6369,6 @@ theorem cardinalProductRepresentation_mem_pcf_exists_member_le
   obtain ⟨alpha, hAlpha⟩ := s.cofinal g
   exact (hStrict alpha).right hAlpha
 
-#print axioms cardinalProductRepresentation_mem_pcf_exists_member_le
-
 /-! A strict threshold above a PCF value must already contain a lower
 coordinate from the generating set. This is the form used when locating a
 PCF value inside a concrete initial segment of `A`. -/
@@ -6707,8 +6383,6 @@ theorem cardinalProductRepresentation_mem_pcf_exists_member_lt_of_lt_member
     cardinalProductRepresentation_mem_pcf_exists_member_le
       hRegulars hPcf
   exact ⟨gamma, hGamma, hGammaTheta.trans_lt hThetaBeta⟩
-
-#print axioms cardinalProductRepresentation_mem_pcf_exists_member_lt_of_lt_member
 
 /-! A general cofinality obstruction: if every proper canonical product has
 no cofinal family indexed by a type of cardinality at most `kappa`, then a
@@ -6733,8 +6407,6 @@ theorem cardinalProductRepresentation_mem_pcf_gt_of_no_small_cofinal_family
   exact hNoSmall J hUltra.isProper
     (cardinalScaleLength theta).Level s.seq hLevelLe s.isCofinalFamily_seq
 
-#print axioms cardinalProductRepresentation_mem_pcf_gt_of_no_small_cofinal_family
-
 /-! The coordinatewise form of the preceding obstruction.  It is often the
     most convenient way to obtain a lower bound: if every regular coordinate
     is above `kappa`, then diagonalization rules out every cofinal family of
@@ -6755,8 +6427,6 @@ theorem cardinalProductRepresentation_mem_pcf_gt_of_coordinate_bound
       hRegulars (ι := ι) (J := J) (fun beta hBeta =>
         hSmall.trans_lt (hCoordinate beta hBeta)) hProper d
   · exact hPcf
-
-#print axioms cardinalProductRepresentation_mem_pcf_gt_of_coordinate_bound
 
 /-! Eventual coordinate bounds constrain the cardinality of any supplied
 cofinal scale. The predicate `B` may discard a small initial part of the
@@ -6790,9 +6460,6 @@ theorem cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
     · exact hEventual
   exact hNoCofinal s.isCofinalFamily_seq
 
-#print axioms
-  cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
-
 /-! Eventual coordinate unboundedness already constrains every cofinal
 family, without assuming that the product has a scale. -/
 theorem cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
@@ -6815,9 +6482,6 @@ theorem cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounde
     hUnbounded (Cardinal.mk ι) hSmall
   exact (cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
     hRegulars hCoordinate hProper hEventual d) hCofinal
-
-#print axioms
-  cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
 
 /-! At a nonregular eventual-unboundedness threshold, a cofinal family whose
 index cardinal is regular must have cardinality strictly above that threshold.
@@ -6848,9 +6512,6 @@ theorem cardinalProductFrame_cardinal_lt_of_cofinalFamily_of_eventually_unbounde
     exact hIndexRegular
   exact lt_of_le_of_ne hGe hNe
 
-#print axioms
-  cardinalProductFrame_cardinal_lt_of_cofinalFamily_of_eventually_unbounded_of_not_isRegular
-
 /-! If the coordinates are eventually unbounded below a cardinal `lambda`,
 then a supplied cofinal scale has cardinality at least `lambda`. This fixes one
 concrete product ideal, so it applies directly to the nonprincipal branch of a
@@ -6873,9 +6534,6 @@ theorem cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
   exact cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
     hRegulars hProper hUnbounded s.seq s.isCofinalFamily_seq
 
-#print axioms
-  cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
-
 /-! The canonical cardinal-length specialization of the preceding generic
 scale-cardinality bound. -/
 theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
@@ -6893,9 +6551,6 @@ theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
   simpa only [mk_cardinalScaleLength_level] using
     cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
       hRegulars hProper hScale hEventual hCoordinate
-
-#print axioms
-  cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
 
 /-! The canonical cardinal-length specialization of eventual scale-length
 unboundedness. -/
@@ -6915,9 +6570,6 @@ theorem cardinalProductFrame_cardinalScaleLength_ge_of_eventually_unbounded
   simpa only [mk_cardinalScaleLength_level] using
     cardinalProductFrame_mk_scaleLength_ge_of_eventually_unbounded
       hRegulars hProper hScale hUnbounded
-
-#print axioms
-  cardinalProductFrame_cardinalScaleLength_ge_of_eventually_unbounded
 
 /-! If eventual coordinate unboundedness is measured below a nonregular
 cardinal, then a canonical scale of regular represented length must be
@@ -6947,9 +6599,6 @@ theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventually_unbounded_of_n
     exact hThetaRegular
   exact lt_of_le_of_ne hGe hNe
 
-#print axioms
-  cardinalProductFrame_cardinalScaleLength_gt_of_eventually_unbounded_of_not_isRegular
-
 theorem cardinalProductRepresentation_mem_pcf_gt_of_eventual_coordinate_bound
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
@@ -6966,8 +6615,6 @@ theorem cardinalProductRepresentation_mem_pcf_gt_of_eventual_coordinate_bound
   exact cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
     hRegulars hUltra.isProper hTcf.hasScaleWitness
     (hEventual J hUltra.isProper) hCoordinate
-
-#print axioms cardinalProductRepresentation_mem_pcf_gt_of_eventual_coordinate_bound
 
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
@@ -7009,8 +6656,6 @@ theorem cardinalProductRepresentation_mem_pcf_gt_aleph0_of_no_nat_cofinal_family
     rw [hAlphaIndex]
     exact hAlpha
   exact hNoNat J hUltra.isProper d hCofinal
-
-#print axioms cardinalProductRepresentation_mem_pcf_gt_aleph0_of_no_nat_cofinal_family
 
 theorem cardinalProductRepresentation_mem_pcf_of_concentrated_witness
     {A B : CardSet.{u}}

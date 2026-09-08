@@ -447,8 +447,6 @@ theorem alephSuccSet_maxPcf_theta_ge_targetAlephOmega
   exact alephSuccSet_tail_maxPcf_theta_ge_targetAlephOmega 0
     (alephSuccSet_maxPcf_witness_isMaxPcf_all_tails hMax 0)
 
-#print axioms alephSuccSet_maxPcf_theta_ge_targetAlephOmega
-
 /-! 自然数双射给出完整后继阿列夫乘积的可数且无限索引。 -/
 
 noncomputable def alephSuccSetCardinalIndexOfNat (n : Nat) :
@@ -491,8 +489,6 @@ theorem alephSuccSetCardinalIndexOfNat_surjective :
   rintro ⟨theta, ⟨n, hTheta⟩⟩
   exact ⟨n, Subtype.ext hTheta.symm⟩
 
-#print axioms alephSuccSetCardinalIndexOfNat_surjective
-
 /-! Although the canonical index type lives one universe above its cardinal
 members, the displayed Nat enumeration makes it small in the cardinal
 universe. This is universe bookkeeping, not a PCF scale construction. -/
@@ -501,8 +497,6 @@ theorem alephSuccSet_cardinalIndex_small :
   letI : Small.{0} (CardinalIndex alephSuccSet.{u}) := by
     exact small_of_surjective alephSuccSetCardinalIndexOfNat_surjective
   exact @small_lift.{u + 1, u, 0} _ _
-
-#print axioms alephSuccSet_cardinalIndex_small
 
 theorem alephSuccSet_cardinalIndex_infinite :
     Infinite (CardinalIndex alephSuccSet.{u}) := by
@@ -529,8 +523,6 @@ theorem alephSuccSet_pcf_mem_gt_aleph0
           (lt_add_one _))
     · exact hProper
   · exact hPcf
-
-#print axioms alephSuccSet_pcf_mem_gt_aleph0
 
 /-! 同一不可数下界对每个严格尾部成立。 -/
 
@@ -572,8 +564,6 @@ theorem alephSuccSet_tail_pcf_mem_gt_aleph0
     · exact hProper
   · exact hPcf
 
-#print axioms alephSuccSet_tail_pcf_mem_gt_aleph0
-
 /-! 完整核心的索引基数为 `aleph0`，其 PCF 值受可数幂控制。 -/
 
 theorem alephSuccSet_cardinalIndex_mk_eq_aleph0 :
@@ -583,8 +573,6 @@ theorem alephSuccSet_cardinalIndex_mk_eq_aleph0 :
   letI : Countable (CardinalIndex alephSuccSet.{u}) :=
     Cardinal.mk_le_aleph0_iff.mp alephSuccSet_countable
   exact Cardinal.mk_eq_aleph0 _
-
-#print axioms alephSuccSet_cardinalIndex_mk_eq_aleph0
 
 /-! The full successor-aleph core has the same ambient countable-power bound
     already proved for each strict tail. This is a cardinal-product estimate;
@@ -603,8 +591,6 @@ theorem alephSuccSet_pcf_theta_le_alephOmega_power_aleph0
       alephSuccSet_countable alephSuccSet_belowAlephOmega hPcf
   refine ⟨J, hUltra, ?_⟩
   exact hBound
-
-#print axioms alephSuccSet_pcf_theta_le_alephOmega_power_aleph0
 
 /-! 严格尾部也有显式自然数索引和相同的可数幂上界。 -/
 
@@ -668,8 +654,6 @@ theorem alephSuccSetTailCardinalIndexOfNat_surjective (n : Nat) :
   have hIndex : n + k + 1 = m := by omega
   simpa only [hIndex] using hTheta.symm
 
-#print axioms alephSuccSetTailCardinalIndexOfNat_surjective
-
 /-! Each strict successor-aleph tail has a canonical index small in the
 cardinal universe, by its explicit Nat enumeration.  This is precisely the
 universe reduction needed to turn its Zorn quotient cofinality into a scale. -/
@@ -686,8 +670,6 @@ theorem alephSuccSet_tail_cardinalIndex_small (n : Nat) :
             singletonCardSet (Cardinal.aleph ((m : Ordinal.{u}) + 1))) n)) := by
     exact small_of_surjective (alephSuccSetTailCardinalIndexOfNat_surjective n)
   exact @small_lift.{u + 1, u, 0} _ _
-
-#print axioms alephSuccSet_tail_cardinalIndex_small
 
 theorem alephSuccSet_tail_cardinalIndex_infinite (n : Nat) :
     Infinite
@@ -724,8 +706,6 @@ theorem alephSuccSet_tail_cardinalIndex_mk_eq_aleph0
     Cardinal.mk_le_aleph0_iff.mp (alephSuccSet_tail_countable n)
   exact Cardinal.mk_eq_aleph0 _
 
-#print axioms alephSuccSet_tail_cardinalIndex_mk_eq_aleph0
-
 theorem alephSuccSet_tail_pcf_theta_le_alephOmega_power_aleph0
     (n : Nat)
     {theta : Cardinal.{u}}
@@ -752,8 +732,6 @@ theorem alephSuccSet_tail_pcf_theta_le_alephOmega_power_aleph0
       hPcf
   refine ⟨J, hUltra, ?_⟩
   exact hBound
-
-#print axioms alephSuccSet_tail_pcf_theta_le_alephOmega_power_aleph0
 
 /-! 核心证明只需要上面的可数尾部乘积估计；其后的旧终端接口均不参与主定理。 -/
 

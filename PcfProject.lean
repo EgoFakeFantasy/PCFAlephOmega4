@@ -1,4 +1,4 @@
-import PcfProject.PcfTransitiveApplications
+import PcfProject.AxiomAudit
 
 /-!
 # PCF 证明库入口
@@ -28,7 +28,7 @@ import PcfProject.PcfTransitiveApplications
 5. `PcfTransitiveApplications.targetConditionalStatement_of_strongLimit` 汇总上述
    构造；最终定理只是把强极限假设代入该已证明的条件结论。
 
-核心定理旁的 `#print axioms` 是公理审计点。当前输出仅包含 Mathlib/Lean
-通常使用的 `propext`、`Classical.choice` 与 `Quot.sound`；证明不含占位项、
-项目自定义公理，也没有把目标结论藏入结构字段。
+`PcfProject.AxiomAudit` 集中检查本入口公开的里程碑。当前输出仅包含
+Mathlib/Lean 通常使用的 `propext`、`Classical.choice` 与 `Quot.sound`；证明
+不含占位项、项目自定义公理，也没有把目标结论藏入结构字段。
 -/

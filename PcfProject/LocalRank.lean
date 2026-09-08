@@ -238,11 +238,6 @@ theorem mem_le_successorAlephLocalMaxPcfRank
   · rw [hLimit.ordinalPred_eq]
     exact hLt.le
 
-#print axioms successorAlephLocalMaxPcfCardinal_mono
-#print axioms successorAlephLocalMaxPcfIndex_mono
-#print axioms successorAlephLocalMaxPcfRank_mono
-#print axioms mem_le_successorAlephLocalMaxPcfRank
-
 
 /-! 后续证明直接使用局部化数据；旧的 club-max 适配层不参与核心定理。 -/
 def SuccessorAlephLocalMaxPcfLocalization
@@ -311,9 +306,6 @@ theorem successorAlephLocalMaxPcfLocalization_of_cardinalProductLocalization_of_
   refine ⟨W, hWX, hWCountable, ?_⟩
   rw [← hB_eq]
   exact hBLocalized
-
-#print axioms
-  successorAlephLocalMaxPcfLocalization_of_cardinalProductLocalization_of_corePcf
 
 def SuccessorAlephLocalMaxPcfRankCountableLocalizers
     {theta : Ordinal.{u}}
@@ -428,9 +420,6 @@ theorem successorAlephLocalMaxPcfRankOmegaOneInitialSegment_of_cardinalProductLo
       hMax
       (successorAlephLocalMaxPcfLocalization_of_cardinalProductLocalization_of_corePcf
         hMax hLocalization hCore))
-
-#print axioms
-  successorAlephLocalMaxPcfRankOmegaOneInitialSegment_of_cardinalProductLocalization_of_corePcf
 
 /-! A reflection pattern with an explicit rank cutoff.  The terminal
 contradiction needs only the fixed cutoff `omega_4`, even when the local
@@ -587,8 +576,6 @@ theorem exists_omegaOneClubLadderAtAlephThree
     exact hFund.iSup_eq hOneLtA
   exact ⟨L, ⟨⟨hBelow, hTypeL, hSup⟩, hClubPullback⟩⟩
 
-#print axioms exists_omegaOneClubLadderAtAlephThree
-
 theorem exists_omegaOneClubLadderSystemAtAlephThree :
     exists guess : Set.Iio
         (Cardinal.aleph (3 : Ordinal.{u})).ord ->
@@ -610,8 +597,6 @@ theorem exists_omegaOneClubLadderSystemAtAlephThree :
   choose guess hGuess using hExists
   exact ⟨guess, fun alpha hAlphaCof => hGuess alpha hAlphaCof⟩
 
-#print axioms exists_omegaOneClubLadderSystemAtAlephThree
-
 
 /-! 从这里开始建立 ω₂ 指标上的稳定化机制，供最终反射论证使用。 -/
 def omegaTwoIndexSucc
@@ -625,8 +610,6 @@ theorem lt_omegaTwoIndexSucc
     (i : Set.Iio (Cardinal.aleph (2 : Ordinal.{u})).ord) :
     i < omegaTwoIndexSucc i := by
   exact Order.lt_succ i.1
-
-#print axioms lt_omegaTwoIndexSucc
 
 /-! A decreasing family of subsets of a set smaller than `aleph_2` cannot
 strictly decrease at all `aleph_2` successor stages. This is the pigeonhole
@@ -684,23 +667,17 @@ theorem antitone_alephTwo_setFamily_stabilizes
     exact Cardinal.mk_le_of_injective hPointInjective
   exact (not_le_of_gt hSmall) hLarge
 
-#print axioms antitone_alephTwo_setFamily_stabilizes
-
 theorem omegaTwoIndex_card :
     Cardinal.mk
       (Set.Iio (Cardinal.aleph (2 : Ordinal.{u})).ord) =
         Cardinal.lift.{u + 1} (Cardinal.aleph (2 : Ordinal.{u})) := by
   rw [Cardinal.mk_Iio_ordinal, Cardinal.card_ord]
 
-#print axioms omegaTwoIndex_card
-
 theorem omegaThreeIndex_card :
     Cardinal.mk
       (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord) =
         Cardinal.lift.{u + 1} (Cardinal.aleph (3 : Ordinal.{u})) := by
   rw [Cardinal.mk_Iio_ordinal, Cardinal.card_ord]
-
-#print axioms omegaThreeIndex_card
 
 theorem targetIndexOmega4_lift_cof_eq :
     (Ordinal.lift.{u + 1} targetIndexOmega4.{u}).cof =
@@ -711,8 +688,6 @@ theorem targetIndexOmega4_lift_cof_eq :
       (Cardinal.isRegular_aleph_add_one (3 : Ordinal.{u}))
   rw [← Ordinal.lift_cof, hRegular.cof_ord]
 
-#print axioms targetIndexOmega4_lift_cof_eq
-
 theorem alephThreeIio_cof_eq :
     Order.cof
       (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord) =
@@ -721,8 +696,6 @@ theorem alephThreeIio_cof_eq :
     simpa only [Nat.cast_ofNat, OfNat.ofNat] using
       (Cardinal.isRegular_aleph_add_one (2 : Ordinal.{u}))
   rw [Ordinal.cof_Iio, ← Ordinal.lift_cof, hRegular.cof_ord]
-
-#print axioms alephThreeIio_cof_eq
 
 theorem alephThreeIio_cof_ne_aleph0 :
     Order.cof
@@ -735,8 +708,6 @@ theorem alephThreeIio_cof_ne_aleph0 :
   have hLift := Cardinal.lift_lt.mpr hBase
   rw [Cardinal.lift_aleph0] at hLift
   exact ne_of_gt hLift
-
-#print axioms alephThreeIio_cof_ne_aleph0
 
 /-! The exact successor-stage club used by the restriction proof:
 `Lim(E ∩ D)` remains club in `omega_3`. -/
@@ -757,8 +728,6 @@ theorem strictLimitPoints_inter_isClub_alephThree
     IsClub.inter alephThreeIio_cof_ne_aleph0 hE hD
   exact strictLimitPoints_isClub alephThreeIio_cof_ne_aleph0
     hInter.isCofinal
-
-#print axioms strictLimitPoints_inter_isClub_alephThree
 
 /-! A club restriction of a fixed ladder system guesses all clubs.  This is
 the intermediate conclusion produced by Shelah's recursive proof before the
@@ -795,8 +764,6 @@ theorem exists_badClub_of_not_omegaOneClubRestrictionGuesses
   intro alpha hAlphaCof hAlphaLimit hSubset
   exact hNoAlpha ⟨alpha, hAlphaCof, hAlphaLimit, hSubset⟩
 
-#print axioms exists_badClub_of_not_omegaOneClubRestrictionGuesses
-
 theorem exists_strictClubRefinement_of_not_restrictionGuesses
     {guess : Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord ->
       Set (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord)}
@@ -827,8 +794,6 @@ theorem exists_strictClubRefinement_of_not_restrictionGuesses
   intro hSubsetE'
   apply hNotSubsetD
   exact hSubsetE'.trans (fun x hx => (hE'SubsetInter hx).2)
-
-#print axioms exists_strictClubRefinement_of_not_restrictionGuesses
 
 /-! The recursive configuration forced by failure of every club restriction
 in Shelah's proof. Each successor stage remains club and strictly removes a
@@ -908,8 +873,6 @@ theorem not_exists_omegaOneClubRestrictionRefinementSequence
     rw [← hStable]
     exact hxA
   exact hxNextA
-
-#print axioms not_exists_omegaOneClubRestrictionRefinementSequence
 
 /-! The missing transfinite-recursion half of the club-restriction proof.
 If every club restriction fails, well-founded recursion through `aleph_2`
@@ -1009,9 +972,6 @@ theorem exists_omegaOneClubRestrictionRefinementSequence_of_forall_not
         ⟨i, lt_omegaTwoIndexSucc i⟩⟩
   exact ⟨E, hEClub, hEAnti, hEStrict⟩
 
-#print axioms
-  exists_omegaOneClubRestrictionRefinementSequence_of_forall_not
-
 theorem exists_club_omegaOneClubRestrictionGuessesAtAlephThree
     (guess : Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord ->
       Set (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord))
@@ -1029,9 +989,6 @@ theorem exists_club_omegaOneClubRestrictionGuessesAtAlephThree
   exact not_exists_omegaOneClubRestrictionRefinementSequence guess hLadder
     (exists_omegaOneClubRestrictionRefinementSequence_of_forall_not
       guess hFail)
-
-#print axioms
-  exists_club_omegaOneClubRestrictionGuessesAtAlephThree
 
 theorem alephThreeClub_pullback_isClub_of_strictLimitPoint
     {E : Set (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord)}
@@ -1081,8 +1038,6 @@ theorem alephThreeClub_pullback_isClub_of_strictLimitPoint
       hAlphaLimit.2 (alephThreeInitialSegmentEmbedding alpha beta) beta.2
     let yLocal : Set.Iio alpha.1 := ⟨y.1, hYAlpha⟩
     exact ⟨yLocal, hyE, hBetaY.le⟩
-
-#print axioms alephThreeClub_pullback_isClub_of_strictLimitPoint
 
 theorem omegaOneClubLadder_inter_of_mem_strictLimitPoints
     {alpha : Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord}
@@ -1216,8 +1171,6 @@ theorem omegaOneClubLadder_inter_of_mem_strictLimitPoints
   · rw [hPullbackEq]
     exact hMBelowClub
 
-#print axioms omegaOneClubLadder_inter_of_mem_strictLimitPoints
-
 /-! Restrict a closed ladder system to the club supplied by the recursive
 argument.  At limit points of that club the restriction is still an
 `omega_1`-ladder, while the restriction theorem supplies the guessing
@@ -1257,8 +1210,6 @@ theorem exists_omegaOneClubGuessingAtAlephThree :
     refine ⟨alpha, hAlphaCof, ?_⟩
     simpa [refined, hAlphaCof, hAlphaLimit] using hSubset
 
-#print axioms exists_omegaOneClubGuessingAtAlephThree
-
 noncomputable def omegaOneClubGuessingSystemAtAlephThree :
     Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord ->
       Set (Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord) :=
@@ -1268,8 +1219,6 @@ theorem omegaOneClubGuessingSystemAtAlephThree_spec :
     OmegaOneClubGuessingAtAlephThree
       omegaOneClubGuessingSystemAtAlephThree :=
   Classical.choose_spec exists_omegaOneClubGuessingAtAlephThree
-
-#print axioms omegaOneClubGuessingSystemAtAlephThree_spec
 
 /-! The purely ordinal part of the later closed trace.  A club trace is a
 continuous cofinal embedding of `omega_3`: normality is exposed through
@@ -1314,8 +1263,6 @@ theorem normal_map_omegaOneCofinalLadder_sSup
       (Set.principalSegIio delta).isNormal.comp hEta
   exact (hValueNormal.map_isLUB hLUB hLNonempty).csSup_eq
     (hLNonempty.image fun i => (eta i).1)
-
-#print axioms normal_map_omegaOneCofinalLadder_sSup
 
 /-! The continuous-chain content used after a club-guessing sequence has
 been fixed.  Pullback of clubs records continuity/cofinality of the trace;
@@ -1491,9 +1438,6 @@ theorem successorAlephLocalMaxPcfRankReflectionBelowAt_of_normal_of_clubRankClos
       ⟨i, hiGuess, rfl⟩)
     hRankBound
 
-#print axioms
-  successorAlephLocalMaxPcfRankReflectionBelowAt_of_normal_of_clubRankClosureBelow
-
 
 /-! 排除反射由构造模块直接完成；此处保留其目标有界原则类型。 -/
 
@@ -1529,8 +1473,6 @@ theorem alephSuccSetAtMostIdealEscapeMax_eq_alephIndex
         (alephSuccSetAtMostIdealEscapeMaxAlephIndex G hEscape) :=
   (aleph_maxPcfWitnessAlephIndex_eq
     (alephSuccSetMaxPcfWitnessOfAtMostIdealEscape G hEscape)).symm
-
-#print axioms alephSuccSetAtMostIdealEscapeMax_eq_alephIndex
 
 /-! 核心只需把最大 PCF 见证写成阿列夫形式；其后的输入套餐适配不参与最终证明。 -/
 

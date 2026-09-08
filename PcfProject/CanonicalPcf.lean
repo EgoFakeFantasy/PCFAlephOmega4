@@ -436,10 +436,6 @@ theorem canonicalBelowIdeal_eq_canonicalAtMostIdeal_of_not_mem
       ((canonicalAtMostIdeal_small_iff A hRegulars theta B).mp
         hSmall beta hBeta) hBetaNe
 
-#print axioms canonicalBelowIdeal_eq_canonicalAtMostIdeal_of_not_mem
-
-#print axioms canonicalAtMostIdeal_le_canonicalBelowIdeal_of_lt
-
 theorem GeneratorSystem.belowIdeal_eq_canonical
     {A : CardSet.{u}}
     (G : GeneratorSystem cardinalProductRepresentation A)

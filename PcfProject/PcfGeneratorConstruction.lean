@@ -51,8 +51,6 @@ theorem pointwiseStrictDirectedBelow_succ_of_isSingular
   exact (cardinalProductFrame A J).eventuallyPointwiseLt_trans
     (hg ⟨gamma, hGamma⟩ ⟨alpha, hAlphaBeta.trans_le hBetaGamma⟩) (hb ⟨gamma, hGamma⟩)
 
-#print axioms pointwiseStrictDirectedBelow_succ_of_isSingular
-
 /-- A scale modulo an arbitrary proper ideal yields PCF membership after
 extending that ideal to an ultrafilter dual. Pointwise strictness ensures
 that the scale survives the extension. -/
@@ -65,8 +63,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_proper_pointwiseStrictScale
   obtain ⟨K, hUltra, hLe⟩ := exists_ultrafilterDual_ideal_extending J hProper
   apply cardinalProductRepresentation_mem_pcf_of_scale K hUltra hTheta
   exact (s.withLargerIdeal K hLe).toScale hUltra.isProper
-
-#print axioms cardinalProductRepresentation_mem_pcf_of_proper_pointwiseStrictScale
 
 /-- The regular non-PCF step of Jech 24.25(ii). A failure to upgrade
 directedness would produce a positive localized scale, hence a forbidden
@@ -89,8 +85,6 @@ theorem pointwiseStrictDirectedBelow_succ_of_regular_not_mem_pcf
     exact hNotPcf (cardinalProductRepresentation_mem_pcf_of_proper_pointwiseStrictScale
       hX hTheta s)
 
-#print axioms pointwiseStrictDirectedBelow_succ_of_regular_not_mem_pcf
-
 theorem pointwiseStrictDirectedBelow_succ_of_not_mem_pcf_of_two_power_lt
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} (hProper : J.IsProper)
     (hInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A))
@@ -110,8 +104,6 @@ theorem pointwiseStrictDirectedBelow_succ_of_not_mem_pcf_of_two_power_lt
       exact ⟨hUncountable.le, fun hEq =>
         hRegular ⟨hUncountable.le, hEq.symm.le⟩⟩
     exact pointwiseStrictDirectedBelow_succ_of_isSingular hSingular hDirected
-
-#print axioms pointwiseStrictDirectedBelow_succ_of_not_mem_pcf_of_two_power_lt
 
 /-- The strict canonical filtration is contained in every witnessing
 ultrafilter whose true cofinality is at least the threshold. This statement
@@ -141,8 +133,6 @@ theorem canonicalBelowIdeal_le_pushforward_of_trueCofinality
         (fun gamma h => hRegulars gamma h.1) theta hPcfW
     exact False.elim ((hBelow theta hPcfA).not_ge hKappaTheta)
 
-#print axioms canonicalBelowIdeal_le_pushforward_of_trueCofinality
-
 theorem canonicalBelowIndexIdeal_le_of_trueCofinality
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     {J : Ideal (CardinalIndex A)} (hUltra : J.IsUltrafilterDual)
@@ -156,8 +146,6 @@ theorem canonicalBelowIndexIdeal_le_of_trueCofinality
   intro S hS
   have hImage := hLe _ hS
   exact J.subset_small hImage (fun i hi => ⟨i, rfl, hi⟩)
-
-#print axioms canonicalBelowIndexIdeal_le_of_trueCofinality
 
 theorem canonicalBelowIndexIdeal_not_succ_directed_of_mem_pcf
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A) {theta : Cardinal.{u}}
@@ -175,8 +163,6 @@ theorem canonicalBelowIndexIdeal_not_succ_directed_of_mem_pcf
   obtain ⟨alpha, hAlpha⟩ := s.cofinal g
   exact ((cardinalProductFrame A J).eventuallyLt_of_eventually_pointwiseStrict
     hUltra.isProper (hg alpha)).2 hAlpha
-
-#print axioms canonicalBelowIndexIdeal_not_succ_directed_of_mem_pcf
 
 theorem isMaxPcf_of_canonicalBelowIndexIdeal_scale
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A) {theta : Cardinal.{u}}
@@ -199,8 +185,6 @@ theorem isMaxPcf_of_canonicalBelowIndexIdeal_scale
     simpa only [mk_cardinalScaleLength_level] using
       cardinal_mk_level_eq_of_hasTrueCofinality hTcf hTcfTheta
   exact hEq.le
-
-#print axioms isMaxPcf_of_canonicalBelowIndexIdeal_scale
 
 /-- The nonmaximal PCF stage of the generator recursion. Assuming only the
 previous-stage directedness invariant, it constructs a positive scale set
@@ -278,8 +262,6 @@ theorem exists_generator_step_of_canonicalBelow_directed_of_nonmax
     exact ⟨X, hX, ⟨s⟩, (J.extendBy_isProper_iff_not_eventually X).mpr hNotEventually,
       hYDirected.withLargerIdeal (J.extendBy X) hYLe⟩
 
-#print axioms exists_generator_step_of_canonicalBelow_directed_of_nonmax
-
 theorem exists_pcf_gt_of_proper_successor_directed
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -303,8 +285,6 @@ theorem exists_pcf_gt_of_proper_successor_directed
   obtain ⟨alpha, ha⟩ := s.cofinal g
   exact ((cardinalProductFrame A K).eventuallyLt_of_eventually_pointwiseStrict
     hUltra.isProper (hg alpha)).2 ha
-
-#print axioms exists_pcf_gt_of_proper_successor_directed
 
 theorem pointwiseStrictCorollary2412_of_two_power_lt
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)}
@@ -337,8 +317,6 @@ theorem pointwiseStrictCorollary2412_of_two_power_lt
   exact pointwiseStrictCorollary2412_of_exactUpperBounds_of_mk_predicates_le
     hTheta hPred hDirected (hExact J) (fun X _ => hExact (J.localize X)) d0
 
-#print axioms pointwiseStrictCorollary2412_of_two_power_lt
-
 /-- The maximal PCF stage of Jech 24.25(iv). Every other branch of the
 trichotomy would yield a PCF value strictly above the supplied maximum. -/
 theorem exists_canonicalBelowIndexIdeal_scale_of_max_of_directed
@@ -369,8 +347,6 @@ theorem exists_canonicalBelowIndexIdeal_scale_of_max_of_directed
     obtain ⟨mu, hMu, hThetaMu⟩ := exists_pcf_gt_of_proper_successor_directed
       hRegulars hSmall hUncountable hY hYDirected
     exact False.elim (hThetaMu.not_ge (hMax.2 mu hMu))
-
-#print axioms exists_canonicalBelowIndexIdeal_scale_of_max_of_directed
 
 /-- Successor-directedness forces every set whose PCF spectrum is bounded
 by the threshold to be small. A positive counterexample yields an actual
@@ -411,8 +387,6 @@ theorem canonicalAtMostIndexIdeal_le_of_successorDirected
   obtain ⟨alpha, ha⟩ := s.cofinal g
   exact ((cardinalProductFrame A K).eventuallyLt_of_eventually_pointwiseStrict
     hUltra.isProper (hg alpha)).2 ha
-
-#print axioms canonicalAtMostIndexIdeal_le_of_successorDirected
 
 theorem canonicalAtMostIndexIdeal_small_of_localized_scale
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -461,8 +435,6 @@ theorem canonicalAtMostIndexIdeal_small_of_localized_scale
       cardinal_mk_level_eq_of_hasTrueCofinality hTcf hTcfTheta
   exact hThetaMu.ne hEq.symm
 
-#print axioms canonicalAtMostIndexIdeal_small_of_localized_scale
-
 /-- The adjoined ideal from the generator step is exactly the canonical
 at-most ideal. One inclusion uses the localized scale; the other uses the
 successor-directedness obstruction. No ideal-equivalence field is assumed. -/
@@ -492,8 +464,6 @@ theorem canonicalBelowIndexIdeal_extendBy_eq_atMost_of_scale_and_directed
     exact K.subset_small (K.union_small hTK hX) hCover
   · exact hReverse S
 
-#print axioms canonicalBelowIndexIdeal_extendBy_eq_atMost_of_scale_and_directed
-
 theorem cardinalProduct_pointwiseStrictDirectedBelow_of_not_proper
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     {J : Ideal (CardinalIndex A)} (hNotProper : Not J.IsProper)
@@ -506,8 +476,6 @@ theorem cardinalProduct_pointwiseStrictDirectedBelow_of_not_proper
   let g : ProductElement (cardinalProductFrame A J) := fun k =>
     Ordinal.ToType.mk ⟨0, (hRegulars k.1 k.2).ord_pos⟩
   exact ⟨g, fun _ => J.subset_small hTop (fun _ _ => True.intro)⟩
-
-#print axioms cardinalProduct_pointwiseStrictDirectedBelow_of_not_proper
 
 theorem canonicalAtMostIndexIdeal_successorDirected_of_belowDirected
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -550,8 +518,6 @@ theorem canonicalAtMostIndexIdeal_successorDirected_of_belowDirected
       exact pointwiseStrictDirectedBelow_succ_of_not_mem_pcf_of_two_power_lt
         hProper hInfinite hUncTheta hPower hPcf hDirected
     · exact cardinalProduct_pointwiseStrictDirectedBelow_of_not_proper hRegulars hProper _
-
-#print axioms canonicalAtMostIndexIdeal_successorDirected_of_belowDirected
 
 /-- The full directedness induction of Jech 24.25(i). For a family of
 cardinality `lambda < theta`, either coordinatewise regularity bounds it
@@ -601,8 +567,6 @@ theorem canonicalBelowIndexIdeal_directed_of_two_power_below_coordinates
         (Order.succ (Cardinal.mk T)) := hStep.withLargerIdeal J hLe
     exact hDirectedJ T (Order.lt_succ _) d
 
-#print axioms canonicalBelowIndexIdeal_directed_of_two_power_below_coordinates
-
 theorem canonicalBelowIdeal_succ_eq_atMost
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A) (theta : Cardinal.{u}) :
     canonicalBelowIdeal A hRegulars (Order.succ theta) = canonicalAtMostIdeal A hRegulars theta := by
@@ -611,8 +575,6 @@ theorem canonicalBelowIdeal_succ_eq_atMost
   change (forall mu, cardinalProductRepresentation.pcf (interCardSet A S) mu -> mu < Order.succ theta) <->
     (forall mu, cardinalProductRepresentation.pcf (interCardSet A S) mu -> mu <= theta)
   simp only [Order.lt_succ_iff]
-
-#print axioms canonicalBelowIdeal_succ_eq_atMost
 
 theorem canonicalAtMostIndexIdeal_successorDirected_of_two_power_below_coordinates
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -626,8 +588,6 @@ theorem canonicalAtMostIndexIdeal_successorDirected_of_two_power_below_coordinat
   have h := canonicalBelowIndexIdeal_directed_of_two_power_below_coordinates
     hRegulars hSmall hInfinite hPower (Order.succ theta)
   rwa [canonicalBelowIdeal_succ_eq_atMost] at h
-
-#print axioms canonicalAtMostIndexIdeal_successorDirected_of_two_power_below_coordinates
 
 theorem exists_canonicalIndex_generator_of_two_power_below_coordinates
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -672,8 +632,6 @@ theorem exists_canonicalIndex_generator_of_two_power_below_coordinates
       exact hProper (J.generator_small_in_extendBy (fun _ => True))
     exact ⟨(fun _ => True), ⟨t⟩, canonicalBelowIndexIdeal_extendBy_eq_atMost_of_scale_and_directed
       hRegulars hSmall hUncountable hTheta _ t hExtDirected⟩
-
-#print axioms exists_canonicalIndex_generator_of_two_power_below_coordinates
 
 /-- Lift the index-level ideal identity to the ambient cardinal predicates.
 Outside `A`, all predicates are already in the canonical strict-below ideal. -/
@@ -730,8 +688,6 @@ theorem canonicalGenerator_ideal_equiv_of_index_eq
       ((canonicalAtMostIdeal A hRegulars theta).union_small
         (fun mu hMu => (hT mu hMu).le) hB) hCover
 
-#print axioms canonicalGenerator_ideal_equiv_of_index_eq
-
 noncomputable def canonicalGeneratorIndexSet
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -745,8 +701,6 @@ noncomputable def canonicalGeneratorIndexSet
       Classical.choose (exists_canonicalIndex_generator_of_two_power_below_coordinates
         hRegulars hSmall hInfinite hPower h)
     else fun _ => False
-
-#print axioms canonicalGeneratorIndexSet
 
 noncomputable def canonicalGeneratorPointwiseScale
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -766,8 +720,6 @@ noncomputable def canonicalGeneratorPointwiseScale
     (Classical.choice
       (Classical.choose_spec (exists_canonicalIndex_generator_of_two_power_below_coordinates
         hRegulars hSmall hInfinite hPower hTheta)).1)
-
-#print axioms canonicalGeneratorPointwiseScale
 
 /-- The semantic generator system is constructed under the displayed
 small-index and powerset gap hypotheses. No generator or ideal-equivalence
@@ -794,8 +746,6 @@ noncomputable def canonicalGeneratorSystemOfTwoPowerBelowCoordinates
       (Classical.choose_spec (exists_canonicalIndex_generator_of_two_power_below_coordinates
         hRegulars hSmall hInfinite hPower hTheta)).2
 
-#print axioms canonicalGeneratorSystemOfTwoPowerBelowCoordinates
-
 theorem canonicalGeneratorSystem_generator_at_index_iff
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -814,8 +764,6 @@ theorem canonicalGeneratorSystem_generator_at_index_iff
     simpa only [hji] using hX
   · intro hX
     exact ⟨i, rfl, hX⟩
-
-#print axioms canonicalGeneratorSystem_generator_at_index_iff
 
 /-- The scale selected during the generator construction really is a scale
 on the displayed semantic generator, not merely on its internal index code. -/
@@ -868,8 +816,6 @@ theorem canonicalGeneratorSystem_generator_hasPointwiseScale
   rw [hIdeal]
   exact ⟨canonicalGeneratorPointwiseScale hRegulars hSmall hInfinite hPower hTheta⟩
 
-#print axioms canonicalGeneratorSystem_generator_hasPointwiseScale
-
 noncomputable def canonicalSemanticGeneratorPointwiseScale
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -886,8 +832,6 @@ noncomputable def canonicalSemanticGeneratorPointwiseScale
   classical
   exact Classical.choice (canonicalGeneratorSystem_generator_hasPointwiseScale
     hRegulars hSmall hInfinite hPower hTheta)
-
-#print axioms canonicalSemanticGeneratorPointwiseScale
 
 /-- Restrict directedness along a subset of the coordinates while retaining
 the same ambient ideal. No size or infinitude assumption on the subset is needed. -/
@@ -911,8 +855,6 @@ theorem cardinalProduct_directed_restrict_subset
   refine ⟨cardinalIndexMap hWA i, hi, ?_⟩
   simpa only [e, extendCardinalProductElement_at_indexMap] using hBad
 
-#print axioms cardinalProduct_directed_restrict_subset
-
 /-- The successor-directed invariant on every subfamily is derived from the
 canonical filtration, independently of which semantic generators are chosen. -/
 theorem generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
@@ -929,8 +871,6 @@ theorem generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
     (canonicalAtMostIndexIdeal_successorDirected_of_two_power_below_coordinates
       hRegulars hSmall hInfinite hPower theta)
 
-#print axioms generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
-
 /-- Capture realizes each PCF value on its own generator. -/
 theorem generator_mem_pcf_of_successorDirected
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -945,8 +885,6 @@ theorem generator_mem_pcf_of_successorDirected
   exact cardinalProductRepresentation_mem_pcf_of_eventually_mem
     (fun _ h => h.1) hRegulars hReg J hUltra hTcf
     (J.eventually_mono hEv (fun i h => ⟨i.2, h⟩))
-
-#print axioms generator_mem_pcf_of_successorDirected
 
 /-- Different PCF values have different generator predicates on the actual
 coordinate set: each is the maximum PCF value of its generator. -/
@@ -976,8 +914,6 @@ theorem generator_predicate_injective_of_successorDirected
     rw [hInter]
     exact generator_mem_pcf_of_successorDirected hRegulars G hDirected mu.2
 
-#print axioms generator_predicate_injective_of_successorDirected
-
 /-- The generator theorem sharpens the pre-generator double-powerset bound
 to the single-powerset bound on the spectrum. -/
 theorem cardinal_mk_cardinalIndex_pcf_le_two_power_of_two_power_below_coordinates
@@ -995,8 +931,6 @@ theorem cardinal_mk_cardinalIndex_pcf_le_two_power_of_two_power_below_coordinate
     (generator_predicate_injective_of_successorDirected hRegulars G hDir)
   simpa only [Cardinal.mk_pi, Cardinal.mk_Prop, Cardinal.lift_ofNat,
     Cardinal.prod_const, Cardinal.lift_id'.{0, u + 1}] using hBound
-
-#print axioms cardinal_mk_cardinalIndex_pcf_le_two_power_of_two_power_below_coordinates
 
 /-- The source double-powerset gap yields the single-powerset gap needed
 to construct generators on the spectrum itself. -/
@@ -1017,7 +951,5 @@ theorem pcf_two_power_below_coordinates_of_doublePower
   obtain ⟨a, ha, haTheta⟩ := cardinalProductRepresentation_mem_pcf_exists_member_le hRegulars hTheta
   exact (Cardinal.power_le_power_left two_ne_zero hBound).trans_lt
     ((hDouble ⟨a, ha⟩).trans_le (Cardinal.lift_le.mpr haTheta))
-
-#print axioms pcf_two_power_below_coordinates_of_doublePower
 
 end PcfProject

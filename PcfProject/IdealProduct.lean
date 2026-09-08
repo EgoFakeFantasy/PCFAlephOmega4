@@ -237,8 +237,6 @@ theorem pushforward_mono
   intro S hS
   exact hLe _ hS
 
-#print axioms pushforward_mono
-
 /-- `P` holds eventually modulo `J` when its complement is `J`-small. -/
 def Eventually (P : I -> Prop) : Prop :=
   J.Small (fun i => Not (P i))
@@ -290,8 +288,6 @@ theorem excludePoint_eventually_iff
   apply Ideal.ext
   intro S
   rfl
-
-#print axioms pushforward_comp
 
 /-! The pushforward of an ultrafilter-dual ideal is principal at `k0`
 exactly when the original ideal is eventually concentrated on the fiber over
@@ -416,8 +412,6 @@ def localize (J : Ideal I) (X : I -> Prop) : Ideal I where
   change (Not (J.Small (fun i => True /\ X i))) <-> Not (J.Small X)
   simp only [true_and]
 
-#print axioms Ideal.localize_isProper_iff
-
 @[simp] theorem localize_eventually_iff
     (J : Ideal I) (X P : I -> Prop) :
     (J.localize X).Eventually P <->
@@ -431,16 +425,12 @@ theorem le_localize (J : Ideal I) (X : I -> Prop) :
     intro i hi
     exact hi.1)
 
-#print axioms Ideal.le_localize
-
 @[simp] theorem localize_true (J : Ideal I) :
     J.localize (fun _ => True) = J := by
   apply Ideal.ext
   intro S
   change J.Small (fun i => S i /\ True) <-> J.Small S
   simp only [and_true]
-
-#print axioms Ideal.localize_true
 
 @[simp] theorem localize_localize
     (J : Ideal I) (X Y : I -> Prop) :
@@ -460,8 +450,6 @@ theorem le_localize (J : Ideal I) (X : I -> Prop) :
       intro i hi
       exact ⟨hi.1.1, ⟨hi.2, hi.1.2⟩⟩)
 
-#print axioms Ideal.localize_localize
-
 /-! Localizing a pushforward ideal is the pushforward of the localization by
 the pulled-back predicate.  This identifies the positive pieces seen on the
 target with predicates on the original index type. -/
@@ -475,8 +463,6 @@ target with predicates on the original index type. -/
   apply Ideal.ext
   intro S
   rfl
-
-#print axioms Ideal.pushforward_localize
 
 /-- Restrict an ideal on `K` along a map `f : I -> K`. A predicate on `I`
 is small when its direct image is small in `K`. -/
@@ -531,8 +517,6 @@ theorem restrictAlong_eventually_of_eventually_image
     obtain ⟨j, hjk, hSj⟩ := hImageS
     have hij : i = j := hf (hik.trans hjk.symm)
     exact hNotSi (hij ▸ hSj))
-
-#print axioms restrictAlong_eventually_of_eventually_image
 
 /-- If `J` concentrates on the range of `f`, restricting to the domain and
 pushing forward again recovers `J`. -/
@@ -895,8 +879,6 @@ theorem IsUltrafilterDual.fubini
           cases (hD i).small_or_compl_small S with
           | inl hSmall => exact False.elim (hi hSmall)
           | inr hCompl => exact hCompl)
-
-#print axioms Ideal.IsUltrafilterDual.fubini
 
 theorem IsUltrafilterDual.exists_eventually_of_finset_cover
     {L : Type v}
@@ -1454,18 +1436,6 @@ theorem exists_ultrafilterDual_ideal_avoiding_eventuallyLe_family
 
 end ReducedProductFrame
 
-#print axioms exists_maximal_good_idealFamily_above
-#print axioms idealFamilyAdjoinFamily_isIdeal
-#print axioms idealFamilyAdjoinFamily_isGood
-#print axioms exists_ultrafilterDual_ideal_extending_family
-#print axioms exists_ultrafilterDual_ideal_avoiding_eventual_family
-#print axioms Ideal.finiteSet_isProper
-#print axioms exists_nonprincipal_ultrafilterDual_ideal_extending_family
-#print axioms
-  exists_nonprincipal_ultrafilterDual_ideal_avoiding_eventual_family
-#print axioms
-  ReducedProductFrame.exists_ultrafilterDual_ideal_avoiding_eventuallyLe_family
-
 theorem exists_nonprincipal_ultrafilterDual_ideal
     {I : Type u} [Infinite I] :
     exists J : Ideal I,
@@ -1490,15 +1460,5 @@ theorem exists_nonprincipal_ultrafilterDual_ideal
   have hSingletonSmall : J.Small (fun j : I => j = i) := hSingletonMem
   rw [hEq] at hSingletonSmall
   exact hSingletonSmall rfl
-
-#print axioms finiteIdealFamily_isIdeal
-#print axioms finiteIdealFamily_isGood
-#print axioms idealFamily_union_isGood
-#print axioms exists_maximal_good_idealFamily
-#print axioms idealFamilyAdjoin_isIdeal
-#print axioms idealFamily_subset_adjoin
-#print axioms idealFamily_adjoin_mem
-#print axioms idealFamily_compl_mem_of_maximal
-#print axioms exists_nonprincipal_ultrafilterDual_ideal
 
 end PcfProject

@@ -27,8 +27,6 @@ noncomputable def GeneratorPath.append {A : CardSet.{u}} {B : Cardinal.{u} -> Ca
   | refl => exact q
   | step edge _ ih => exact .step edge (ih q)
 
-#print axioms GeneratorPath.append
-
 /-- Iterated evaluation along the chosen finite path, from its terminal
 coordinate back to its initial coordinate, as in Jech (24.17). -/
 noncomputable def GeneratorPath.eval {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
@@ -38,8 +36,6 @@ noncomputable def GeneratorPath.eval {A : CardSet.{u}} {B : Cardinal.{u} -> Card
   induction p with
   | refl => exact id
   | @step i j k edge tail ih => exact fun alpha => f j (ih alpha) i
-
-#print axioms GeneratorPath.eval
 
 theorem GeneratorPath.eval_characteristic
     {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
@@ -56,8 +52,6 @@ theorem GeneratorPath.eval_characteristic
       rw [ih]
       exact hAgreement i j edge
 
-#print axioms GeneratorPath.eval_characteristic
-
 def generatorPathClosure {A : CardSet.{u}}
     (B : Cardinal.{u} -> CardSet.{u}) (lambda : Cardinal.{u}) : CardSet.{u} :=
   fun nu => exists hNu : A nu, exists hLambda : A lambda,
@@ -69,16 +63,12 @@ theorem generatorPathClosure_subset {A : CardSet.{u}}
   rintro nu ⟨hNu, _, _⟩
   exact hNu
 
-#print axioms generatorPathClosure_subset
-
 theorem generatorPathClosure_contains {A : CardSet.{u}}
     (B : Cardinal.{u} -> CardSet.{u}) {lambda : Cardinal.{u}} (hLambda : A lambda)
     (hSubset : SubsetOf (B lambda) A) :
     SubsetOf (B lambda) (generatorPathClosure (A := A) B lambda) := by
   intro nu hNu
   exact ⟨hSubset nu hNu, hLambda, ⟨.step hNu (.refl _)⟩⟩
-
-#print axioms generatorPathClosure_contains
 
 theorem generatorPathClosure_transitive {A : CardSet.{u}}
     (B : Cardinal.{u} -> CardSet.{u}) {mu lambda : Cardinal.{u}}
@@ -87,8 +77,6 @@ theorem generatorPathClosure_transitive {A : CardSet.{u}}
   obtain ⟨hMuA, hLambda, ⟨q⟩⟩ := hMu
   rintro nu ⟨hNu, _, ⟨p⟩⟩
   exact ⟨hNu, hLambda, ⟨p.append q⟩⟩
-
-#print axioms generatorPathClosure_transitive
 
 noncomputable def generatorPathCompositeFamily
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -101,8 +89,6 @@ noncomputable def generatorPathCompositeFamily
   exact if h : Nonempty (GeneratorPath B i lambda) then
     (Classical.choice h).eval f alpha
   else Ordinal.ToType.mk ⟨0, (hRegulars i.1 i.2).ord_pos⟩
-
-#print axioms generatorPathCompositeFamily
 
 theorem generatorPathCompositeFamily_characteristic
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -118,8 +104,6 @@ theorem generatorPathCompositeFamily_characteristic
   obtain ⟨_, _, hPath⟩ := hPath
   simp only [generatorPathCompositeFamily, dif_pos hPath]
   exact GeneratorPath.eval_characteristic f chi hAgreement _
-
-#print axioms generatorPathCompositeFamily_characteristic
 
 /-- The terminal smallness argument: a bound on the whole composite family
 lying pointwise below the characteristic defeats every path coordinate at
@@ -142,8 +126,6 @@ theorem generatorPathClosure_small_of_characteristic_bound
   intro i hPath hLe
   rw [generatorPathCompositeFamily_characteristic hRegulars B f chi hAgreement lambda i hPath] at hLe
   exact (not_le_of_gt (hBelow i)) hLe
-
-#print axioms generatorPathClosure_small_of_characteristic_bound
 
 /-- Replacing a generator by an at-most-small superset of a below-equivalent
 thinning preserves the full semantic generator identity. -/
@@ -169,8 +151,6 @@ theorem GeneratorSystem.ideal_equiv_of_thinning_superset
   · rintro S ⟨T, hT, hCover⟩
     exact (G.atMostIdeal theta).subset_small
       ((G.atMostIdeal theta).union_small (G.belowIdeal_le_atMost theta T hT) hC) hCover
-
-#print axioms GeneratorSystem.ideal_equiv_of_thinning_superset
 
 /-- The finite-path suffix of Jech 24.31, with its remaining characteristic
 data explicit. The hypotheses do not assert path-closure smallness or the
@@ -219,16 +199,12 @@ theorem exists_transitive_generators_of_characteristic_path_bounds
           (hClosureSmall lambda hLambdaA) }
   exact ⟨H, fun {_ _} h => generatorPathClosure_transitive B h, rfl⟩
 
-#print axioms exists_transitive_generators_of_characteristic_path_bounds
-
 /-- A path is coded by its successive vertices; edge proofs carry no data. -/
 noncomputable def GeneratorPath.code {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
     {i j : CardinalIndex A} (p : GeneratorPath B i j) : List (CardinalIndex A) := by
   induction p with
   | refl => exact []
   | @step i j k _ _ ih => exact j :: ih
-
-#print axioms GeneratorPath.code
 
 theorem GeneratorPath.code_injective {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
     {i j : CardinalIndex A} : Function.Injective (@GeneratorPath.code A B i j) := by
@@ -249,8 +225,6 @@ theorem GeneratorPath.code_injective {A : CardSet.{u}} {B : Cardinal.{u} -> Card
           cases hPath
           rfl
 
-#print axioms GeneratorPath.code_injective
-
 /-- Forget which thinning permitted a path. This allows all later thinnings
 to share a single, preselected family of bounds. -/
 noncomputable def GeneratorPath.erase {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
@@ -258,8 +232,6 @@ noncomputable def GeneratorPath.erase {A : CardSet.{u}} {B : Cardinal.{u} -> Car
   induction p with
   | refl => exact .refl _
   | step _ _ ih => exact .step trivial ih
-
-#print axioms GeneratorPath.erase
 
 theorem GeneratorPath.eval_erase {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.{u}}
     (f : forall j : CardinalIndex A, j.1.ord.ToType -> forall i : CardinalIndex A, i.1.ord.ToType)
@@ -271,8 +243,6 @@ theorem GeneratorPath.eval_erase {A : CardSet.{u}} {B : Cardinal.{u} -> CardSet.
       change f j (tail.erase.eval f alpha) i = f j (tail.eval f alpha) i
       rw [ih]
 
-#print axioms GeneratorPath.eval_erase
-
 def UniversalGeneratorPathChoices (A : CardSet.{u}) :=
   Sigma fun lambda : CardinalIndex A =>
     forall i : CardinalIndex A, Option (GeneratorPath (fun _ _ => True) i lambda)
@@ -281,8 +251,6 @@ noncomputable def universalGeneratorPathChoicesCode {A : CardSet.{u}}
     (q : UniversalGeneratorPathChoices A) :
     CardinalIndex A × (CardinalIndex A -> Option (List (CardinalIndex A))) :=
   ⟨q.1, fun i => (q.2 i).map GeneratorPath.code⟩
-
-#print axioms universalGeneratorPathChoicesCode
 
 theorem universalGeneratorPathChoicesCode_injective {A : CardSet.{u}} :
     Function.Injective (@universalGeneratorPathChoicesCode A) := by
@@ -313,8 +281,6 @@ theorem universalGeneratorPathChoicesCode_injective {A : CardSet.{u}} :
   cases hPQ
   rfl
 
-#print axioms universalGeneratorPathChoicesCode_injective
-
 theorem mk_universalGeneratorPathChoices_le_two_power
     {A : CardSet.{u}} (hInfinite : Cardinal.aleph0 <= Cardinal.mk (CardinalIndex A)) :
     Cardinal.mk (UniversalGeneratorPathChoices A) <=
@@ -341,8 +307,6 @@ theorem mk_universalGeneratorPathChoices_le_two_power
         (ne_of_gt ((zero_le : (0 : Cardinal.{u + 1}) <= Cardinal.mk (CardinalIndex A)).trans_lt (Cardinal.cantor _)))]
       exact max_eq_right (Cardinal.cantor _).le
 
-#print axioms mk_universalGeneratorPathChoices_le_two_power
-
 noncomputable def universalGeneratorPathComposite
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (f : forall j : CardinalIndex A, j.1.ord.ToType -> forall i : CardinalIndex A, i.1.ord.ToType)
@@ -352,16 +316,12 @@ noncomputable def universalGeneratorPathComposite
   | none => Ordinal.ToType.mk ⟨0, (hRegulars i.1 i.2).ord_pos⟩
   | some p => p.eval f alpha
 
-#print axioms universalGeneratorPathComposite
-
 noncomputable def generatorErasedPathChoices
     {A : CardSet.{u}} (B : Cardinal.{u} -> CardSet.{u}) (lambda : CardinalIndex A) :
     UniversalGeneratorPathChoices A := by
   classical
   exact ⟨lambda, fun i => if h : Nonempty (GeneratorPath B i lambda) then
     some (Classical.choice h).erase else none⟩
-
-#print axioms generatorErasedPathChoices
 
 theorem universalGeneratorPathComposite_erased
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -377,8 +337,6 @@ theorem universalGeneratorPathComposite_erased
     exact GeneratorPath.eval_erase f _ alpha
   · simp only [universalGeneratorPathComposite, generatorErasedPathChoices,
       generatorPathCompositeFamily, dif_neg h]
-
-#print axioms universalGeneratorPathComposite_erased
 
 /-- Simultaneously preselect bounds for every finite-path choice, before the
 thinned edge relation or characteristic function is known. The powerset gap
@@ -438,8 +396,6 @@ theorem exists_universalGeneratorPathBound_seed
   · intro alpha
     simpa only [q, universalGeneratorPathComposite_erased] using hg q alpha
 
-#print axioms exists_universalGeneratorPathBound_seed
-
 /-- The path-bound hypothesis is discharged by the universal seed. The
 remaining source obligation is cofinally high characteristic agreement for
 the displayed family of coordinate functions, modulo each below ideal. -/
@@ -489,8 +445,6 @@ theorem exists_transitive_generators_of_cofinally_characteristic_agreement
       obtain ⟨g, hg, hBound⟩ := hSeed B lambda
       exact ⟨g, fun i => (hg i).trans_le (hSeedChi i), hBound⟩)
   exact ⟨H, hTransitive⟩
-
-#print axioms exists_transitive_generators_of_cofinally_characteristic_agreement
 
 /-- Pointwise-strict exact upper bounds in a cardinal product are unique
 modulo the ideal. This is the ideal-theoretic equality used in Jech (24.14). -/
@@ -561,8 +515,6 @@ theorem cardinalProduct_exactUpperBounds_eventually_eq
           (f i) (g i) hle' hge'))
     · exact Or.inl hle)
 
-#print axioms cardinalProduct_exactUpperBounds_eventually_eq
-
 /-- An exact upper bound is eventually below every pointwise-strict upper
 bound of the same nonempty family. This is the comparison needed when a
 scale is normalized at large-cofinality limit indices. -/
@@ -600,8 +552,6 @@ theorem cardinalProduct_exactUpperBound_eventuallyLe_upperBound
       intro i h
       exact h.2.2 h.1)
   exact hProper.not_eventually_false hFalse
-
-#print axioms cardinalProduct_exactUpperBound_eventuallyLe_upperBound
 
 /-- A closed exact upper bound lying below an actual pointwise-strict upper
 bound cannot reach the coordinate top on a positive set. It therefore has a
@@ -661,8 +611,6 @@ theorem exists_pointwiseStrictExactUpperBound_of_closed_of_upperBound
       intro k hk
       simpa only [hk.2] using hk.1)
 
-#print axioms exists_pointwiseStrictExactUpperBound_of_closed_of_upperBound
-
 theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta kappa : Cardinal.{u}}
     (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))
@@ -694,8 +642,6 @@ theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
     (fun beta : Set.Iio alpha => s.seq beta.1) c hc' (s.seq alpha)
     (fun beta => s.increasing beta.2)
 
-#print axioms PointwiseStrictScale.initialSegment_exactUpperBound_of_closedPrinciple
-
 /-- Closed exactness on a strictly increasing cofinal subsequence is already
 closed exactness for the entire scale initial segment. -/
 theorem PointwiseStrictScale.closedExactUpperBound_of_cofinal_subsequence
@@ -717,8 +663,6 @@ theorem PointwiseStrictScale.closedExactUpperBound_of_cofinal_subsequence
   · intro h hh
     obtain ⟨eta, hEta⟩ := hExact.2 h hh
     exact ⟨r eta, hEta⟩
-
-#print axioms PointwiseStrictScale.closedExactUpperBound_of_cofinal_subsequence
 
 /-- Lemma 24.10 applied at the cofinality of an arbitrary scale index. -/
 theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_cofinalMap_two_power_lt
@@ -756,8 +700,6 @@ theorem PointwiseStrictScale.initialSegment_exactUpperBound_of_cofinalMap_two_po
     (fun beta : Set.Iio alpha => s.seq beta.1) c hcFull (s.seq alpha)
     (fun beta => s.increasing beta.2)
 
-#print axioms PointwiseStrictScale.initialSegment_exactUpperBound_of_cofinalMap_two_power_lt
-
 /-- A scale index has source-large cofinality when it has a regular cofinal
 presentation whose cardinal is above the powerset of the coordinate index.
 This is the exact hypothesis used to normalize the scale in Jech 24.31. -/
@@ -789,9 +731,6 @@ theorem PointwiseStrictScale.exists_initialSegment_exactUpperBound_of_largeCofin
   exact s.initialSegment_exactUpperBound_of_cofinalMap_two_power_lt
     hIndexInfinite hRegular hUncountable hPower alpha r hStrict hCofinal
 
-#print axioms
-  PointwiseStrictScale.exists_initialSegment_exactUpperBound_of_largeCofinality
-
 /-- Replace a scale value at each source-large-cofinality index by a chosen
 exact upper bound of its initial segment. Elsewhere retain the original
 scale value. -/
@@ -822,8 +761,6 @@ theorem PointwiseStrictScale.exactifiedValue_exact
     (s.exists_initialSegment_exactUpperBound_of_largeCofinality
       hIndexInfinite alpha hLarge)
 
-#print axioms PointwiseStrictScale.exactifiedValue_exact
-
 theorem PointwiseStrictScale.exactifiedValue_eventuallyLe
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta : Cardinal.{u}}
     (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))
@@ -851,8 +788,6 @@ theorem PointwiseStrictScale.exactifiedValue_eventuallyLe
   · simp only [PointwiseStrictScale.exactifiedValue, dif_neg hLarge]
     exact (cardinalProductFrame A J).eventuallyLe_refl (s.seq alpha)
 
-#print axioms PointwiseStrictScale.exactifiedValue_eventuallyLe
-
 theorem PointwiseStrictScale.eventuallyPointwiseLt_exactifiedValue_of_lt
     {A : CardSet.{u}} {J : Ideal (CardinalIndex A)} {theta : Cardinal.{u}}
     (s : PointwiseStrictScale (cardinalProductFrame A J) (cardinalScaleLength theta))
@@ -866,9 +801,6 @@ theorem PointwiseStrictScale.eventuallyPointwiseLt_exactifiedValue_of_lt
       ⟨alpha, hAlphaBeta⟩
   · simpa only [PointwiseStrictScale.exactifiedValue, dif_neg hLarge] using
       s.increasing hAlphaBeta
-
-#print axioms
-  PointwiseStrictScale.eventuallyPointwiseLt_exactifiedValue_of_lt
 
 /-- Normalize an entire pointwise-strict scale. At large-cofinality indices
 its values are exact upper bounds of the original initial segments. -/
@@ -895,8 +827,6 @@ noncomputable def PointwiseStrictScale.exactifyLargeCofinality
       hIndexInfinite hAlphaBeta
     exact ⟨beta, (cardinalProductFrame A J).eventuallyLe_trans hAlpha
       (J.eventually_mono hStrict (fun _ h => h.1))⟩
-
-#print axioms PointwiseStrictScale.exactifyLargeCofinality
 
 /-- At every source-large-cofinality index, the normalized value is an exact
 upper bound of the normalized (not merely original) scale initial segment. -/
@@ -948,9 +878,6 @@ theorem PointwiseStrictScale.exactifyLargeCofinality_initialSegment_exact
         hBeta hToGamma
     refine ⟨gamma, ?_⟩
     exact J.eventually_mono hHGamma (fun _ h => h.1)
-
-#print axioms
-  PointwiseStrictScale.exactifyLargeCofinality_initialSegment_exact
 
 abbrev PcfCharacteristic (A : CardSet.{u}) : Type (u + 1) :=
   forall i : CardinalIndex A, i.1.ord.ToType
@@ -1079,8 +1006,6 @@ theorem exists_pcfCharacteristicClosureStage
     rw [Equiv.symm_apply_apply] at hBound
     exact hBound.trans (hScaleValue i)
 
-#print axioms exists_pcfCharacteristicClosureStage
-
 noncomputable def pcfCharacteristicClosureStageChoice
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1133,8 +1058,6 @@ theorem pcfCharacteristicClosureChain_eq
           (fun xi _ => pcfCharacteristicClosureChain hRegulars hSmall
             hIndexKappa hKappaCoordinates J s seed xi)).value := by
   rw [pcfCharacteristicClosureChain, WellFounded.fix_eq]
-
-#print axioms pcfCharacteristicClosureChain_eq
 
 noncomputable def pcfCharacteristicClosureBase
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -1252,8 +1175,6 @@ theorem pcfCharacteristicClosureChain_strictMono_at
       (pcfCharacteristicClosureChain_base_lt hRegulars hSmall
         hIndexKappa hKappaCoordinates J s seed eta i)
 
-#print axioms pcfCharacteristicClosureChain_strictMono_at
-
 theorem pcfCharacteristicClosureChain_scale_lt
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1323,10 +1244,6 @@ theorem pcfCharacteristicClosureChain_cofinalIndex_lt
       (fun xi _ => pcfCharacteristicClosureChain hRegulars hSmall
         hIndexKappa hKappaCoordinates J s seed xi)).cofinalIndex_lt_value lambda
 
-#print axioms pcfCharacteristicClosureChain_scale_lt
-#print axioms pcfCharacteristicClosureChain_base_le_scale
-#print axioms pcfCharacteristicClosureChain_cofinalIndex_lt
-
 noncomputable def pcfCharacteristicClosureOrdinal
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1375,8 +1292,6 @@ theorem pcfCharacteristicClosureOrdinal_lt_and_cof_eq
       (pcfCharacteristicClosureChain hRegulars hSmall hIndexKappa
         hKappaCoordinates J s seed eta) i
 
-#print axioms pcfCharacteristicClosureOrdinal_lt_and_cof_eq
-
 /-- The terminal characteristic is the pointwise supremum of the closure
 chain. The strict gap `kappa < i` and regularity of every coordinate keep it
 inside the genuine product. -/
@@ -1420,8 +1335,6 @@ noncomputable def pcfCharacteristicClosure
         (pcfCharacteristicClosureOrdinal_lt_and_cof_eq hRegulars hSmall
           hKappaRegular hIndexKappa hKappaCoordinates J s seed i).1⟩)
 
-#print axioms pcfCharacteristicClosure_ordinalValue
-
 theorem pcfCharacteristicClosureChain_lt
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1461,8 +1374,6 @@ theorem pcfCharacteristicClosureChain_lt
       cardinalProductOrdinalValue (J := J i)
         (pcfCharacteristicClosureChain hRegulars hSmall hIndexKappa
           hKappaCoordinates J s seed xi) i) zeta)
-
-#print axioms pcfCharacteristicClosureChain_lt
 
 noncomputable def pcfCharacteristicClosureCofinalMap
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
@@ -1539,9 +1450,6 @@ theorem pcfCharacteristicClosureCofinalMap_cofinal
     exact hEta
   exact (e.symm.lt_iff_lt.mp hInverse).le
 
-#print axioms pcfCharacteristicClosureCofinalMap_strictMono
-#print axioms pcfCharacteristicClosureCofinalMap_cofinal
-
 theorem pcfCharacteristicClosure_largeCofinality
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1570,8 +1478,6 @@ theorem pcfCharacteristicClosure_largeCofinality
     pcfCharacteristicClosureCofinalMap_cofinal hRegulars hSmall
       hKappaRegular hIndexKappa hKappaCoordinates J s seed i⟩
 
-#print axioms pcfCharacteristicClosure_largeCofinality
-
 theorem pcfCharacteristicClosure_seed_le
     {A : CardSet.{u}} (hRegulars : SetOfRegulars A)
     (hSmall : Small.{u} (CardinalIndex A))
@@ -1596,8 +1502,6 @@ theorem pcfCharacteristicClosure_seed_le
         hIndexKappa hKappaCoordinates J s seed eta i) |>.trans
       (pcfCharacteristicClosureChain_lt hRegulars hSmall hKappaRegular
         hIndexKappa hKappaCoordinates J s seed eta i)).le
-
-#print axioms pcfCharacteristicClosure_seed_le
 
 /-- The terminal closure characteristic is an exact upper bound of every
 scale initial segment cut out by its own coordinate. This is the direct
@@ -1742,8 +1646,6 @@ theorem pcfCharacteristicClosure_isExactUpperBound
       (pcfCharacteristicClosureChain_base_le_scale hRegulars hSmall
         hIndexKappa hKappaCoordinates J s seed rho lambda)
 
-#print axioms pcfCharacteristicClosure_isExactUpperBound
-
 /-- After normalizing every scale at its source-large-cofinality indices, the
 terminal characteristic closure agrees modulo each ideal with the scale value
 at its own coordinate. This is the characteristic-agreement core of Jech
@@ -1821,8 +1723,6 @@ theorem exists_pcfCharacteristicClosure_eventual_agreement
       ((normalized lambda).seq (chi lambda)) chi
       hNormalizedExact hClosureExact
 
-#print axioms exists_pcfCharacteristicClosure_eventual_agreement
-
 /-- A family of local generator scales, together with one regular closure
 length above the powerset of the index and below all coordinates, yields a
 transitive generator system. The scales are normalized internally, so no
@@ -1890,8 +1790,6 @@ theorem exists_transitive_generators_of_localScales
   · exact Classical.byContradiction (fun hNotGenerator =>
       hi (fun hGenerator => False.elim (hNotGenerator hGenerator)))
 
-#print axioms exists_transitive_generators_of_localScales
-
 /-- Canonical local PCF scales discharge the remaining scale-family input in
 `exists_transitive_generators_of_localScales`. Thus a fixed PCF set satisfying
 the closure-length gap has transitive generators. -/
@@ -1925,8 +1823,6 @@ theorem exists_transitive_generators_of_regularClosureGap
   exact exists_transitive_generators_of_localScales hRegulars hSmall
     hIndexInfinite hPower G hFixed hDirected hKappaRegular
     hKappaUncountable hIndexPowerKappa hKappaCoordinates raw
-
-#print axioms exists_transitive_generators_of_regularClosureGap
 
 /-- Jech 24.31 in the present cardinal-product interface: if `A = pcf A`
 and the successor of the powerset of its (shrunk) index lies below every
@@ -1976,9 +1872,6 @@ theorem exists_transitive_generators_of_successorPowerBelowCoordinates
     hIndexInfinite hPower hFixed hKappaRegular hKappaUncountable
     hIndexPowerKappa hKappaCoordinates
 
-#print axioms
-  exists_transitive_generators_of_successorPowerBelowCoordinates
-
 /-- A universe-correct strengthened double-powerset gap. The extra successor
 is the margin needed after passing from a set to its PCF spectrum: the
 spectrum's powerset is bounded by the original double powerset, and taking a
@@ -2006,9 +1899,6 @@ theorem cardinalProductDoublePowerBelowCoordinates_of_successor
     Cardinal.lift_lt.mpr hSmallUniverse
   simpa only [Cardinal.lift_power, Cardinal.lift_ofNat,
     Cardinal.lift_mk_shrink''] using hLifted
-
-#print axioms
-  cardinalProductDoublePowerBelowCoordinates_of_successor
 
 /-- The strengthened double-powerset gap constructs transitive and
 successor-directed generators on the PCF spectrum itself. This is the form
@@ -2086,8 +1976,5 @@ theorem exists_pcf_transitive_successorDirected_generators_of_successorDoublePow
     generatorAtMostIdealSuccessorDirected_of_two_power_below_coordinates
       (cardinalProductRepresentation.pcf_is_setOfRegulars A)
       hPcfSmall hPcfInfinite hPcfPower G⟩
-
-#print axioms
-  exists_pcf_transitive_successorDirected_generators_of_successorDoublePower
 
 end PcfProject

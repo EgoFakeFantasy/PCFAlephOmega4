@@ -42,8 +42,6 @@ theorem targetAlephOmega_power_aleph0_le_continuumAtAlephOmega :
       exact Cardinal.power_self_eq targetAlephOmega_aleph0_le
     _ = continuumAtAlephOmega := rfl
 
-#print axioms targetAlephOmega_power_aleph0_le_continuumAtAlephOmega
-
 /-! A strong-limit coding lemma for the continuum at `aleph_omega`.  Choose a
     cofinal subset of the canonical well-order of `aleph_omega`.  Each initial
     segment has a powerset of cardinality below `aleph_omega`, so a subset of
@@ -124,8 +122,6 @@ theorem continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
     _ ≤ targetAlephOmega ^ #s := hPi
     _ = targetAlephOmega ^ Cardinal.aleph0 := by rw [hcof]
 
-#print axioms continuumAtAlephOmega_le_targetAlephOmega_power_aleph0_of_strongLimit
-
 /-! The preceding two inequalities identify the two powers under the
     strong-limit hypothesis.  Keeping this as a named equality avoids
     repeating the arithmetic sandwich in final-assembly arguments. -/
@@ -138,8 +134,6 @@ theorem continuumAtAlephOmega_eq_targetAlephOmega_power_aleph0_of_strongLimit
       hStrongLimit)
     targetAlephOmega_power_aleph0_le_continuumAtAlephOmega
 
-#print axioms continuumAtAlephOmega_eq_targetAlephOmega_power_aleph0_of_strongLimit
-
 /-! Under the strong-limit premise, the ordinary continuum is strictly below
     `aleph_omega`. This is the elementary cardinal-arithmetic part of the
     conditional PCF route; it does not identify `2 ^ aleph_omega` with the
@@ -150,7 +144,5 @@ theorem two_power_aleph0_lt_targetAlephOmega_of_strongLimit
   apply hStrongLimit.isStrongPrelimit
   simpa only [targetAlephOmega, targetIndexOmega] using
     (Cardinal.aleph0_lt_aleph.mpr Ordinal.omega0_pos)
-
-#print axioms two_power_aleph0_lt_targetAlephOmega_of_strongLimit
 
 end PcfProject

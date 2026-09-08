@@ -71,8 +71,6 @@ theorem cardinalIndex_small_of_countableCardSet
     countableCardSet_iff_countable.mp hCountable
   exact Countable.toSmall _
 
-#print axioms cardinalIndex_small_of_countableCardSet
-
 theorem countableCardSet_iff_set_countable
     {A : CardSet.{u}} :
     CountableCardSet A <->
@@ -152,8 +150,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_power_of_countable_below_alep
         (Cardinal.lift.{u + 1} targetAlephOmega.{u}) ^ Cardinal.aleph0 := by
     exact Cardinal.power_le_power_left hBase hExponent
   exact ⟨J, hUltra, hBound.trans hPower⟩
-
-#print axioms cardinalProductRepresentation_pcf_theta_le_power_of_countable_below_alephOmega
 
 theorem setOfRegulars_iUnion_of_forall
     {I : Type v}

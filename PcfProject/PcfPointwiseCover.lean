@@ -46,8 +46,6 @@ theorem nonempty_cardinalProductUltrafilterScaleChoice
       hRegulars U.2 hSmall hAleph0
   exact ⟨⟨theta, hRegular, hTcf, hThetaAleph0⟩⟩
 
-#print axioms nonempty_cardinalProductUltrafilterScaleChoice
-
 noncomputable def cardinalProductUltrafilterScaleChoice
     (A : CardSet.{u})
     (hRegulars : SetOfRegulars A)
@@ -91,8 +89,6 @@ theorem cardinalProductUltrafilterScaleChoice_mem_pcf
     (cardinalProductUltrafilterScaleChoice
       A hRegulars hSmall hAleph0 U).tcf⟩
 
-#print axioms cardinalProductUltrafilterScaleChoice_mem_pcf
-
 theorem mk_cardinalProductUltrafilterIdeal_le_two_power_two_power
     (A : CardSet.{u}) :
     Cardinal.mk (CardinalProductUltrafilterIdeal A) <=
@@ -114,9 +110,6 @@ theorem mk_cardinalProductUltrafilterIdeal_le_two_power_two_power
       simp only [Cardinal.mk_pi, Cardinal.mk_Prop,
         Cardinal.lift_ofNat, Cardinal.prod_const,
         Cardinal.lift_id'.{0, u + 1}]
-
-#print axioms
-  mk_cardinalProductUltrafilterIdeal_le_two_power_two_power
 
 /-- The disjoint union of the level types of all selected ultrafilter
 scales. -/
@@ -184,9 +177,6 @@ theorem mk_cardinalProductAllUltrafilterScaleIndex_le_maxPcf
       Cardinal.mul_eq_self
         (Cardinal.aleph0_le_lift.mpr M.isRegular.aleph0_le)
 
-#print axioms
-  mk_cardinalProductAllUltrafilterScaleIndex_le_maxPcf
-
 /-- The raw product family obtained by putting every chosen quotient scale
 into one common family.  The product-element type does not depend on the
 ideal, only its eventual order does. -/
@@ -220,8 +210,6 @@ theorem cardinalProductAllUltrafilterScaleFamily_isCofinal
       A hRegulars hSmall hAleph0 U).cofinal g
   exact ⟨⟨U, alpha⟩, hAlpha⟩
 
-#print axioms cardinalProductAllUltrafilterScaleFamily_isCofinal
-
 /-! Every product element is pointwise dominated by the maximum of finitely
 many members of the uniform family.  This is the exact order-theoretic
 statement of Lemma 24.21, before its cardinality estimate. -/
@@ -249,9 +237,6 @@ theorem exists_finset_cardinalProductAllUltrafilterScaleFamily_pointwise_cover
   intro J hUltra
   exact cardinalProductAllUltrafilterScaleFamily_isCofinal
     A hRegulars hSmall hAleph0 J hUltra
-
-#print axioms
-  exists_finset_cardinalProductAllUltrafilterScaleFamily_pointwise_cover
 
 /-- Nonempty finite subfamilies index the actual pointwise maxima supplied
 by the finite-cover conclusion. -/
@@ -323,9 +308,6 @@ theorem cardinalProductAllUltrafilterScaleFamily_le_finiteMax
           A hRegulars hSmall hAleph0 j) i)
     hk
 
-#print axioms
-  cardinalProductAllUltrafilterScaleFamily_le_finiteMax
-
 /-! The finite-max family is literally pointwise cofinal in the full
 product, rather than merely cofinal modulo every ultrafilter. -/
 theorem cardinalProductAllUltrafilterFiniteMaxFamily_pointwise_cofinal
@@ -361,9 +343,6 @@ theorem cardinalProductAllUltrafilterFiniteMaxFamily_pointwise_cofinal
     (cardinalProductAllUltrafilterScaleFamily_le_finiteMax
       A hRegulars hSmall hAleph0 ⟨s, hSNonempty⟩ hk i)
 
-#print axioms
-  cardinalProductAllUltrafilterFiniteMaxFamily_pointwise_cofinal
-
 theorem mk_cardinalProductFiniteMaxIndex_le
     {K : Type v}
     {mu : Cardinal.{v}}
@@ -376,8 +355,6 @@ theorem mk_cardinalProductFiniteMaxIndex_le
     _ <= max Cardinal.aleph0 (Cardinal.mk K) :=
       mk_finset_le_max_aleph0_mk K
     _ <= mu := max_le hMu hK
-
-#print axioms mk_cardinalProductFiniteMaxIndex_le
 
 /-! Under the strong-limit hypothesis, the complete family of selected
 ultrafilter scales on the successor-aleph core has size at most its maximum
@@ -410,9 +387,6 @@ theorem alephSuccSet_mk_allUltrafilterScaleIndex_le_maxPcf
     (hDelta.le.trans
       (alephSuccSet_maxPcf_theta_ge_targetAlephOmega M.isMax))
 
-#print axioms
-  alephSuccSet_mk_allUltrafilterScaleIndex_le_maxPcf
-
 theorem alephSuccSet_mk_allUltrafilterFiniteMaxIndex_le_maxPcf
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u})
     (M : MaxPcfWitness cardinalProductRepresentation alephSuccSet.{u}) :
@@ -427,9 +401,6 @@ theorem alephSuccSet_mk_allUltrafilterFiniteMaxIndex_le_maxPcf
   · exact alephSuccSet_mk_allUltrafilterScaleIndex_le_maxPcf
       hStrongLimit M
   · exact Cardinal.aleph0_le_lift.mpr M.isRegular.aleph0_le
-
-#print axioms
-  alephSuccSet_mk_allUltrafilterFiniteMaxIndex_le_maxPcf
 
 /-! Canonical successor-aleph specialization of Lemma 24.21's pointwise
 cover conclusion. -/
@@ -455,9 +426,6 @@ theorem alephSuccSet_exists_finset_allUltrafilterScaleFamily_pointwise_cover :
     alephSuccSet_cardinalIndex_small
     (fun _ hTheta => alephSuccSet_aleph0_lt _ hTheta)
 
-#print axioms
-  alephSuccSet_exists_finset_allUltrafilterScaleFamily_pointwise_cover
-
 theorem alephSuccSet_allUltrafilterFiniteMaxFamily_pointwise_cofinal :
     forall g : ProductElement
         (cardinalProductFrame alephSuccSet.{u}
@@ -482,8 +450,5 @@ theorem alephSuccSet_allUltrafilterFiniteMaxFamily_pointwise_cofinal :
       alephSuccSet.{u} alephSuccSet_regulars
       alephSuccSet_cardinalIndex_small
       (fun _ hTheta => alephSuccSet_aleph0_lt _ hTheta)
-
-#print axioms
-  alephSuccSet_allUltrafilterFiniteMaxFamily_pointwise_cofinal
 
 end PcfProject

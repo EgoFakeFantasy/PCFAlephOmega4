@@ -35,8 +35,6 @@ theorem pcf_below_alephOmega4
       hRegulars hPrincipal theta hTheta)).trans
     targetAlephOmega_lt_targetAlephOmega4
 
-#print axioms AllUltrafiltersPrincipal.pcf_below_alephOmega4
-
 end AllUltrafiltersPrincipal
 
 end PcfProject

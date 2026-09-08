@@ -92,8 +92,6 @@ theorem exists_small_subfamily_cover_iUnionCardSet
   let e : E := ⟨theta, hTheta⟩
   exact ⟨owner e, Set.mem_range_self e, hOwner e⟩
 
-#print axioms exists_small_subfamily_cover_iUnionCardSet
-
 /-! The output form of Localization Lemma 24.32 for the canonical cardinal
 product.  If `X` lies in `pcf A` and `lambda` lies in `pcf X`, it can be
 localized to a subset whose cardinality is at most that of `A`.  The
@@ -132,9 +130,6 @@ theorem cardinalProductPcfIdempotenceBelow_of_spectrumSmall
   exact cardinalProductRepresentation_pcf_pcf_eq_of_spectrumSmall
     E (setOfRegulars_of_subset hEA hRegulars) (hSmall E hEA)
 
-#print axioms
-  cardinalProductPcfIdempotenceBelow_of_spectrumSmall
-
 /-! The hereditary double-power bound is a concrete sufficient condition
 for the whole below-ambient idempotence interface. -/
 theorem cardinalProductPcfIdempotenceBelow_of_doublePowerBelow
@@ -146,9 +141,6 @@ theorem cardinalProductPcfIdempotenceBelow_of_doublePowerBelow
     (fun _E hEA =>
       cardinalProductPcfSpectrumSmallBelowCoordinates_of_doublePower_subset
         hEA hDouble)
-
-#print axioms
-  cardinalProductPcfIdempotenceBelow_of_doublePowerBelow
 
 def CardinalProductPcfMaxReductionAt (A : CardSet.{u}) : Prop :=
   forall (X : CardSet.{u}) (lambda : Cardinal.{u}),
@@ -196,8 +188,6 @@ theorem cardinalIndex_small_of_boundedAbove
     apply Subtype.ext
     exact congrArg (fun x : Set.Iic bound => x.1) hij
   exact small_of_injective hInjective
-
-#print axioms cardinalIndex_small_of_boundedAbove
 
 /-! This is the canonical-product form of the concentration conclusion in
 Theorem 24.25(b): when an ultrafilter product over a subfamily `W` realizes
@@ -292,9 +282,6 @@ theorem generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
       hUltra.isProper (hg alpha)
   exact hStrict.right hga
 
-#print axioms
-  generatorAtMostIdealEscapesCanonicalUltrafilters_of_successorDirected
-
 /-! Any set below the realized cofinality is small in the witnessing
 ultrafilter.  Otherwise that ultrafilter would concentrate on the set, and
 restriction of the same true-cofinality witness would put `theta` below
@@ -345,9 +332,6 @@ theorem GeneratorSystem.belowIdeal_le_pushforward_of_trueCofinality
       exact False.elim ((G.belowIdeal_small_iff theta B).mp
         hBelow theta hThetaInterA |>.false)
 
-#print axioms
-  GeneratorSystem.belowIdeal_le_pushforward_of_trueCofinality
-
 /-! The generator-equivalence axiom now turns the isolated at-most-ideal
 obstruction into Theorem 24.25(b)'s ultrafilter concentration conclusion.
 The strict-below part is discharged by the preceding theorem. -/
@@ -376,9 +360,6 @@ theorem generatorCapturesCanonicalUltrafilters_of_atMostIdealEscape
     ((J.pushforward fun i => i.1).union_small
       (hBelowLe T hTBelow) hGeneratorSmall)
     hCover
-
-#print axioms
-  generatorCapturesCanonicalUltrafilters_of_atMostIdealEscape
 
 /-! Generator concentration also supplies the base-realization clause used
 in Localization.  Unpack a witness for `theta in pcf A`, view `A` inside
@@ -418,9 +399,6 @@ theorem generatorBaseRealization_of_canonicalUltrafilterCapture
     (A := interCardSet A (G.generator theta)) (B := A)
     (fun gamma hGamma => hGamma.1)
     hRegulars hThetaRegular J hUltra hTcf hEventuallyInter
-
-#print axioms
-  generatorBaseRealization_of_canonicalUltrafilterCapture
 
 /-! The same concentration theorem supplies the preliminary maximum
 reduction used by Localization.  For `lambda in pcf X`, intersect `X` with
@@ -484,9 +462,6 @@ theorem cardinalProductPcfMaxReductionAt_of_canonicalUltrafilterCapture
   apply G.generator_pcf_le hLambdaPcfPcfA
   rw [hInterEq]
   exact hBetaGenerator
-
-#print axioms
-  cardinalProductPcfMaxReductionAt_of_canonicalUltrafilterCapture
 
 /-! Jech Corollary 24.29 in canonical-product form.  If no finite collection
 of generators covers `W`, the complements of all relevant generators have
@@ -560,8 +535,6 @@ theorem generatorCompactCover_of_canonicalUltrafilterCapture
   have hEventually : J.Eventually (fun i => G.generator theta i.1) :=
     hCapture W hWA J hUltra theta hThetaRegular hThetaPcfA hTcf
   exact hAvoid ⟨theta, hThetaPcfW⟩ hEventually
-
-#print axioms generatorCompactCover_of_canonicalUltrafilterCapture
 
 /-! A finite generator cover already yields a maximum PCF value for every
 nonempty subfamily of the ambient generator domain.  Choose the largest
@@ -637,9 +610,6 @@ theorem cardinalProductRepresentation_hasMaxPcf_of_generatorCompactCover
     simpa [Gen, hMuS] using hBetaGenerator
   exact hBetaLeMu.trans (by
     simpa [lambda] using Finset.le_max' s mu hMuS)
-
-#print axioms
-  cardinalProductRepresentation_hasMaxPcf_of_generatorCompactCover
 
 /-! The preceding theorem gives an actual maximum witness for the fixed
 successor-aleph core once generators on its PCF spectrum have the compact
@@ -839,9 +809,6 @@ theorem cardinalProductPcfLocalizationOutput_of_transitiveGenerators
     G.generator_pcf_le hMuPcfPcfA hLambdaInter
   exact (not_le_of_gt (hSupportLt mu hMuS)) hLambdaLeMu
 
-#print axioms
-  cardinalProductPcfLocalizationOutput_of_transitiveGenerators
-
 /-! The preceding compactness theorem can be fed directly into the source
 proof of Localization Lemma 24.32.  Thus compact cover is no longer an
 independent premise: it is derived from smallness, uncountability of the
@@ -872,9 +839,6 @@ theorem cardinalProductPcfLocalizationOutput_of_ultrafilterGenerators
       (cardinalProductRepresentation.pcf_is_setOfRegulars A)
       hPcfSmall hPcfAleph0 G hCapture)
 
-#print axioms
-  cardinalProductPcfLocalizationOutput_of_ultrafilterGenerators
-
 /-! The elementary hereditary double-power bound is enough to run the
 ultrafilter-generator localization route: Lemma 24.24 supplies the only
 idempotence input used by the proof. -/
@@ -898,9 +862,6 @@ theorem cardinalProductPcfLocalizationOutput_of_ultrafilterGenerators_of_doubleP
       A hRegulars hDouble)
     G hTransitive hPcfSmall hPcfAleph0 hCapture
 
-#print axioms
-  cardinalProductPcfLocalizationOutput_of_ultrafilterGenerators_of_doublePowerBelow
-
 /-! The canonical PCF spectrum of the countable successor-aleph core is a
 small type.  Every member is bounded by the already proved countable-product
 cardinal, and bounded families of same-universe cardinals are small. -/
@@ -915,8 +876,6 @@ theorem alephSuccSet_pcf_cardinalIndex_small :
   obtain ⟨J, hUltra, hBound⟩ :=
     alephSuccSet_pcf_theta_le_alephOmega_power_aleph0 hTheta
   simpa only [Cardinal.lift_power, Cardinal.lift_aleph0] using hBound
-
-#print axioms alephSuccSet_pcf_cardinalIndex_small
 
 /-! Every finite tail of the successor-aleph core has a small canonical PCF
 spectrum.  The proof is the full-core boundedness argument with the exact
@@ -940,8 +899,6 @@ theorem alephSuccSet_tail_pcf_cardinalIndex_small (n : Nat) :
   obtain ⟨J, hUltra, hBound⟩ :=
     alephSuccSet_tail_pcf_theta_le_alephOmega_power_aleph0 n hTheta
   simpa only [Cardinal.lift_power, Cardinal.lift_aleph0] using hBound
-
-#print axioms alephSuccSet_tail_pcf_cardinalIndex_small
 
 /-! Tail-specialized localization with the source smallness condition made
 explicit. Together with the strong-limit tail-selection theorem above, it
@@ -971,9 +928,6 @@ theorem alephSuccSet_tail_cardinalProductPcfLocalizationOutput_of_doublePowerBel
     G hTransitive (alephSuccSet_tail_pcf_cardinalIndex_small n)
     (fun _ hPcf => alephSuccSet_tail_pcf_mem_gt_aleph0 n hPcf)
     hCapture
-
-#print axioms
-  alephSuccSet_tail_cardinalProductPcfLocalizationOutput_of_doublePowerBelow
 
 /-! Localization on one strict successor-aleph tail extends to the full
 core.  The omitted prefix is finite, and canonical PCF turns the full core
@@ -1074,9 +1028,6 @@ theorem alephSuccSet_cardinalProductPcfLocalizationOutput_of_tail
         obtain ⟨m, hnm, hThetaEq⟩ := hTheta
         exact ⟨m, hThetaEq⟩))
 
-#print axioms
-  alephSuccSet_cardinalProductPcfLocalizationOutput_of_tail
-
 /-! Stable name for the core maximum obtained directly from canonical
 ultrafilter capture, via Corollary 24.29. -/
 noncomputable def alephSuccSetMaxPcfWitnessOfCanonicalUltrafilterCapture
@@ -1123,8 +1074,6 @@ theorem mk_finset_le_max_aleph0_mk (Base : Type u) :
   classical
   exact (Cardinal.mk_le_of_surjective List.toFinset_surjective).trans
     (Cardinal.mk_list_le_max Base)
-
-#print axioms mk_finset_le_max_aleph0_mk
 
 /-! 上式是核心闭包构造实际使用的最后一项有限支撑基数估计；后续历史接口不进入主定理。 -/
 

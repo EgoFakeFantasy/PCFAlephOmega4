@@ -153,8 +153,6 @@ theorem finite_cardinalIndex_singleton
   apply Subtype.ext
   exact i.2.trans j.2.symm
 
-#print axioms finite_cardinalIndex_singleton
-
 /-- The finite-index PCF construction applies to a finite union once the
 component regularity and nonemptiness facts have been supplied. The
 finite-index premise is proved from the components by
@@ -201,7 +199,5 @@ noncomputable def finiteMaxPcfWitness
             hRegulars beta hBeta⟩
         exact Finset.le_max' Finset.univ iBeta (Finset.mem_univ iBeta)
   }
-
-#print axioms finiteMaxPcfWitness
 
 end PcfProject

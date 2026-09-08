@@ -506,9 +506,6 @@ theorem successorAlephLocalOmegaFourTargetReflectionPrinciple_of_rankConstructio
       (successorAlephLocalRankClosedEta_clubRankClosureBelow hMax guess
         omegaOneClubGuessingSystemAtAlephThree_spec.1)
 
-#print axioms
-  successorAlephLocalOmegaFourTargetReflectionPrinciple_of_rankConstruction
-
 /-! Only the part of Corollary 24.30 below a fixed cutoff is used by the
 bounded reflection contradiction. -/
 def SuccessorAlephLocalClubMaxPcfBelow
@@ -556,9 +553,6 @@ theorem two_power_ordinalCof_lt_aleph_of_strongLimit_of_uncountableCof
     rw [Ordinal.card_omega0] at hCardLe
     exact (not_lt_of_ge hCardLe) hCofCard
   exact hPowerTarget.trans (Cardinal.aleph_lt_aleph.mpr hOmegaEta)
-
-#print axioms
-  two_power_ordinalCof_lt_aleph_of_strongLimit_of_uncountableCof
 
 /-! Corollary 24.30 specialized to the successor-aleph index families used
 in the rank proof.  The strong-limit arithmetic needed in Shelah's
@@ -615,8 +609,6 @@ theorem successorAlephIioCardinalIndex_injective
   apply Cardinal.aleph.injective
   exact congrArg Subtype.val hij
 
-#print axioms successorAlephIioCardinalIndex_injective
-
 /-! The coordinate map for a fundamental sequence below `eta`.  The ambient
 cardinal set remains the successor-aleph family below `eta`, while the ideal
 is supported only on the cofinal sequence, exactly as in Theorem 24.16. -/
@@ -633,8 +625,6 @@ theorem successorAlephFundamentalCardinalIndex_injective
     (hf : Function.Injective f) :
     Function.Injective (successorAlephFundamentalCardinalIndex eta f) :=
   (successorAlephIioCardinalIndex_injective eta).comp hf
-
-#print axioms successorAlephFundamentalCardinalIndex_injective
 
 /-! Along a fundamental sequence into a limit index `eta`, the corresponding
 successor-aleph coordinates are eventually above every cardinal below
@@ -681,8 +671,6 @@ theorem successorAlephFundamental_eventually_unbounded
     exact hBetaFi.trans (hFundamental.strictMono.monotone hij)
   exact hKappaBeta.trans (Cardinal.aleph_lt_aleph.mpr
     (hBetaJ.trans_lt (lt_add_one (f j).1)))
-
-#print axioms successorAlephFundamental_eventually_unbounded
 
 theorem successorAlephFundamental_eventually_rapidSupportBelow_small
     (eta : Ordinal.{u})
@@ -757,9 +745,6 @@ theorem successorAlephFundamental_eventually_rapidSupportBelow_small
             k.1 k.2).pos))
     simpa using hkPos
 
-#print axioms
-  successorAlephFundamental_eventually_rapidSupportBelow_small
-
 theorem successorAlephFundamental_exists_strictIncreasing_rapidBelow_of_directed
     (eta : Ordinal.{u})
     (hEtaLimit : Order.IsSuccLimit eta)
@@ -792,9 +777,6 @@ theorem successorAlephFundamental_exists_strictIncreasing_rapidBelow_of_directed
   exact hBaseLe _
     (successorAlephFundamental_eventually_rapidSupportBelow_small
       eta hEtaLimit hEtaCof hFundamental beta alpha)
-
-#print axioms
-  successorAlephFundamental_exists_strictIncreasing_rapidBelow_of_directed
 
 /-! At a limit source stage of a normal fundamental sequence, the
 cofinality of the attained ordinal is strictly below the cofinality indexing
@@ -832,8 +814,6 @@ theorem normalFundamental_value_cof_lt_sourceCof
     Cardinal.mk_Iio_ordinal] at hCofLe
   exact Cardinal.lift_lt.mp (hCofLe.trans_lt hLiftCardI)
 
-#print axioms normalFundamental_value_cof_lt_sourceCof
-
 /-! Below a successor-aleph coordinate attained at a normal limit stage,
 the cofinality of any proper closed value is already below the predecessor
 aleph, once that predecessor dominates the source cofinality.  If the value
@@ -868,8 +848,6 @@ theorem closedOrdinal_cof_lt_predecessorAleph_at_normalLimit
     exact hCofLeOne.trans_lt
       (Cardinal.one_lt_aleph0.trans_le
         (Cardinal.aleph0_le_aleph (f i).1))
-
-#print axioms closedOrdinal_cof_lt_predecessorAleph_at_normalLimit
 
 /-! The stationary/Fodor conclusion in the final paragraph of Jech's
 Theorem 24.16.  A closed exact upper bound of a sequence which is rapid for
@@ -1089,9 +1067,6 @@ theorem successorAlephFundamental_eventually_top_of_localized_closedExactUpperBo
       (hFj0Fi0.trans (lt_add_one (f i0).1)))
   exact (not_lt_of_ge (hD i hiD hiS.1.1.2)) hSmallCof
 
-#print axioms
-  successorAlephFundamental_eventually_top_of_localized_closedExactUpperBound
-
 /-! The unlocalized stationary/Fodor conclusion is the special case of the
 preceding theorem on the full source set. -/
 theorem successorAlephFundamental_eventually_top_of_closedExactUpperBound
@@ -1140,9 +1115,6 @@ theorem successorAlephFundamental_eventually_top_of_closedExactUpperBound
   rw [Ideal.localize_true] at hLocal
   exact hLocal d hIncreasing hRapid g hExact
 
-#print axioms
-  successorAlephFundamental_eventually_top_of_closedExactUpperBound
-
 /-! The ordinal index whose successor aleph is represented by a coordinate
 of `successorAlephCardSet (Iio eta)`. -/
 noncomputable def successorAlephCardinalIndexRank
@@ -1173,8 +1145,6 @@ theorem successorAlephCardinalIndexRank_fundamental
   apply (Ordinal.add_right_cancel 1).mp
   simpa using hs.symm
 
-#print axioms successorAlephCardinalIndexRank_fundamental
-
 /-! The fundamental-sequence product is directed for every family smaller
 than the singular limit `aleph eta`.  The coordinate cardinals eventually
 dominate the family's cardinality, and regularity then supplies a strict
@@ -1203,9 +1173,6 @@ theorem successorAlephFundamental_pointwiseStrictDirectedBelow_aleph
     (cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof)).pushforward
       (successorAlephFundamentalCardinalIndex eta f)).eventually_mono
         hB hBound
-
-#print axioms
-  successorAlephFundamental_pointwiseStrictDirectedBelow_aleph
 
 /-! The stronger directedness used by Theorem 24.16.  A family of size below
 `aleph (eta+1)` has size at most `aleph eta`, so encode it into the initial
@@ -1295,9 +1262,6 @@ theorem successorAlephFundamental_pointwiseStrictDirectedBelow_alephSucc
     exact hRankBeta.trans_le (Ordinal.omega_strictMono.monotone
       (hBetaFi.trans (hFundamental.strictMono.monotone hjl)))
 
-#print axioms
-  successorAlephFundamental_pointwiseStrictDirectedBelow_alephSucc
-
 /-! This is the lower-bound half of Theorem 24.16.  Eventual coordinate
 unboundedness forces any regular scale length above `aleph eta`; the power
 hypothesis makes `aleph eta` singular, so the successor-cardinal property
@@ -1344,9 +1308,6 @@ theorem successorAlephFundamental_regularScaleLength_ge_alephSucc
   rw [← Cardinal.succ_aleph]
   exact Order.succ_le_iff.mpr hGt
 
-#print axioms
-  successorAlephFundamental_regularScaleLength_ge_alephSucc
-
 /-! The predicates on the literal cofinality index have exactly the powerset
 cardinality appearing in Theorem 24.16.  The universe lift is unavoidable
 because an ordinal initial segment lives one universe above its cardinal. -/
@@ -1358,8 +1319,6 @@ theorem mk_predicates_Iio_cofOrd
   rw [Cardinal.mk_set, Cardinal.mk_Iio_ordinal, Cardinal.card_ord]
   exact (Cardinal.lift_two_power eta.cof).symm
 
-#print axioms mk_predicates_Iio_cofOrd
-
 theorem mk_predicates_Iio_cofOrd_le_lift
     (eta : Ordinal.{u})
     {theta : Cardinal.{u}}
@@ -1368,8 +1327,6 @@ theorem mk_predicates_Iio_cofOrd_le_lift
       Cardinal.lift.{u + 1} theta := by
   rw [mk_predicates_Iio_cofOrd]
   exact Cardinal.lift_le.mpr hPower
-
-#print axioms mk_predicates_Iio_cofOrd_le_lift
 
 /-! The source-sized exact-upper-bound package needed from Jech Lemma 24.10
 for the fundamental-sequence product.  The power hypothesis is the one
@@ -1436,8 +1393,6 @@ theorem successorAlephLocalLemma2410ExactUpperBounds :
       (localizedPushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
         (J := NS) coord hSourceInfinite hThetaRegular hThetaUncountable
           hSourcePower X)
-
-#print axioms successorAlephLocalLemma2410ExactUpperBounds
 
 /-! The true-cofinality conclusion used from Theorem 24.16 after transporting
 the continuous cofinal sequence to the ordinal interval below `eta`.  For
@@ -1621,18 +1576,12 @@ theorem successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
     exact pointwiseStrictScale_of_directedBelow_of_cofinalFamily
       hThetaRegular hDirected q hq
 
-#print axioms
-  successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
-
 /-! The local Theorem 24.16 scale is now unconditional under its displayed
 source hypotheses: Lemma 24.10 is supplied by the source-sized W-tree hull. -/
 theorem successorAlephLocalTheorem2416FundamentalSequenceScale :
     SuccessorAlephLocalTheorem2416FundamentalSequenceScale.{u} :=
   successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
     successorAlephLocalLemma2410ExactUpperBounds
-
-#print axioms
-  successorAlephLocalTheorem2416FundamentalSequenceScale
 
 
 
@@ -1704,17 +1653,12 @@ theorem successorAlephLocalTheorem2416UltrafilterTcf_of_fundamentalSequenceScale
   exact cardinalScaleLength_hasTrueCofinality
     (Cardinal.isRegular_aleph_add_one eta) hScale
 
-#print axioms
-  successorAlephLocalTheorem2416UltrafilterTcf_of_fundamentalSequenceScale
-
 /-! The club-ultrafilter true-cofinality form of local Theorem 24.16 is now
 unconditional under its displayed source hypotheses. -/
 theorem successorAlephLocalTheorem2416UltrafilterTcf :
     SuccessorAlephLocalTheorem2416UltrafilterTcf.{u} :=
   successorAlephLocalTheorem2416UltrafilterTcf_of_fundamentalSequenceScale
     successorAlephLocalTheorem2416FundamentalSequenceScale
-
-#print axioms successorAlephLocalTheorem2416UltrafilterTcf
 
 /-! Theorem 24.16 plus the generator-concentration conclusion of Theorem
 24.25(b) supplies all of the PCF-specific ultrafilter data in Corollary
@@ -1870,9 +1814,6 @@ theorem
         Order.succ_le_iff.mpr hEtaLtIndex
     exact le_antisymm hUpper hLower
 
-#print axioms
-  successorAlephLocalCorollary2430UltrafilterData_of_theorem2416_of_generators
-
 /-! With local Theorem 24.16 proved, generator concentration and the initial
 core segment are the only PCF inputs needed for the ultrafilter data in
 Corollary 24.30. -/
@@ -1886,9 +1827,6 @@ theorem successorAlephLocalCorollary2430UltrafilterData_of_generators
     SuccessorAlephLocalCorollary2430UltrafilterData hMax :=
   successorAlephLocalCorollary2430UltrafilterData_of_theorem2416_of_generators
     hMax G hCapture hCore successorAlephLocalTheorem2416UltrafilterTcf
-
-#print axioms
-  successorAlephLocalCorollary2430UltrafilterData_of_generators
 
 theorem successorAlephLocalCorollary2430_of_ultrafilterData
     {theta : Ordinal.{u}}
@@ -1914,8 +1852,6 @@ theorem successorAlephLocalCorollary2430_of_ultrafilterData
             hCofIioNe J).mp hLe))
   exact ⟨C, hCClub, hRestrictedMax C hCClub hCP⟩
 
-#print axioms successorAlephLocalCorollary2430_of_ultrafilterData
-
 /-! Generator concentration now yields local Corollary 24.30 directly; its
 Theorem 24.16 input is discharged by the exact-upper-bound construction. -/
 theorem successorAlephLocalCorollary2430_of_generators
@@ -1930,8 +1866,6 @@ theorem successorAlephLocalCorollary2430_of_generators
     (successorAlephLocalCorollary2430UltrafilterData_of_generators
       hMax G hCapture hCore)
 
-#print axioms successorAlephLocalCorollary2430_of_generators
-
 theorem successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
     {theta : Ordinal.{u}}
     (hMax : SuccessorAlephHasMaxPcfBelow theta)
@@ -1942,9 +1876,6 @@ theorem successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
   exact h2430 eta hEtaTheta hEtaLimit hEtaCof
     (two_power_ordinalCof_lt_aleph_of_strongLimit_of_uncountableCof
       hStrongLimit hEtaTarget hEtaCof)
-
-#print axioms
-  successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
 
 def SuccessorAlephLocalMaxPcfRankClubWitnessBelow
     {theta : Ordinal.{u}}
@@ -1984,9 +1915,6 @@ theorem successorAlephLocalMaxPcfRankClubWitnessBelow_of_clubMaxPcfBelow
   rw [successorAlephLocalMaxPcfRank, hIndex,
     ← Order.succ_eq_add_one, Ordinal.pred_succ]
 
-#print axioms
-  successorAlephLocalMaxPcfRankClubWitnessBelow_of_clubMaxPcfBelow
-
 def SuccessorAlephLocalMaxPcfRankJechPropertiesBelow
     {theta : Ordinal.{u}}
     (hMax : SuccessorAlephHasMaxPcfBelow theta)
@@ -2009,9 +1937,6 @@ theorem successorAlephLocalMaxPcfRankJechPropertiesBelow_of_sourceInputs
       hMax hClub,
     successorAlephLocalMaxPcfRankOmegaOneInitialSegment_of_cardinalProductLocalization_of_corePcf
       hMax hLocalization hCore⟩
-
-#print axioms
-  successorAlephLocalMaxPcfRankJechPropertiesBelow_of_sourceInputs
 
 theorem not_successorAlephLocalMaxPcfRankReflectionBelowAt_of_boundedJechProperties
     {theta bound delta : Ordinal.{u}}
@@ -2058,9 +1983,6 @@ theorem not_successorAlephLocalMaxPcfRankReflectionBelowAt_of_boundedJechPropert
     csSup_le hXNonempty (fun x hx => hDominates x hx)
   exact (not_lt_of_ge hSupLe) hRankInitialSup
 
-#print axioms
-  not_successorAlephLocalMaxPcfRankReflectionBelowAt_of_boundedJechProperties
-
 theorem successorAlephLocalRankDomain_lt_targetIndexOmega4_of_boundedClubInputs
     {theta : Ordinal.{u}}
     (hMax : SuccessorAlephHasMaxPcfBelow theta)
@@ -2082,9 +2004,6 @@ theorem successorAlephLocalRankDomain_lt_targetIndexOmega4_of_boundedClubInputs
         hMax hClub hLocalization hCore)
       hDeltaTheta hDeltaTarget hDeltaLimit hDeltaCof) hReflectAt
 
-#print axioms
-  successorAlephLocalRankDomain_lt_targetIndexOmega4_of_boundedClubInputs
-
 theorem coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
     {theta : Ordinal.{u}}
     (hMax : SuccessorAlephHasMaxPcfBelow theta)
@@ -2100,9 +2019,6 @@ theorem coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
       hMax hClub hLocalization hCore
   rw [hMaxIndexEq]
   exact Cardinal.aleph_lt_aleph.mpr hTheta
-
-#print axioms
-  coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
 
 
 /-! 核心端点直接使用上面的局部秩界；这里省去不参与主证明的替代输入适配层。 -/

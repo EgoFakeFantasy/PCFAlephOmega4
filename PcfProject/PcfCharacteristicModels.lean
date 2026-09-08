@@ -127,8 +127,6 @@ theorem alephOmegaClosureLanguage_card_le_aleph0 :
   rw [hRelations, add_zero]
   exact hFunctions
 
-#print axioms alephOmegaClosureLanguage_card_le_aleph0
-
 noncomputable def alephOmegaZero : AlephOmegaOrdinal.{u} :=
   ⟨0, (Cardinal.ord_pos.mpr
     (Cardinal.aleph0_pos.trans_le targetAlephOmega_aleph0_le))⟩
@@ -259,8 +257,6 @@ theorem mk_alephOmegaElementaryHull
   unfold alephOmegaElementaryHull
   exact Cardinal.lift_inj.mp h
 
-#print axioms mk_alephOmegaElementaryHull
-
 def alephOmegaBoundedValues
     (k n : Nat) (s : Set AlephOmegaOrdinal.{u}) : Set (Ordinal.{u}) :=
   (fun x : AlephOmegaOrdinal.{u} => x.1) ''
@@ -320,9 +316,6 @@ theorem lt_alephOmegaSetCharacteristic
           (Cardinal.aleph0_le_aleph _)).add_one_lt hx.2 |>.le⟩
   · exact ⟨x.1, ⟨x, ⟨hxs, hxUpper⟩, rfl⟩, rfl⟩
 
-#print axioms alephOmegaSetCharacteristic_lt
-#print axioms lt_alephOmegaSetCharacteristic
-
 abbrev AlephOmegaChainStage (k : Nat) :=
   (finiteAleph.{u} k).ord.ToType
 
@@ -380,8 +373,6 @@ theorem mk_alephOmegaPreviousCarrier_le
     _ = Cardinal.lift.{u + 1} (finiteAleph.{u} k) :=
       Cardinal.mul_eq_self
         (Cardinal.aleph0_le_lift.{u, u + 1}.mpr hk)
-
-#print axioms mk_alephOmegaPreviousCarrier_le
 
 def alephOmegaBase (k : Nat) : Set AlephOmegaOrdinal.{u} :=
   {x | x.1 < (finiteAleph.{u} k).ord}
@@ -455,9 +446,6 @@ theorem AlephOmegaTailCofinalFamily.characteristic_le
     Ordinal.ToType.mk
       ⟨alephOmegaSetCharacteristic k n s,
         alephOmegaSetCharacteristic_lt k n s hs⟩)) n
-
-#print axioms
-  AlephOmegaTailCofinalFamily.characteristic_le
 
 noncomputable def alephOmegaCharacteristicPoint
     (k n : Nat) (s : Set AlephOmegaOrdinal.{u})
@@ -533,8 +521,6 @@ theorem mk_alephOmegaStageSeed_le
       hChar)
     hMember
 
-#print axioms mk_alephOmegaStageSeed_le
-
 noncomputable def alephOmegaStageStep
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (F : AlephOmegaTailCofinalFamily.{u} k)
@@ -578,8 +564,6 @@ def alephOmegaModelUnion
   ⋃ i : AlephOmegaChainStage.{u} k,
     ((alephOmegaModelChain hk F a ha i).substructure :
       Set AlephOmegaOrdinal.{u})
-
-#print axioms alephOmegaModelChain_eq_stageStep
 
 theorem alephOmegaStageSeed_subset_modelChain
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -640,8 +624,6 @@ theorem alephOmegaFinalSubstructure_mem_iff
   rcases le_total i j with hij | hji
   · exact ⟨j, alephOmegaModelChain_mono hk F a ha hij, le_rfl⟩
   · exact ⟨i, le_rfl, alephOmegaModelChain_mono hk F a ha hji⟩
-
-#print axioms alephOmegaFinalSubstructure_mem_iff
 
 theorem mk_alephOmegaModelUnion_le
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -717,9 +699,6 @@ theorem alephOmegaInput_subset_finalSubstructure
   apply (alephOmegaFinalSubstructure_mem_iff hk F a ha x).mpr
   refine ⟨zero, alephOmegaStageSeed_subset_modelChain hk F a ha zero ?_⟩
   exact Or.inl (Or.inl (Or.inl (Or.inr hx)))
-
-#print axioms mk_alephOmegaModelUnion_le
-#print axioms alephOmegaInput_subset_finalSubstructure
 
 def alephOmegaChainPreviousCarrier
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -805,8 +784,6 @@ theorem alephOmegaStageCharacteristic_lt_final
     exact Set.mem_iUnion.2 ⟨j, hj⟩
   · exact alephOmegaSetCharacteristic_lt k n _
       (mk_alephOmegaChainPreviousCarrier_le hk F a ha i)
-
-#print axioms alephOmegaStageCharacteristic_lt_final
 
 noncomputable def alephOmegaStageCharacteristicInFinal
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -904,9 +881,6 @@ theorem alephOmegaStageCharacteristicInFinal_isCofinal
   exact hxle.trans
     (lt_alephOmegaSetCharacteristic k n _ hpCarrier hyUpper).le
 
-#print axioms alephOmegaStageCharacteristic_strictMono
-#print axioms alephOmegaStageCharacteristicInFinal_isCofinal
-
 theorem alephOmegaStageCharacteristicInFinal_dirSupClosed
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (F : AlephOmegaTailCofinalFamily.{u} k)
@@ -982,9 +956,6 @@ theorem alephOmegaStageCharacteristicInFinal_isClub
   ⟨alephOmegaStageCharacteristicInFinal_dirSupClosed hk F a ha n,
     alephOmegaStageCharacteristicInFinal_isCofinal hk F a ha n⟩
 
-#print axioms alephOmegaStageCharacteristicInFinal_dirSupClosed
-#print axioms alephOmegaStageCharacteristicInFinal_isClub
-
 theorem alephOmegaFinalCharacteristic_cof_ne_aleph0
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (hkUncountable : Cardinal.aleph0 < finiteAleph.{u} k)
@@ -1044,8 +1015,6 @@ theorem alephOmegaFinalCharacteristic_cof_ne_aleph0
     (hxIndex z').trans (hf.monotone (hj (Set.mem_range_self z')))
   exact (not_lt_of_ge (hflz.trans hzUpper) (hf hjl))
 
-#print axioms alephOmegaFinalCharacteristic_cof_ne_aleph0
-
 theorem alephOmegaFinalSubstructure_below_characteristic
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (F : AlephOmegaTailCofinalFamily.{u} k)
@@ -1060,8 +1029,6 @@ theorem alephOmegaFinalSubstructure_below_characteristic
     obtain ⟨i, hi⟩ := hx
     exact Set.mem_iUnion.2 ⟨i, hi⟩
   · exact hxUpper
-
-#print axioms alephOmegaFinalSubstructure_below_characteristic
 
 theorem alephOmegaForward_value
     (n : Nat) (gamma xi : AlephOmegaOrdinal.{u})
@@ -1164,8 +1131,6 @@ theorem alephOmegaSubstructure_mem_iff_of_common_interval_point
   exact ((finiteAlephIntervalEquiv n gamma.1 hLower hUpper).symm
     ⟨eta.1, hEta⟩).2
 
-#print axioms alephOmegaSubstructure_mem_iff_of_common_interval_point
-
 theorem alephOmegaSubstructures_agree_next_of_characteristic_clubs
     (S T : alephOmegaClosureLanguage.Substructure AlephOmegaOrdinal.{u})
     (n : Nat) (delta : Ordinal.{u})
@@ -1244,9 +1209,6 @@ theorem alephOmegaSubstructures_agree_next_of_characteristic_clubs
       hCTmem hCSmem hTBelow
       (fun x hx => (hAgreeLower x hx).symm) eta hEtaUpper
 
-#print axioms
-  alephOmegaSubstructures_agree_next_of_characteristic_clubs
-
 /-! The exact abstract content of the model part of Jech's Lemma 24.22.
 The model is represented only by the substructure needed for the selected
 interval bijections.  At every tail coordinate it carries a club contained
@@ -1310,8 +1272,6 @@ noncomputable def alephOmegaFinalCharacteristicModel
     convert hMem using 1
   below_characteristic :=
     alephOmegaFinalSubstructure_below_characteristic hk F a ha
-
-#print axioms alephOmegaFinalCharacteristicModel
 
 @[simp] theorem alephOmegaFinalCharacteristicModel_substructure
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -1383,8 +1343,6 @@ theorem AlephOmegaCharacteristicModel.substructure_eq
         exact_mod_cast (by omega : q <= k + (q + 1)))))
   exact M.agree_below_finiteAleph N (q + 1) x hq'
 
-#print axioms AlephOmegaCharacteristicModel.substructure_eq
-
 theorem AlephOmegaCharacteristicModel.substructure_eq_of_characteristic_eq
     {k : Nat} {chi psi : Nat -> Ordinal.{u}}
     (M : AlephOmegaCharacteristicModel k chi)
@@ -1394,9 +1352,6 @@ theorem AlephOmegaCharacteristicModel.substructure_eq_of_characteristic_eq
   let N' : AlephOmegaCharacteristicModel k chi := h.symm ▸ N
   exact (M.substructure_eq N').trans
     (AlephOmegaCharacteristicModel.substructure_transport h.symm N)
-
-#print axioms
-  AlephOmegaCharacteristicModel.substructure_eq_of_characteristic_eq
 
 theorem alephOmegaFinalSubstructure_eq_of_characteristic_eq
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -1415,7 +1370,5 @@ theorem alephOmegaFinalSubstructure_eq_of_characteristic_eq
       (alephOmegaFinalCharacteristicModel hk hkUncountable F a ha)
       (alephOmegaFinalCharacteristicModel hk hkUncountable F b hb)
       hCharacteristic)
-
-#print axioms alephOmegaFinalSubstructure_eq_of_characteristic_eq
 
 end PcfProject

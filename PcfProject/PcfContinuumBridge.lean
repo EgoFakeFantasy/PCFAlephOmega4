@@ -168,8 +168,6 @@ noncomputable def alephSuccFiniteMaxTailFamily (k : Nat) :
         (alephSuccSetIndexEquiv.{u} (k + n)).1.ord.ToType).symm.monotone
       (hs (alephSuccSetIndexEquiv.{u} (k + n)))
 
-#print axioms alephSuccFiniteMaxTailFamily
-
 noncomputable def alephOmegaStageCode
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (F : AlephOmegaTailCofinalFamily.{u} k)
@@ -265,9 +263,6 @@ theorem alephOmegaWitnessStages_isCofinal
   rw [hStagesCard, hXCard] at hStrict
   exact (lt_irrefl _ hStrict)
 
-#print axioms mk_alephOmegaCharacteristicWitness
-#print axioms alephOmegaWitnessStages_isCofinal
-
 theorem AlephOmegaTailCofinalFamily.memberPoint_lt
     {k : Nat} (F : AlephOmegaTailCofinalFamily.{u} k)
     (q : F.Index) (n : Nat) :
@@ -306,8 +301,6 @@ theorem alephOmegaStageCharacteristic_le_memberPoint
       (finiteAleph.{u} (k + n + 1)).ord.ToType).symm.monotone h
   simpa [alephOmegaStageCharacteristic, alephOmegaStageCode,
     AlephOmegaTailCofinalFamily.memberPoint] using h'
-
-#print axioms alephOmegaStageCharacteristic_le_memberPoint
 
 theorem alephOmegaCharacteristicWitness_exists_code_ge
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -404,8 +397,6 @@ theorem alephOmegaWitnessReconstruct_of_subset
   exact (Order.add_one_le_iff.mpr hpMember).trans
     ((lt_add_one _).le.trans (le_csSup hValuesBounded hMemberValue))
 
-#print axioms alephOmegaWitnessReconstruct_of_subset
-
 abbrev CountableAlephOmegaSubset : Type (u + 1) :=
   {a : Set AlephOmegaOrdinal.{u} // Cardinal.mk a <= Cardinal.aleph0}
 
@@ -462,8 +453,6 @@ noncomputable def alephOmegaUniformSubsetCharacteristicCoding
           hk F a.1 a.2 X hXSubset hXCard
       _ = chi.1 := alephOmegaCharacteristicSource_spec hk F chi
 
-#print axioms alephOmegaUniformSubsetCharacteristicCoding
-
 noncomputable def uniformSubsetCoverOfCardLtAleph
     (K : Type u) {mu : Cardinal.{u}}
     (hMu : Cardinal.IsRegular mu)
@@ -503,8 +492,6 @@ theorem alephOmegaCharacteristicRange_mk_le
       (finiteAleph_isRegular k).lift (hK.trans_lt hAlphaLt)
   exact (alephOmegaUniformSubsetCharacteristicCoding hk F).mk_le_of_uniformSubsetCover
     C hPower hK
-
-#print axioms alephOmegaCharacteristicRange_mk_le
 
 theorem mk_alephOmegaFinalSubstructure_le
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -609,8 +596,6 @@ theorem alephOmegaSequenceCharacteristic_fiber_mk_le
         Cardinal.mul_aleph0_eq
           (Cardinal.aleph0_le_lift.mpr hk)]
 
-#print axioms alephOmegaSequenceCharacteristic_fiber_mk_le
-
 theorem alephOmegaSequence_mk_le
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (hkUncountable : Cardinal.aleph0 < finiteAleph.{u} k)
@@ -658,9 +643,6 @@ theorem lift_targetAlephOmega_power_aleph0_le_of_characteristic_bound
   rw [lift_targetAlephOmega_power_aleph0_eq_sequence_mk]
   exact alephOmegaSequence_mk_le
     hk hkUncountable F alpha hAlphaInfinite hCharacteristic hPower
-
-#print axioms
-  lift_targetAlephOmega_power_aleph0_le_of_characteristic_bound
 
 theorem aleph0_le_finiteAleph_four :
     Cardinal.aleph0 <= finiteAleph.{u} 4 := by
@@ -735,9 +717,6 @@ theorem targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
       hCharacteristic hPower
   exact Cardinal.lift_le.mp hLift
 
-#print axioms
-  targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
-
 theorem continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
     (hStrongLimit : Cardinal.IsStrongLimit targetAlephOmega.{u})
     (M : MaxPcfWitness cardinalProductRepresentation alephSuccSet.{u})
@@ -770,7 +749,5 @@ theorem successorAlephInitialSegmentInCorePcf_of_strongLimit_of_maxAlephIndex
       exact (hStrongLimit.isStrongPrelimit hAleph0).trans_le (le_of_not_gt hLow)
     · rw [← aleph_maxPcfWitnessAlephIndex_eq M]
       exact Cardinal.aleph_le_aleph.mpr (Order.succ_le_iff.mpr hi)
-
-#print axioms successorAlephInitialSegmentInCorePcf_of_strongLimit_of_maxAlephIndex
 
 end PcfProject

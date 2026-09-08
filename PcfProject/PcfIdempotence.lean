@@ -35,8 +35,6 @@ theorem cardinalScaleLength_le_of_scale_eventuallyLe
   exact (s.not_eventuallyLe_of_lt (by
     simpa only [cardinalScaleLength] using hLt)) hLe
 
-#print axioms cardinalScaleLength_le_of_scale_eventuallyLe
-
 /-! The source pointwise supremum used to flatten an iterated product. -/
 noncomputable def cardinalProductFubiniFlatten
     {A B : CardSet.{u}}
@@ -73,8 +71,6 @@ theorem cardinalProductFubiniFlatten_inner_le
         cardinalProductFubiniFlatten hARegulars hSmall D s g a) := by
   exact cardinalProduct_le_pointwiseSupOfSmallFamily
     hARegulars hSmall (fun b => (s b).seq (g b)) b a
-
-#print axioms cardinalProductFubiniFlatten_inner_le
 
 /-! Flattening an outer cofinal scale gives a cofinal (not necessarily
 increasing) family in the Fubini product. -/
@@ -120,8 +116,6 @@ theorem cardinalProductFubiniFlatten_isCofinalFamily
       intro a ha
       exact ha.trans (cardinalProductFubiniFlatten_inner_le
         hARegulars hSmall D s (t.seq alpha) b a)))
-
-#print axioms cardinalProductFubiniFlatten_isCofinalFamily
 
 /-! The Fubini quotient has cofinality at least that of the outer quotient.
 A least cofinal set in the Fubini quotient is represented by raw functions;
@@ -203,8 +197,6 @@ theorem cardinalProductQuotient_cof_le_fubini
     _ = Order.cof QE := hCardC
     _ = Order.cof (CardinalProductQuotient A (J.fubini D)) := rfl
 
-#print axioms cardinalProductQuotient_cof_le_fubini
-
 /-! The Fubini product realizes the same regular true cofinality as the
 outer scale.  The flattened family supplies the upper bound, while the
 preceding theorem supplies the matching lower bound on quotient cofinality. -/
@@ -258,8 +250,6 @@ theorem cardinalProductFubini_hasTrueCofinality
     (cardinalScaleLength_hasTrueCofinality_iff_exists_quotientCofinalFamily_of_lift_le
       hARegulars hFubiniUltra hThetaRegular).mpr
         ⟨d, hDCofinal, hCofLower⟩
-
-#print axioms cardinalProductFubini_hasTrueCofinality
 
 /-! Same-universe formulation of Jech's hypothesis `|pcf A| < min A`.
 Writing it coordinatewise avoids introducing a separate minimum operation
@@ -322,9 +312,6 @@ theorem cardinalProductRepresentation_pcf_pcf_eq_of_spectrumSmall
     exact cardinalProductRepresentation_mem_pcf_of_mem
       (cardinalProductRepresentation.pcf_is_setOfRegulars A) hTheta
 
-#print axioms
-  cardinalProductRepresentation_pcf_pcf_eq_of_spectrumSmall
-
 /-! Choose one witnessing ultrafilter-dual ideal for each canonical PCF
 value.  Distinct values must choose distinct ideals because true cofinality
 is unique on a fixed reduced product. -/
@@ -356,8 +343,6 @@ theorem cardinalProductPcfWitnessIdeal_injective
   simpa only [mk_cardinalScaleLength_level] using
     cardinal_mk_level_eq_of_hasTrueCofinality hTheta hMu
 
-#print axioms cardinalProductPcfWitnessIdeal_injective
-
 /-! There are at most `2^(2^|A|)` ideals on the coordinate type, hence at
 most that many canonical PCF values. -/
 theorem cardinal_mk_cardinalIndex_pcf_le_two_power_two_power
@@ -382,9 +367,6 @@ theorem cardinal_mk_cardinalIndex_pcf_le_two_power_two_power
       simp only [Cardinal.mk_pi, Cardinal.mk_Prop,
         Cardinal.lift_ofNat, Cardinal.prod_const,
         Cardinal.lift_id'.{0, u + 1}]
-
-#print axioms
-  cardinal_mk_cardinalIndex_pcf_le_two_power_two_power
 
 /-! A convenient hereditary sufficient condition for Lemma 24.24.  It is
 the elementary pre-generator bound `2^(2^|A|) < min A` from (24.7)(iv). -/
@@ -416,9 +398,6 @@ theorem cardinalProductPcfSpectrumSmallBelowCoordinates_of_doublePower_subset
   exact (cardinal_mk_cardinalIndex_pcf_le_two_power_two_power E).trans_lt
     (hDoublePower.trans_lt (hDouble ⟨e.1, hEA e.1 e.2⟩))
 
-#print axioms
-  cardinalProductPcfSpectrumSmallBelowCoordinates_of_doublePower_subset
-
 theorem cardinalProductRepresentation_pcf_pcf_eq_of_doublePowerBelow
     (A : CardSet.{u})
     (hARegulars : SetOfRegulars A)
@@ -429,8 +408,5 @@ theorem cardinalProductRepresentation_pcf_pcf_eq_of_doublePowerBelow
   cardinalProductRepresentation_pcf_pcf_eq_of_spectrumSmall A hARegulars
     (cardinalProductPcfSpectrumSmallBelowCoordinates_of_doublePower_subset
       (A := A) (E := A) (fun _ h => h) hDouble)
-
-#print axioms
-  cardinalProductRepresentation_pcf_pcf_eq_of_doublePowerBelow
 
 end PcfProject

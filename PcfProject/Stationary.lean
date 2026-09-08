@@ -196,8 +196,6 @@ theorem smallInitialSegments_Iio_ord_of_isRegular
       simpa [Cardinal.mk_Iio_ordinal, Cardinal.card_ord] using
         Cardinal.lift_le.{u + 1, u}.mpr hc.aleph0_le)
 
-#print axioms smallInitialSegments_Iio_ord_of_isRegular
-
 theorem cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
     {c : Cardinal.{u}}
     (hc : c.IsRegular)
@@ -254,9 +252,6 @@ theorem exists_mem_strict_upperBound_of_countable_subset_of_orderType_omega_one
       (Ordinal.le_iSup f wW)
   exact (Ordinal.typein_lt_typein
     ((· < ·) : X -> X -> Prop)).mp hTypeinLt
-
-#print axioms
-  exists_mem_strict_upperBound_of_countable_subset_of_orderType_omega_one
 
 theorem stationary_meets_club
     {alpha : Type u}
@@ -583,8 +578,6 @@ theorem isSuccLimit_of_mem_strictLimitPoints_univ
   obtain ⟨c, _hc, hbc, hcx⟩ := hx.2 b hCov.lt
   exact ((not_covBy_iff hCov.lt).mpr ⟨c, hbc, hcx⟩) hCov
 
-#print axioms isSuccLimit_of_mem_strictLimitPoints_univ
-
 theorem strictLimitPoints_dirSupClosed
     {alpha : Type u}
     [LinearOrder alpha]
@@ -606,8 +599,6 @@ theorem strictLimitPoints_dirSupClosed
   obtain ⟨y, hyE, hBetaY, hYX⟩ := (hd hxD).2 beta hBetaX
   exact ⟨y, hyE, hBetaY, hYX.trans_le (ha.1 hxD)⟩
 
-#print axioms strictLimitPoints_dirSupClosed
-
 theorem strictLimitPoints_mono
     {alpha : Type u}
     [LT alpha]
@@ -619,8 +610,6 @@ theorem strictLimitPoints_mono
   intro beta hBetaX
   obtain ⟨y, hyE, hBetaY, hyX⟩ := hx.2 beta hBetaX
   exact ⟨y, hEF hyE, hBetaY, hyX⟩
-
-#print axioms strictLimitPoints_mono
 
 theorem strictLimitPoints_subset_of_dirSupClosed
     {alpha : Type u}
@@ -650,8 +639,6 @@ theorem strictLimitPoints_subset_of_dirSupClosed
       obtain ⟨y, hyE, hBY, hyX⟩ := hx.2 b hBX
       exact (not_lt_of_ge (hb ⟨hyE, hyX⟩)) hBY
   exact hE hBelowSubset hBelowNonempty hBelowDirected hBelowLUB
-
-#print axioms strictLimitPoints_subset_of_dirSupClosed
 
 theorem strictLimitPoints_isCofinal
     {alpha : Type u}
@@ -708,8 +695,6 @@ theorem strictLimitPoints_isCofinal
     · exact hGLtSup (n + 1)
   exact ⟨b, hBLimit, le_csSup hGBdd (Set.mem_range_self 0)⟩
 
-#print axioms strictLimitPoints_isCofinal
-
 theorem strictLimitPoints_isClub
     {alpha : Type u}
     [LinearOrder alpha]
@@ -722,8 +707,6 @@ theorem strictLimitPoints_isClub
     IsClub (StrictLimitPoints E) where
   dirSupClosed := strictLimitPoints_dirSupClosed
   isCofinal := strictLimitPoints_isCofinal hcof hE
-
-#print axioms strictLimitPoints_isClub
 
 /-! A normal map with cofinal range has closed range even when its source and
 target are different well-orders.  Mathlib's `IsNormal.isClub_range` is the
@@ -757,8 +740,6 @@ theorem isClub_range_of_isNormal_of_isCofinal
   rw [Set.image_preimage_eq_of_subset hs] at hImageLUB
   obtain rfl := hb.unique hImageLUB
   exact Set.mem_range_self _
-
-#print axioms isClub_range_of_isNormal_of_isCofinal
 
 /-! The inclusion of a club into its ambient well-order is normal.  The only
 subtle point is continuity at limit points of the club subtype: if the
@@ -815,8 +796,6 @@ theorem IsClub.isNormal_subtypeVal
     obtain ⟨c, hca, rfl⟩ := hx
     exact hb c hca)
 
-#print axioms IsClub.isNormal_subtypeVal
-
 /-! A normal cofinal map sends every club in its source to a club in its
 target.  This is the image counterpart to the preimage lemma below and is
 the direction needed when restricting a club ultrafilter along a fundamental
@@ -854,8 +833,6 @@ theorem isClub_image_of_isNormal_of_isCofinal
   rw [← hEq]
   exact hRange
 
-#print axioms isClub_image_of_isNormal_of_isCofinal
-
 /-! Pulling a club back along a normal cofinal map again gives a club.  The
 closure half is continuity of the normal map; for cofinality, intersect the
 target club with the map's club range. -/
@@ -886,8 +863,6 @@ theorem isClub_preimage_of_isNormal_of_isCofinal
     obtain ⟨y, hy, hFaY⟩ := hRangeInter.isCofinal (f a)
     obtain ⟨⟨b, rfl⟩, hbC⟩ := hy
     exact ⟨b, hbC, hf.strictMono.le_iff_le.mp hFaY⟩
-
-#print axioms isClub_preimage_of_isNormal_of_isCofinal
 
 /-! Every fundamental sequence whose index ordinal is a successor limit can
 be replaced by a continuous (normal) fundamental sequence.  At index `i` we
@@ -954,8 +929,6 @@ theorem exists_normal_isFundamentalSeq
       (hb jGlobal hJGlobalI))
   exact ⟨f, ⟨hCof.symm.le, hStrict, hRangeCofinal⟩, hNormal⟩
 
-#print axioms exists_normal_isFundamentalSeq
-
 /-! A normal cofinal enumeration of an ordinal has fewer than `cof o`
 many values below every fixed target stage.  The proof embeds that initial
 part into a proper initial segment of the canonical cofinality index. -/
@@ -991,8 +964,6 @@ theorem mk_range_inter_Iio_lt_lift_cof
     _ = Cardinal.lift.{u + 1} o.cof := by
       rw [Cardinal.mk_Iio_ordinal, Cardinal.card_ord]
 
-#print axioms mk_range_inter_Iio_lt_lift_cof
-
 /-! Every limit ordinal has a club whose proper initial pieces have
 cardinality strictly below the ordinal's cofinality.  This is the club system
 used in the rapid recursion of Theorem 24.16. -/
@@ -1016,8 +987,6 @@ theorem exists_club_with_initial_segments_mk_lt_cof
   exact mk_range_inter_Iio_lt_lift_cof
     q hNormal hFundamental.isCofinal_range alpha
 
-#print axioms exists_club_with_initial_segments_mk_lt_cof
-
 /-! A canonical choice of the preceding club, used to define all rapid
 supports simultaneously.  Non-limit ordinals receive the empty set; only
 the limit case is consumed below. -/
@@ -1037,8 +1006,6 @@ theorem smallInitialClub_isClub
   exact (Classical.choose_spec
     (exists_club_with_initial_segments_mk_lt_cof hLimit)).1
 
-#print axioms smallInitialClub_isClub
-
 theorem smallInitialClub_initial_mk_lt_cof
     {o : Ordinal.{u}}
     (hLimit : Order.IsSuccLimit o)
@@ -1050,8 +1017,6 @@ theorem smallInitialClub_initial_mk_lt_cof
   rw [smallInitialClub, dif_pos hLimit]
   exact (Classical.choose_spec
     (exists_club_with_initial_segments_mk_lt_cof hLimit)).2 alpha
-
-#print axioms smallInitialClub_initial_mk_lt_cof
 
 theorem diagonalCofinalHypothesis_of_small_initial_segments
     {alpha : Type u}
@@ -1775,8 +1740,6 @@ theorem exists_stationary_eqOn_const_of_small_codomain
   · intro a ha
     exact ha.2
 
-#print axioms exists_stationary_eqOn_const_of_small_codomain
-
 /-! A cofinal subset cannot inject into a type smaller than the cofinality
 of the ambient order.  This is the cardinal contradiction used in Jech
 Lemma 24.14 after one coordinate has been fixed on a cofinal fiber. -/
@@ -1796,8 +1759,6 @@ theorem not_injOn_of_isCofinal_of_mk_lt_cof
   have hCardLe : Cardinal.mk S <= Cardinal.mk beta :=
     Cardinal.mk_le_of_injective hSubtypeInjective
   exact (not_lt_of_ge ((Order.cof_le hS).trans hCardLe)) hSmall
-
-#print axioms not_injOn_of_isCofinal_of_mk_lt_cof
 
 theorem not_injOn_of_isCofinal_of_lift_mk_lt_lift_cof
     {alpha : Type u} {beta : Type v}
@@ -1820,8 +1781,6 @@ theorem not_injOn_of_isCofinal_of_lift_mk_lt_lift_cof
     Cardinal.lift_le.mpr (Order.cof_le hS)
   exact (not_lt_of_ge (hCofLe.trans hCardLe)) hSmall
 
-#print axioms not_injOn_of_isCofinal_of_lift_mk_lt_lift_cof
-
 theorem not_strictMonoOn_of_isCofinal_of_mk_lt_cof
     {alpha beta : Type u}
     [LinearOrder alpha]
@@ -1833,8 +1792,6 @@ theorem not_strictMonoOn_of_isCofinal_of_mk_lt_cof
     Not (StrictMonoOn f S) := by
   intro hStrict
   exact not_injOn_of_isCofinal_of_mk_lt_cof hSmall f hS hStrict.injOn
-
-#print axioms not_strictMonoOn_of_isCofinal_of_mk_lt_cof
 
 /-! The two cardinal pigeonhole steps used in Lemma 24.14.  First a small
 coordinate coloring is constant on a stationary set; on that same cofinal
@@ -1861,8 +1818,6 @@ theorem exists_stationary_eqOn_const_and_not_injOn_values
   exact ⟨a, T, hTStationary, hCoordinate,
     not_injOn_of_isCofinal_of_mk_lt_cof
       (hValueSmall a) (values a) (stationary_isCofinal hTStationary)⟩
-
-#print axioms exists_stationary_eqOn_const_and_not_injOn_values
 
 /-! There is no cofinal-length pattern which uses fewer than cofinality many
 coordinates, has fewer than cofinality many values at each coordinate, and
@@ -1911,8 +1866,6 @@ theorem no_repeated_coordinate_strict_pattern_of_small
     (hValueSmall a) valueInRange (stationary_isCofinal hTStationary)
     hInjective
 
-#print axioms no_repeated_coordinate_strict_pattern_of_small
-
 /-! Universe-polymorphic form of the same terminal contradiction.  This is
 needed for canonical products, whose coordinate-index type lives one
 universe above the ordinal stages. -/
@@ -1960,8 +1913,6 @@ theorem no_repeated_coordinate_strict_pattern_of_lift_small
   exact not_injOn_of_isCofinal_of_lift_mk_lt_lift_cof
     (hValueSmall a) valueInRange (stationary_isCofinal hTStationary)
     hInjective
-
-#print axioms no_repeated_coordinate_strict_pattern_of_lift_small
 
 /-! Club-restricted form of the terminal small-range contradiction.  This
 is the form used after aligning a normal failure recursion with a rapidity
@@ -2016,9 +1967,6 @@ theorem no_repeated_coordinate_strict_pattern_on_club_of_lift_small
   exact not_injOn_of_isCofinal_of_lift_mk_lt_lift_cof
     (hValueSmall a) valueInRange (stationary_isCofinal hTStationary)
     hInjective
-
-#print axioms
-  no_repeated_coordinate_strict_pattern_on_club_of_lift_small
 
 theorem exists_stationaryFiber_of_diagonalClubHypothesis
     {alpha : Type u}
@@ -2665,9 +2613,6 @@ theorem exists_ordinalCof_eq_of_regular_lt_mem_club_with_cofinal_subset
   exact ⟨delta, hDeltaCof, hDeltaD, X, hXSubsetD,
     hXSubsetDelta, hTypeX, rfl⟩
 
-#print axioms
-  exists_ordinalCof_eq_of_regular_lt_mem_club_with_cofinal_subset
-
 /-! The standard stationary cofinality strata below a regular cardinal.
 For regular `mu < c`, every club in `c.ord` contains a point whose
 cofinality is exactly `mu`. -/
@@ -2685,8 +2630,6 @@ theorem stationary_ordinalCof_eq_of_regular_lt
       hMu hC hMuC hD
   exact ⟨delta, hDeltaCof, hDeltaD⟩
 
-#print axioms stationary_ordinalCof_eq_of_regular_lt
-
 theorem stationary_ordinalCof_eq_alephOne_below_alephThree :
     Stationary
       {delta : Set.Iio (Cardinal.aleph (3 : Ordinal.{u})).ord |
@@ -2696,8 +2639,6 @@ theorem stationary_ordinalCof_eq_alephOne_below_alephThree :
   · simpa only [Nat.cast_ofNat, OfNat.ofNat] using
       (Cardinal.isRegular_aleph_add_one (2 : Ordinal.{u}))
   · exact Cardinal.aleph_lt_aleph.mpr (by simp)
-
-#print axioms stationary_ordinalCof_eq_alephOne_below_alephThree
 
 /-! A club in an ordinal of cofinality `aleph_1` contains a cofinal
 suborder of order type `omega_1`. This is the purely order-theoretic input
@@ -2778,8 +2719,6 @@ theorem exists_omegaOneCofinalSubset_of_club
     exact hBetaValue.trans_le (le_csSup hXBdd hValueMem)
   exact ⟨X, hXSubset, hTypeX, le_antisymm hSupLe hDeltaLe⟩
 
-#print axioms exists_omegaOneCofinalSubset_of_club
-
 /-! Every proper initial segment of a well-ordered set of order type
 `omega_1` is countable. -/
 theorem countable_inter_Iio_of_orderType_omegaOne
@@ -2812,8 +2751,6 @@ theorem countable_inter_Iio_of_orderType_omegaOne
     _ < #X := Cardinal.mk_Iio_lt gammaX hInitialOrder
     _ = Cardinal.aleph (1 : Ordinal.{u + 1}) := hCardX
 
-#print axioms countable_inter_Iio_of_orderType_omegaOne
-
 /-! In the recursion used for Jech's Lemma 24.14, a strictly increasing
 `gamma`-sequence below a larger regular cardinal `lambda` has a supremum
 still below `lambda`, and that supremum has cofinality exactly `gamma`.
@@ -2837,8 +2774,6 @@ theorem cardinalScaleLength_strictSequence_iSup_lt_and_cof_eq
       Cardinal.noMaxOrder hGamma.aleph0_le
     rw [Ordinal.cof_iSup hStageStrict, Ordinal.cof_toType,
       hGamma.cof_ord]
-
-#print axioms cardinalScaleLength_strictSequence_iSup_lt_and_cof_eq
 
 /-! A regular target cardinal supports the transfinite stage recursion used
 in the failure branch of Jech's Lemma 24.14.  The map `advance` records the
@@ -2907,8 +2842,6 @@ theorem exists_strictMono_advance_sequence
   refine ⟨stage, ?_, hAdvanceStage⟩
   intro i j hij
   exact (hAdvance (stage i)).trans (hAdvanceStage i j hij)
-
-#print axioms exists_strictMono_advance_sequence
 
 /-! The failure recursion can be chosen continuous as well as strictly
 increasing.  At a limit index its value is the supremum of the requested
@@ -3003,8 +2936,6 @@ theorem exists_normal_advance_sequence
     · exact bot_le
   exact ⟨stage, hNormal, hAdvanceStage⟩
 
-#print axioms exists_normal_advance_sequence
-
 /-! Terminal form of the normal recursion.  Its supremum `beta` remains
 below `lambda`, has cofinality `gamma`, and the recursion becomes a normal
 cofinal map into `beta`.  This packages exactly the data required to pull a
@@ -3056,7 +2987,5 @@ theorem exists_normal_cofinal_advance_sequence_below
     hStageCofinal, ?_⟩
   intro i j hij
   exact hAdvanceRaw i j hij
-
-#print axioms exists_normal_cofinal_advance_sequence_below
 
 end PcfProject
