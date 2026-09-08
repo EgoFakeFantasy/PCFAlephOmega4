@@ -2043,24 +2043,6 @@ theorem cardinalProductQuotient_exists_lt_of_regulars
           exact (not_le_of_gt (hStrictAt k hk.1 i)) hk.2)
   exact ⟨g, hUpper⟩
 
-theorem cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {ι : Type u}
-    {B : CardinalIndex A -> Prop}
-    (hSmall : forall k : CardinalIndex A, B k -> Cardinal.mk ι < k.1)
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (hEventually : J.Eventually B)
-    (d : ι -> ProductElement (cardinalProductFrame A J)) :
-    Not ((cardinalProductFrame A J).IsCofinalFamily d) := by
-  obtain ⟨g, hUpper⟩ :=
-    cardinalProductFrame_exists_strict_upper_bound_of_mk_lt_of_eventually
-      hRegulars hSmall hProper hEventually d
-  intro hCofinal
-  obtain ⟨i, hgi⟩ := hCofinal g
-  exact (hUpper i).right hgi
-
 theorem cardinalProductFrame_not_isCofinalFamily_nat_of_aleph0_lt
     {A : CardSet.{u}}
     (hRegulars : SetOfRegulars A)
