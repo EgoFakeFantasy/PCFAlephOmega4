@@ -1571,13 +1571,6 @@ theorem cardinalProductQuotient_le_total_of_isUltrafilterDual
       exact cardinalProductFrame_eventuallyLe_total_of_isUltrafilterDual
         hUltra x y
 
-theorem cardinalProductQuotient_isLinearOrder_of_isUltrafilterDual
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hUltra : J.IsUltrafilterDual) :
-    IsLinearOrder (CardinalProductQuotient A J) (fun q r => q <= r) where
-  toTotal := ⟨cardinalProductQuotient_le_total_of_isUltrafilterDual hUltra⟩
-
 /-! A family is cofinal in the eventual-equality quotient when it eventually
 bounds every quotient class. This definition is paired below with its exact
 raw-product characterization. -/
