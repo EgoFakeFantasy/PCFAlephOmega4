@@ -1772,29 +1772,6 @@ theorem cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt_on
   intro i k hk
   simpa only [g, dif_pos hk] using hb k hk i
 
-/-! If every small index type is eventually smaller than the coordinate
-cardinals, coordinatewise regularity upgrades this tail condition to genuine
-eventual pointwise-strict directedness.  This isolates the ideal-theoretic
-part of the diagonal argument from its cardinal-coordinate construction. -/
-theorem cardinalProductFrame_pointwiseStrictDirectedBelow_of_eventually_coordinate
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {J : Ideal (CardinalIndex A)}
-    {theta : Cardinal.{u}}
-    (hEventually : forall (ι : Type u), Cardinal.mk ι < theta ->
-      J.Eventually (fun k : CardinalIndex A => Cardinal.mk ι < k.1)) :
-    (cardinalProductFrame A J).PointwiseStrictDirectedBelow theta := by
-  intro ι hSmall d
-  obtain ⟨g, hg⟩ :=
-    cardinalProduct_exists_pointwise_strict_upper_bound_of_mk_lt_on
-      hRegulars (B := fun k : CardinalIndex A => Cardinal.mk ι < k.1)
-        (fun _ hk => hk) d
-  refine ⟨g, ?_⟩
-  intro i
-  exact J.eventually_mono (hEventually ι hSmall) (by
-    intro k hk
-    exact ⟨(hg i k hk).le, not_le_of_gt (hg i k hk)⟩)
-
 /-! Layered diagonalization.  The whole family may be as large as the limit
 of the coordinate cardinals: coordinate `k` only has to dominate the local
 subfamily selected by `B k`, provided that local subfamily is smaller than
