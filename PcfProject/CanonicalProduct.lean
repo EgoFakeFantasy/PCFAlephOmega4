@@ -5296,30 +5296,6 @@ theorem cardinalProductRepresentation_mem_pcf_exists_member_le
   exact (hStrict alpha).right hAlpha
 
 
-/-! A general cofinality obstruction: if every proper canonical product has
-no cofinal family indexed by a type of cardinality at most `kappa`, then a
-canonical PCF value must be strictly above `kappa`. The scale occurring in a
-PCF witness is itself the forbidden cofinal family. -/
-theorem cardinalProductRepresentation_mem_pcf_gt_of_no_small_cofinal_family
-    {A : CardSet.{u}}
-    {kappa theta : Cardinal.{u}}
-    (hNoSmall : forall (J : Ideal (CardinalIndex A)), J.IsProper ->
-      forall (ι : Type u) (d : ι -> ProductElement (cardinalProductFrame A J)),
-        Cardinal.mk ι <= kappa ->
-        Not ((cardinalProductFrame A J).IsCofinalFamily d))
-    (hPcf : cardinalProductRepresentation.pcf A theta) :
-    kappa < theta := by
-  obtain ⟨_hRegular, J, hUltra, hTcf⟩ :=
-    (cardinalProductRepresentation_mem_pcf_iff (A := A) (theta := theta)).mp hPcf
-  by_contra hNot
-  have hThetaLe : theta <= kappa := le_of_not_gt hNot
-  obtain ⟨s⟩ := hTcf.hasScaleWitness
-  have hLevelLe : Cardinal.mk (cardinalScaleLength theta).Level <= kappa := by
-    simpa only [mk_cardinalScaleLength_level] using hThetaLe
-  exact hNoSmall J hUltra.isProper
-    (cardinalScaleLength theta).Level s.seq hLevelLe s.isCofinalFamily_seq
-
-
 /-! Eventual coordinate bounds constrain the cardinality of any supplied
 cofinal scale. The predicate `B` may discard a small initial part of the
 coordinates, provided it is eventual for the fixed proper product ideal. -/
