@@ -351,32 +351,6 @@ theorem cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
       hi.1.trans_lt (hb i)
     exact ⟨hlt.le, not_le_of_gt hlt⟩)
 
-/-- A regular-length pointwise-strict scale on repeated coordinates gives a
-scale of the same length on the pushforward ideal. The fiber bounds and the
-recursive strictification are constructed, not supplied as hypotheses. -/
-theorem cardinalReindexedProduct_pushforward_scale
-    {A : CardSet.{u}} {I : Type v} (J : Ideal I)
-    (p : I -> CardinalIndex A) (hRegulars : SetOfRegulars A)
-    (hFibers : forall k : CardinalIndex A,
-      Cardinal.lift.{u} (Cardinal.mk {i : I // p i = k}) <
-        Cardinal.lift.{v} k.1)
-    {theta : Cardinal.{u}} (hTheta : Cardinal.IsRegular theta)
-    (s : PointwiseStrictScale (cardinalReindexedProductFrame J p)
-      (cardinalScaleLength theta)) :
-    Nonempty (PointwiseStrictScale (cardinalProductFrame A (J.pushforward p))
-      (cardinalScaleLength theta)) := by
-  classical
-  choose d hd using fun a => cardinalReindexedProduct_exists_fiber_bound
-    J p hRegulars hFibers (s.seq a)
-  apply pointwiseStrictScale_of_directedBelow_of_cofinalFamily hTheta
-    (cardinalReindexedProduct_pointwiseStrictDirectedBelow_of_scale
-      J p hRegulars hFibers hTheta s) d
-  intro g
-  obtain ⟨a, ha⟩ := s.cofinal (fun i => g (p i))
-  refine ⟨a, J.eventually_mono ha ?_⟩
-  intro i hi
-  exact hi.trans (hd a i).le
-
 /-! A cofinal order representation below an exact bound carries a genuine
 scale of the original regular length. Regularity bounds all stage choices
 for each short family; exactness supplies cofinality and strictification
