@@ -195,18 +195,6 @@ noncomputable def regularCardinalNonstationaryIdeal
     (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
       hRegular hUncountable)
 
-theorem regularCardinalNonstationaryIdeal_isProper
-    (c : Cardinal.{u})
-    (hRegular : c.IsRegular)
-    (hUncountable : Cardinal.aleph0 < c) :
-    (regularCardinalNonstationaryIdeal c hRegular hUncountable).IsProper :=
-  by
-    letI : Nonempty c.ord.ToType := by
-      simpa using hRegular.ne_zero
-    exact nonstationaryIdeal_isProper
-      (cof_ord_toType_ne_aleph0_of_isRegular_of_aleph0_lt
-        hRegular hUncountable)
-
 theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
     {alpha : Type u}
     [LinearOrder alpha]
