@@ -4462,24 +4462,6 @@ theorem cardinalProductQuotientScale_of_cofinalFamily_of_lift_le
     (cardinalProductQuotient_cof_eq_lift_of_cofinalFamily_of_lift_le
       d hCofinal hCofLower)
 
-/-! Exact lifted quotient cofinality also yields a raw scale witness after
-selecting representatives. The equality remains an explicit quotient-order
-hypothesis rather than a consequence of the Zorn ideal. -/
-theorem hasScaleWitness_of_quotientCof_eq_lift
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    {theta : Cardinal.{u}}
-    (hCofEq : Order.cof (CardinalProductQuotient A J) =
-      Cardinal.lift.{u + 1} theta) :
-    HasScaleWitness
-      (cardinalProductFrame A J)
-      (cardinalScaleLength theta) := by
-  obtain ⟨s⟩ := cardinalProductQuotientScale_of_cof_eq_lift
-    hRegulars hUltra hCofEq
-  exact s.exists_scale
-
 /-! At a regular canonical length, true cofinality is exactly equivalent to
 the existence of a lower-universe quotient cofinal family of that length with
 the matching quotient-cofinality lower bound. The reverse implication invokes
