@@ -4377,57 +4377,6 @@ theorem cardinalProductQuotient_isRegular_of_cof_eq_lift
   simp only [Q, hCofEq] at hStrict
   exact (lt_irrefl _) hStrict
 
-/-! A small canonical index removes the remaining universe obstruction in a
-concrete quotient-cofinality lower bound.  If that lower-bound cardinal is
-singular, the represented quotient cofinality is a strictly larger regular
-cardinal and gives a genuine canonical true-cofinality scale. -/
-theorem cardinalProductFrame_exists_trueCofinality_gt_of_small_cardinalIndex
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {lambda : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hLambdaAleph0 : Cardinal.aleph0 <= lambda)
-    (hLambdaNotRegular : Not (Cardinal.IsRegular lambda))
-    (hCofLower : Cardinal.lift.{u + 1} lambda <=
-      Order.cof (CardinalProductQuotient A J)) :
-    exists theta : Cardinal.{u},
-      Cardinal.IsRegular theta /\
-        HasTrueCofinality
-          (cardinalProductFrame A J)
-          (cardinalScaleLength theta) /\
-        lambda < theta := by
-  letI : Small.{u} (CardinalIndex A) := hSmall
-  obtain ⟨theta, hCofEq⟩ :=
-    cardinalProductQuotient_exists_cof_eq_lift_of_small_cardinalIndex
-      (A := A) (J := J)
-  have hThetaLower : lambda <= theta := by
-    apply Cardinal.lift_le.mp
-    calc
-      Cardinal.lift.{u + 1} lambda <=
-          Order.cof (CardinalProductQuotient A J) := hCofLower
-      _ = Cardinal.lift.{u + 1} theta := hCofEq
-  have hThetaAleph0 : Cardinal.aleph0 <= theta :=
-    hLambdaAleph0.trans hThetaLower
-  have hRegular : Cardinal.IsRegular theta :=
-    cardinalProductQuotient_isRegular_of_cof_eq_lift
-      hRegulars hUltra hThetaAleph0 hCofEq
-  have hTcf : HasTrueCofinality
-      (cardinalProductFrame A J)
-      (cardinalScaleLength theta) :=
-    cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular
-      (cardinalProductQuotientScale_of_cof_eq_lift
-        hRegulars hUltra hCofEq).some
-  have hThetaGt : lambda < theta := by
-    have hNe : Not (lambda = theta) := by
-      intro hEq
-      apply hLambdaNotRegular
-      rw [hEq]
-      exact hRegular
-    exact lt_of_le_of_ne hThetaLower hNe
-  exact ⟨theta, hRegular, hTcf, hThetaGt⟩
-
 /-! For a small canonical index, any ultrafilter quotient whose order
 cofinality is uncountable has a genuine represented regular true cofinality.
 Smallness gives an exact lifted cardinal for the quotient cofinality, and the
