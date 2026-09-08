@@ -5082,38 +5082,6 @@ theorem cardinalProductRepresentation_mem_pcf_exists_member_le
   exact (hStrict alpha).right hAlpha
 
 
-/-! Eventual coordinate bounds constrain the cardinality of any supplied
-cofinal scale. The predicate `B` may discard a small initial part of the
-coordinates, provided it is eventual for the fixed proper product ideal. -/
-theorem cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {kappa : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {B : CardinalIndex A -> Prop}
-    {L : ScaleLength.{u}}
-    (hProper : J.IsProper)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame A J) L)
-    (hEventual : J.Eventually B)
-    (hCoordinate : forall i : CardinalIndex A, B i -> kappa < i.1) :
-    kappa < Cardinal.mk L.Level := by
-  by_contra hNot
-  have hLengthLe : Cardinal.mk L.Level <= kappa := le_of_not_gt hNot
-  obtain ⟨s⟩ := hScale
-  have hNoCofinal : Not
-      ((cardinalProductFrame A J).IsCofinalFamily s.seq) := by
-    apply cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
-      (A := A) (B := B) (ι := L.Level)
-      hRegulars
-    · intro i hi
-      calc
-        Cardinal.mk L.Level <= kappa := hLengthLe
-        _ < i.1 := hCoordinate i hi
-    · exact hProper
-    · exact hEventual
-  exact hNoCofinal s.isCofinalFamily_seq
-
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
 `aleph0`-length scale by an equivalence with `Nat`, so the obstruction is a
