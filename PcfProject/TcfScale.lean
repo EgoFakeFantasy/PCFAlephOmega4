@@ -214,68 +214,6 @@ theorem IsPointwiseStrictExactUpperBound.cofinalBelow_of_eventuallyLe
     intro hfh
     exact hk.1.2 (F.le_trans k hk.2 hfh))
 
-/-! Exact-upper-bound decomposition (the order-theoretic content of Jech
-24.11).  With coordinatewise total comparison, an exact upper bound `f`
-relative to a comparison function `g` yields either a bound strictly below
-`g`, cofinality below `g`, or a partition into two positive localized ideals
-carrying those two alternatives separately. -/
-theorem exactUpperBound_bounded_or_cofinal_or_localized_split
-    (hTotal : forall (k : F.Index) (x y : F.Coord k),
-      F.le k x y \/ F.le k y x)
-    {ι : Type w}
-    {d : ι -> ProductElement F}
-    {f g : ProductElement F}
-    (i0 : ι)
-    (hExact : F.IsPointwiseStrictExactUpperBound d f) :
-    F.IsPointwiseStrictBoundedBelow d g \/
-      F.IsPointwiseStrictCofinalBelow d g \/
-      exists X : F.Index -> Prop,
-        (F.J.localize X).IsProper /\
-        (F.J.localize (fun k => Not (X k))).IsProper /\
-        (F.withIdeal (F.J.localize X)).IsPointwiseStrictBoundedBelow d g /\
-        IsPointwiseStrictCofinalBelow
-          (F.withIdeal (F.J.localize (fun k => Not (X k)))) d g := by
-  classical
-  let X : F.Index -> Prop := fun k =>
-    F.le k (f k) (g k) /\ Not (F.le k (g k) (f k))
-  by_cases hXSmall : F.J.Small X
-  · right
-    left
-    apply hExact.cofinalBelow_of_eventuallyLe
-    exact F.J.subset_small hXSmall (by
-      intro k hgf
-      exact ⟨(hTotal k (f k) (g k)).resolve_right hgf, hgf⟩)
-  · by_cases hComplSmall : F.J.Small (fun k => Not (X k))
-    · left
-      exact ⟨f, hExact.isUpperBound, hComplSmall⟩
-    · right
-      right
-      refine ⟨X, (F.J.localize_isProper_iff X).mpr hXSmall,
-        (F.J.localize_isProper_iff (fun k => Not (X k))).mpr hComplSmall,
-        ?_, ?_⟩
-      · refine ⟨f,
-          IsPointwiseStrictExactUpperBound.isUpperBound
-            (F.withIdeal (F.J.localize X))
-            (IsPointwiseStrictExactUpperBound.localize F hExact i0 X), ?_⟩
-        change F.J.Small (fun k => Not (X k) /\ X k)
-        exact F.J.subset_small F.J.empty_small (by
-          intro k hk
-          exact hk.1 hk.2)
-      · apply
-          IsPointwiseStrictExactUpperBound.cofinalBelow_of_eventuallyLe
-            (F.withIdeal (F.J.localize (fun k => Not (X k))))
-            (IsPointwiseStrictExactUpperBound.localize F hExact i0
-              (fun k => Not (X k)))
-        change F.J.Small (fun k =>
-          Not (F.le k (g k) (f k)) /\ Not (X k))
-        exact F.J.subset_small F.J.empty_small (by
-          intro k hk
-          apply hk.1
-          by_cases hgf : F.le k (g k) (f k)
-          · exact hgf
-          · exact False.elim (hk.2
-              ⟨(hTotal k (f k) (g k)).resolve_right hgf, hgf⟩))
-
 /-! A finitely compatible family of coordinatewise comparison sets can be
     defeated in one ultrafilter-dual extension of the frame's ideal.  The
     compactness/Zorn construction lives in `IdealProduct`; here its fixed
