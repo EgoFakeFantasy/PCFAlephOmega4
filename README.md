@@ -38,7 +38,7 @@ import PcfProject
 | 基础 | `CardinalArithmetic`, `IdealProduct`, `TcfScale` | 基数记号、理想约化积与真共尾度 |
 | PCF 表示 | `CanonicalProduct`, `CanonicalPcf`, `CofinalCore` | 标准乘积表示、PCF 谱与共尾核心性质 |
 | 生成元 | `Generators`, `PcfGeneratorConstruction`, `PcfTransitiveGenerators` | 生成元构造、有向性与传递化 |
-| 秩与稳集 | `Stationary`, `StationaryIdeal`, `LocalRank`, `RankClosureConstruction` | club猜测、非稳理想与局部秩闭包 |
+| 秩与稳集 | `Stationary`, `StationaryIdeal`, `LocalRank`, `RankClosureConstruction` | 无界闭子集猜测、非稳理想与局部秩闭包 |
 | 连续统桥 | `PcfCharacteristicModels`, `PcfContinuumBridge` | 特征模型计数与 `aleph_omega ^ aleph_0` 上界 |
 | 汇总 | `PcfTransitiveApplications` | 构造强极限尾部并组合出最终不等式 |
 
