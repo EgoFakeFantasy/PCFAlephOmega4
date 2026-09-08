@@ -867,22 +867,6 @@ theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyPointwiseLt
     intro k hk
     exact hk.1.trans hk.2)
 
-theorem CardinalProductEventuallyLtClosed.trans_of_eventuallyLe
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {x y : ProductElement (cardinalProductFrame A J)}
-    {f : CardinalProductClosedElement A}
-    (hxy : (cardinalProductFrame A J).eventuallyLe x y)
-    (hyf : CardinalProductEventuallyLtClosed J y f) :
-    CardinalProductEventuallyLtClosed J x f := by
-  exact J.eventually_mono (J.eventually_and hxy hyf) (by
-    intro k hk
-    have hValueLe : cardinalProductOrdinalValue x k <=
-        cardinalProductOrdinalValue y k := by
-      exact ((Ordinal.ToType.mk : Set.Iio k.1.ord ≃o k.1.ord.ToType).symm
-        |>.monotone hk.1)
-    exact hValueLe.trans_lt hk.2)
-
 /-! A closed exact upper bound: every family member is strictly below `f`,
 and every genuine product member below `f` is eventually dominated by the
 family.  Allowing `f` to be closed, rather than a product member, is the
