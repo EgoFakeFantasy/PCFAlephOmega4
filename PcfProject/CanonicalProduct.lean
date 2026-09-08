@@ -4886,22 +4886,6 @@ theorem cardinalProductRepresentation_mem_pcf_of_scale
     ⟨rfl, hRegular⟩
     (cardinalScaleLength_hasTrueCofinality hRegular s)
 
-/-! The quotient-scale form of the concrete canonical membership constructor.
-It is usable once a quotient chain of the exact lower-universe canonical
-length has been constructed; it does not obtain that chain from quotient
-cofinality alone. -/
-theorem cardinalProductRepresentation_mem_pcf_of_quotientScale
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (J : Ideal (CardinalIndex A))
-    (hUltra : J.IsUltrafilterDual)
-    (hRegular : Cardinal.IsRegular theta)
-    (s : CardinalProductQuotientScale A J (cardinalScaleLength theta)) :
-    cardinalProductRepresentation.pcf A theta :=
-  cardinalProductRepresentation.mem_pcf_of_witness
-    (isCardinalProductOver_cardinalProductFrame J hUltra)
-    ⟨rfl, hRegular⟩
-    (cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s)
 /-- Every regular cardinal belongs to the canonical `pcf` of its singleton
 set. Unlike the general membership theorem, this result constructs the scale. -/
 theorem cardinalProductRepresentation_mem_pcf_singleton
