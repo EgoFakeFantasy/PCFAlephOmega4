@@ -4628,27 +4628,6 @@ theorem cardinalScaleLength_hasTrueCofinality_iff_quotient_cof_eq_lift
       hRegulars hUltra hCofEq
     exact cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s
 
-/-! A lower bound on the order cofinality of a quotient transfers directly
-to the length of an already supplied regular quotient scale. This consumes the
-scale; it does not create one from the order-cofinality bound. -/
-theorem cardinalProductQuotient_cardinal_le_of_regular_quotientScale
-    {A : CardSet.{u}}
-    {kappa theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hCofLower : Cardinal.lift.{u + 1} kappa <=
-      Order.cof (CardinalProductQuotient A J))
-    (hRegular : Cardinal.IsRegular theta)
-    (hUltra : J.IsUltrafilterDual)
-    (s : CardinalProductQuotientScale A J (cardinalScaleLength theta)) :
-    kappa <= theta := by
-  apply Cardinal.lift_le.mp
-  calc
-    Cardinal.lift.{u + 1} kappa <=
-        Order.cof (CardinalProductQuotient A J) := hCofLower
-    _ = Cardinal.lift.{u + 1} theta :=
-      cardinalProductQuotient_cof_eq_lift_of_regular_quotientScale
-        hRegular hUltra s
-
 noncomputable def singletonCardinalScaleSeq
     (theta : Cardinal.{u})
     (J : Ideal (CardinalIndex (singletonCardSet theta)))
