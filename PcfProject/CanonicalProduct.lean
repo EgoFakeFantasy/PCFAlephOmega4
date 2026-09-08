@@ -5149,47 +5149,7 @@ theorem cardinalProductRepresentation_mem_pcf_of_quotientScale
     ⟨rfl, hRegular⟩
     (cardinalScaleLength_hasTrueCofinality_of_quotientScale hRegular s)
 
-/-! A low-universe cofinal quotient family yields canonical PCF membership
-when its quotient cofinality is explicitly identified with the represented
-regular cardinal. The proof uses the recursive quotient-scale construction;
-it does not derive the low-universe family or the cofinality equality from a
-nonprincipal ideal alone. -/
-theorem cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_cof_eq_lift
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (J : Ideal (CardinalIndex A))
-    (hUltra : J.IsUltrafilterDual)
-    (hRegular : Cardinal.IsRegular theta)
-    (d : (cardinalScaleLength theta).Level -> CardinalProductQuotient A J)
-    (hCofinal : cardinalProductQuotientIsCofinalFamily d)
-    (hCofEq : Order.cof (CardinalProductQuotient A J) =
-      Cardinal.lift.{u + 1} theta) :
-    cardinalProductRepresentation.pcf A theta := by
-  obtain ⟨s⟩ := cardinalProductQuotientScale_of_cofinalFamily_of_cof_eq_lift
-    hRegulars hUltra d hCofinal hCofEq
-  exact cardinalProductRepresentation_mem_pcf_of_quotientScale
-    J hUltra hRegular s
 
-/-! The lower-bound form of the preceding PCF constructor. A low-universe
-cofinal family of canonical length supplies the reverse cofinality inequality,
-so the displayed lower bound suffices to construct the required scale. -/
-theorem cardinalProductRepresentation_mem_pcf_of_quotientCofinalFamily_of_lift_le
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (J : Ideal (CardinalIndex A))
-    (hUltra : J.IsUltrafilterDual)
-    (hRegular : Cardinal.IsRegular theta)
-    (d : (cardinalScaleLength theta).Level -> CardinalProductQuotient A J)
-    (hCofinal : cardinalProductQuotientIsCofinalFamily d)
-    (hCofLower : Cardinal.lift.{u + 1} theta <=
-      Order.cof (CardinalProductQuotient A J)) :
-    cardinalProductRepresentation.pcf A theta := by
-  obtain ⟨s⟩ := cardinalProductQuotientScale_of_cofinalFamily_of_lift_le
-    hRegulars hUltra d hCofinal hCofLower
-  exact cardinalProductRepresentation_mem_pcf_of_quotientScale
-    J hUltra hRegular s
 
 /-! Exact lifted quotient cofinality for a regular cardinal gives canonical
 PCF membership by constructing the corresponding quotient scale. It does not
@@ -5295,116 +5255,8 @@ theorem cardinalProductRepresentation_mem_pcf_not_mem_has_nonprincipal_ideal
   rw [hThetaEq]
   exact i.2
 
-/-! A canonical PCF member is either one of the original regular coordinates,
-or has a representation by a nonprincipal ultrafilter-dual ideal with a real
-true-cofinality scale.  This classifies an already displayed PCF witness; it
-does not construct a nonprincipal scale for an arbitrary cardinal set. -/
-theorem cardinalProductRepresentation_mem_pcf_iff_mem_or_exists_nonprincipal_trueCofinality
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta : Cardinal.{u}} :
-    cardinalProductRepresentation.pcf A theta <->
-      Cardinal.IsRegular theta /\
-        (A theta \/
-          exists J : Ideal (CardinalIndex A),
-            J.IsUltrafilterDual /\
-              (forall i, Not (J = Ideal.excludePoint i)) /\
-              HasTrueCofinality
-                (cardinalProductFrame A J)
-                (cardinalScaleLength theta)) := by
-  constructor
-  · intro hPcf
-    obtain ⟨hRegular, J, hUltra, hTcf⟩ :=
-      (cardinalProductRepresentation_mem_pcf_iff (A := A) (theta := theta)).mp hPcf
-    refine ⟨hRegular, ?_⟩
-    by_cases hMem : A theta
-    · exact Or.inl hMem
-    · obtain ⟨J, hUltra, hTcf, hNonprincipal⟩ :=
-        cardinalProductRepresentation_mem_pcf_not_mem_has_nonprincipal_ideal
-          hRegulars hPcf hMem
-      exact Or.inr ⟨J, hUltra, hNonprincipal, hTcf⟩
-  · rintro ⟨hRegular, hMem | ⟨J, hUltra, _hNonprincipal, hTcf⟩⟩
-    · exact cardinalProductRepresentation_mem_pcf_of_mem hRegulars hMem
-    · exact cardinalProductRepresentation_mem_pcf_iff.mpr
-        ⟨hRegular, J, hUltra, hTcf⟩
 
-/-! A small canonical index and uncountable regular coordinates make every
-specified ultrafilter-dual canonical product realize a regular PCF value
-above `aleph0`.  This constructs the scale from the quotient cofinality;
-there is no scale hypothesis in the statement. -/
-theorem cardinalProductRepresentation_exists_pcf_mem_gt_aleph0_of_small_cardinalIndex
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hAleph0 : forall theta, A theta -> Cardinal.aleph0 < theta) :
-    exists theta : Cardinal.{u},
-      Cardinal.IsRegular theta /\
-        cardinalProductRepresentation.pcf A theta /\
-        Cardinal.aleph0 < theta := by
-  obtain ⟨theta, hRegular, hTcf, hThetaGt⟩ :=
-    cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt
-      hRegulars hUltra hSmall hAleph0
-  exact ⟨theta, hRegular,
-    cardinalProductRepresentation_mem_pcf_iff.mpr
-      ⟨hRegular, J, hUltra, hTcf⟩,
-    hThetaGt⟩
 
-/-! On an infinite small canonical index, Zorn supplies a nonprincipal
-ultrafilter-dual ideal and the preceding quotient argument constructs its
-true cofinality scale. This is a genuine nonprincipal PCF witness for every
-small regular-cardinal set whose coordinates are all uncountable. -/
-theorem cardinalProductRepresentation_exists_nonprincipal_pcf_mem_gt_aleph0_of_small_cardinalIndex
-    {A : CardSet.{u}}
-    [Infinite (CardinalIndex A)]
-    (hRegulars : SetOfRegulars A)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hAleph0 : forall theta, A theta -> Cardinal.aleph0 < theta) :
-    exists theta : Cardinal.{u},
-      exists J : Ideal (CardinalIndex A),
-        Cardinal.IsRegular theta /\
-          J.IsUltrafilterDual /\
-          (forall i, Not (J = Ideal.excludePoint i)) /\
-          HasTrueCofinality
-            (cardinalProductFrame A J)
-            (cardinalScaleLength theta) /\
-          cardinalProductRepresentation.pcf A theta /\
-          Cardinal.aleph0 < theta := by
-  obtain ⟨J, hUltra, hNonprincipal⟩ :=
-    exists_nonprincipal_ultrafilterDual_ideal (I := CardinalIndex A)
-  obtain ⟨theta, hRegular, hTcf, hThetaGt⟩ :=
-    cardinalProductFrame_exists_trueCofinality_of_small_cardinalIndex_of_aleph0_lt
-      hRegulars hUltra hSmall hAleph0
-  exact ⟨theta, J, hRegular, hUltra, hNonprincipal, hTcf,
-    cardinalProductRepresentation_mem_pcf_iff.mpr
-      ⟨hRegular, J, hUltra, hTcf⟩,
-    hThetaGt⟩
-
-/-! The small-index quotient construction expressed directly as canonical
-PCF membership.  It still needs the displayed ultrafilter-dual ideal and
-quotient lower bound; it does not manufacture those inputs. -/
-theorem cardinalProductRepresentation_exists_pcf_mem_gt_of_small_cardinalIndex
-    {A : CardSet.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {lambda : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A)
-    (hUltra : J.IsUltrafilterDual)
-    (hSmall : Small.{u} (CardinalIndex A))
-    (hLambdaAleph0 : Cardinal.aleph0 <= lambda)
-    (hLambdaNotRegular : Not (Cardinal.IsRegular lambda))
-    (hCofLower : Cardinal.lift.{u + 1} lambda <=
-      Order.cof (CardinalProductQuotient A J)) :
-    exists theta : Cardinal.{u},
-      cardinalProductRepresentation.pcf A theta /\
-        lambda < theta := by
-  obtain ⟨theta, hRegular, hTcf, hThetaGt⟩ :=
-    cardinalProductFrame_exists_trueCofinality_gt_of_small_cardinalIndex
-      hRegulars hUltra hSmall hLambdaAleph0 hLambdaNotRegular hCofLower
-  exact ⟨theta,
-    cardinalProductRepresentation_mem_pcf_iff.mpr
-      ⟨hRegular, J, hUltra, hTcf⟩,
-    hThetaGt⟩
 
 theorem cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
     {A : CardSet.{u}}
@@ -5426,59 +5278,7 @@ theorem cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
     exact cardinalProductRepresentation_mem_pcf_of_scale
       J hUltra hRegular s
 
-/-! Canonical membership can equivalently be witnessed by a well-ordered
-strictly increasing cofinal chain in the eventual-equality quotient, provided
-the chain has the canonical lower-universe cardinal length. This theorem
-transports a specified quotient scale; it does not derive one from
-`Order.cof`, whose natural universe is larger. -/
-theorem cardinalProductRepresentation_mem_pcf_iff_exists_quotientScale
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}} :
-    cardinalProductRepresentation.pcf A theta <->
-      Cardinal.IsRegular theta /\
-        exists J : Ideal (CardinalIndex A),
-          J.IsUltrafilterDual /\
-            Nonempty (CardinalProductQuotientScale A J
-              (cardinalScaleLength theta)) := by
-  constructor
-  · intro hPcf
-    obtain ⟨hRegular, J, hUltra, hScale⟩ :=
-      (cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
-        (A := A) (theta := theta)).mp hPcf
-    obtain ⟨s⟩ := hScale
-    exact ⟨hRegular, J, hUltra,
-      CardinalProductQuotientScale.nonempty_of_scale s⟩
-  · rintro ⟨hRegular, J, hUltra, hQuotientScale⟩
-    obtain ⟨s⟩ := hQuotientScale
-    exact (cardinalProductRepresentation_mem_pcf_iff_hasScaleWitness
-      (A := A) (theta := theta)).mpr
-        ⟨hRegular, J, hUltra, s.exists_scale⟩
 
-/-! Canonical PCF membership is equivalently witnessed by a regular cardinal
-and an ultrafilter-dual quotient whose order cofinality is exactly that
-cardinal after lifting. The reverse direction is a proved scale construction,
-but the exact quotient-cofinality equality remains a visible hypothesis. -/
-theorem cardinalProductRepresentation_mem_pcf_iff_exists_quotient_cof_eq_lift
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    (hRegulars : SetOfRegulars A) :
-    cardinalProductRepresentation.pcf A theta <->
-      Cardinal.IsRegular theta /\
-        exists J : Ideal (CardinalIndex A),
-          J.IsUltrafilterDual /\
-            Order.cof (CardinalProductQuotient A J) =
-              Cardinal.lift.{u + 1} theta := by
-  constructor
-  · intro hPcf
-    obtain ⟨hRegular, J, hUltra, hTcf⟩ :=
-      (cardinalProductRepresentation_mem_pcf_iff
-        (A := A) (theta := theta)).mp hPcf
-    exact ⟨hRegular, J, hUltra,
-      (cardinalScaleLength_hasTrueCofinality_iff_quotient_cof_eq_lift
-        hRegulars hUltra hRegular).mp hTcf⟩
-  · rintro ⟨hRegular, J, hUltra, hCofEq⟩
-    exact cardinalProductRepresentation_mem_pcf_of_quotient_cof_eq_lift
-      hRegulars J hUltra hRegular hCofEq
 
 /-! The canonical scale sequence is injective: strict eventual growth rules
     out equality at two distinct ordinal indices. This gives the correct
@@ -5532,32 +5332,6 @@ theorem cardinalProductRepresentation_pcf_theta_le_coordinateProduct
   rw [← mk_cardinalProductFrame_productElement J]
   exact hBound
 
-/-! The preceding product bound can be combined with Mathlib's exact
-    cardinal-arithmetic calculation for an infinite index type.  The two
-    coordinate hypotheses are deliberately explicit: this is an ambient
-    product calculation, not the countable-PCF theorem. -/
-theorem cardinalProductRepresentation_pcf_theta_le_two_power_of_coordinateProduct
-    {A : CardSet.{u}}
-    {theta : Cardinal.{u}}
-    [Infinite (CardinalIndex A)]
-    (hPcf : cardinalProductRepresentation.pcf A theta)
-    (hTwo : forall i : CardinalIndex A, 2 <= i.1)
-    (hIndexBound : forall i : CardinalIndex A,
-      Cardinal.lift.{u + 1} i.1 <=
-        Cardinal.lift.{u} (Cardinal.mk (CardinalIndex A))) :
-    exists J : Ideal (CardinalIndex A),
-      J.IsUltrafilterDual /\
-      Cardinal.lift.{u + 1} theta <=
-        (2 : Cardinal.{u + 1}) ^
-          Cardinal.lift.{u} (Cardinal.mk (CardinalIndex A)) := by
-  obtain ⟨J, hUltra, hProduct⟩ :=
-    cardinalProductRepresentation_pcf_theta_le_coordinateProduct hPcf
-  have hArithmetic :
-      Cardinal.prod (fun i : CardinalIndex A => i.1) =
-        (2 : Cardinal.{u + 1}) ^
-          Cardinal.lift.{u} (Cardinal.mk (CardinalIndex A)) := by
-    exact Cardinal.prod_eq_two_power hTwo hIndexBound
-  exact ⟨J, hUltra, hProduct.trans_eq hArithmetic⟩
 
 /-! A coordinatewise bound on the ambient product gives a power bound for
     every canonical PCF value. The bound is stated with `Cardinal.lift`
@@ -5624,20 +5398,6 @@ theorem cardinalProductRepresentation_mem_pcf_exists_member_le
   obtain ⟨alpha, hAlpha⟩ := s.cofinal g
   exact (hStrict alpha).right hAlpha
 
-/-! A strict threshold above a PCF value must already contain a lower
-coordinate from the generating set. This is the form used when locating a
-PCF value inside a concrete initial segment of `A`. -/
-theorem cardinalProductRepresentation_mem_pcf_exists_member_lt_of_lt_member
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {theta beta : Cardinal.{u}}
-    (hPcf : cardinalProductRepresentation.pcf A theta)
-    (hThetaBeta : theta < beta) :
-    exists gamma, A gamma /\ gamma < beta := by
-  obtain ⟨gamma, hGamma, hGammaTheta⟩ :=
-    cardinalProductRepresentation_mem_pcf_exists_member_le
-      hRegulars hPcf
-  exact ⟨gamma, hGamma, hGammaTheta.trans_lt hThetaBeta⟩
 
 /-! A general cofinality obstruction: if every proper canonical product has
 no cofinal family indexed by a type of cardinality at most `kappa`, then a
@@ -5662,26 +5422,6 @@ theorem cardinalProductRepresentation_mem_pcf_gt_of_no_small_cofinal_family
   exact hNoSmall J hUltra.isProper
     (cardinalScaleLength theta).Level s.seq hLevelLe s.isCofinalFamily_seq
 
-/-! The coordinatewise form of the preceding obstruction.  It is often the
-    most convenient way to obtain a lower bound: if every regular coordinate
-    is above `kappa`, then diagonalization rules out every cofinal family of
-    cardinality at most `kappa`, so every represented true cofinality is
-    strictly above `kappa`.  This is a genuine scale consequence and does
-    not assert existence of a scale for an arbitrary product. -/
-theorem cardinalProductRepresentation_mem_pcf_gt_of_coordinate_bound
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {kappa theta : Cardinal.{u}}
-    (hCoordinate : forall beta, A beta -> kappa < beta)
-    (hPcf : cardinalProductRepresentation.pcf A theta) :
-    kappa < theta := by
-  apply cardinalProductRepresentation_mem_pcf_gt_of_no_small_cofinal_family
-    (A := A) (kappa := kappa)
-  · intro J hProper ι d hSmall
-    apply cardinalProductFrame_not_isCofinalFamily_of_mk_lt
-      hRegulars (ι := ι) (J := J) (fun beta hBeta =>
-        hSmall.trans_lt (hCoordinate beta hBeta)) hProper d
-  · exact hPcf
 
 /-! Eventual coordinate bounds constrain the cardinality of any supplied
 cofinal scale. The predicate `B` may discard a small initial part of the
@@ -5738,34 +5478,6 @@ theorem cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounde
   exact (cardinalProductFrame_not_isCofinalFamily_of_mk_lt_of_eventually
     hRegulars hCoordinate hProper hEventual d) hCofinal
 
-/-! At a nonregular eventual-unboundedness threshold, a cofinal family whose
-index cardinal is regular must have cardinality strictly above that threshold.
-This is a statement about an already displayed cofinal family, not an
-existence theorem for such a family or a scale. -/
-theorem cardinalProductFrame_cardinal_lt_of_cofinalFamily_of_eventually_unbounded_of_not_isRegular
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {lambda : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    (hProper : J.IsProper)
-    (hUnbounded : forall kappa : Cardinal.{u}, kappa < lambda ->
-      exists B : CardinalIndex A -> Prop,
-        J.Eventually B /\
-          forall i : CardinalIndex A, B i -> kappa < i.1)
-    {ι : Type u}
-    (d : ι -> ProductElement (cardinalProductFrame A J))
-    (hCofinal : (cardinalProductFrame A J).IsCofinalFamily d)
-    (hLambdaNotRegular : Not (Cardinal.IsRegular lambda))
-    (hIndexRegular : Cardinal.IsRegular (Cardinal.mk ι)) :
-    lambda < Cardinal.mk ι := by
-  have hGe := cardinalProductFrame_cardinal_le_of_cofinalFamily_of_eventually_unbounded
-    hRegulars hProper hUnbounded d hCofinal
-  have hNe : Not (lambda = Cardinal.mk ι) := by
-    intro hEq
-    apply hLambdaNotRegular
-    rw [hEq]
-    exact hIndexRegular
-  exact lt_of_le_of_ne hGe hNe
 
 /-! If the coordinates are eventually unbounded below a cardinal `lambda`,
 then a supplied cofinal scale has cardinality at least `lambda`. This fixes one
@@ -5854,22 +5566,6 @@ theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventually_unbounded_of_n
     exact hThetaRegular
   exact lt_of_le_of_ne hGe hNe
 
-theorem cardinalProductRepresentation_mem_pcf_gt_of_eventual_coordinate_bound
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {kappa theta : Cardinal.{u}}
-    {B : CardinalIndex A -> Prop}
-    (hEventual : forall (J : Ideal (CardinalIndex A)), J.IsProper ->
-      J.Eventually B)
-    (hCoordinate : forall i : CardinalIndex A, B i -> kappa < i.1)
-    (hPcf : cardinalProductRepresentation.pcf A theta) :
-    kappa < theta := by
-  obtain ⟨_hRegular, J, hUltra, hTcf⟩ :=
-    (cardinalProductRepresentation_mem_pcf_iff
-      (A := A) (theta := theta)).mp hPcf
-  exact cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
-    hRegulars hUltra.isProper hTcf.hasScaleWitness
-    (hEventual J hUltra.isProper) hCoordinate
 
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
