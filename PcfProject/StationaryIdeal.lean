@@ -260,28 +260,4 @@ theorem exists_club_subset_of_forall_nonstationaryIdeal_extension_eventually
     (Ideal.eventually_iff_forall_ultrafilterDual_extension
       (nonstationaryIdeal alpha hCof) P).mpr hAll
 
-/-! If every ultrafilter extending the club filter contains a set, then that
-set itself contains a club.  This is the compactness step used in Corollary
-24.30 after the generator theorem identifies the relevant set in every such
-ultrafilter. -/
-theorem exists_club_subset_of_forall_ultrafilterDual_extension_eventually
-    (c : Cardinal.{u})
-    (hRegular : c.IsRegular)
-    (hUncountable : Cardinal.aleph0 < c)
-    (P : c.ord.ToType -> Prop)
-    (hAll : forall J : Ideal c.ord.ToType,
-      J.IsUltrafilterDual ->
-      Ideal.Le
-        (regularCardinalNonstationaryIdeal c hRegular hUncountable) J ->
-      J.Eventually P) :
-    exists C : Set c.ord.ToType,
-      IsClub C /\ forall i, i ∈ C -> P i := by
-  apply
-    (regularCardinalNonstationaryIdeal_eventually_iff_contains_club
-      c hRegular hUncountable P).mp
-  exact
-    (Ideal.eventually_iff_forall_ultrafilterDual_extension
-      (regularCardinalNonstationaryIdeal c hRegular hUncountable) P).mpr
-      hAll
-
 end PcfProject
