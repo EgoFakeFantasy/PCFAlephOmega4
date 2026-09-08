@@ -1436,29 +1436,4 @@ theorem exists_ultrafilterDual_ideal_avoiding_eventuallyLe_family
 
 end ReducedProductFrame
 
-theorem exists_nonprincipal_ultrafilterDual_ideal
-    {I : Type u} [Infinite I] :
-    exists J : Ideal I,
-      J.IsUltrafilterDual /\
-        forall i, Not (J = Ideal.excludePoint i) := by
-  obtain ⟨M, hM, hFiniteM, hMax⟩ :=
-    exists_maximal_good_idealFamily (I := I)
-  let J := idealOfFamily M hM.1
-  have hUltra : J.IsUltrafilterDual := by
-    constructor
-    · intro hUniv
-      exact hM.2 hUniv
-    · intro S
-      exact idealFamily_compl_mem_of_maximal
-        hM.1 hM.2 hMax S
-  refine ⟨J, hUltra, ?_⟩
-  intro i hEq
-  have hSingletonMem : (fun j : I => j = i) ∈ M := by
-    apply hFiniteM
-    change Set.Finite {j : I | j = i}
-    simp
-  have hSingletonSmall : J.Small (fun j : I => j = i) := hSingletonMem
-  rw [hEq] at hSingletonSmall
-  exact hSingletonSmall rfl
-
 end PcfProject
