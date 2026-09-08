@@ -1059,28 +1059,8 @@ theorem idealFamily_union_isGood
     obtain ⟨M, hMc, hMUniv⟩ := Set.mem_sUnion.mp hUniv
     exact (hcGood M hMc).2 hMUniv
 
-theorem exists_maximal_good_idealFamily
-    {I : Type u} [Infinite I] :
-    exists M : Set (I -> Prop),
-      IdealFamilyIsGood M /\
-        finiteIdealFamily I ⊆ M /\
-        forall N, IdealFamilyIsGood N -> M ⊆ N -> N ⊆ M := by
-  let S : Set (Set (I -> Prop)) := {M | IdealFamilyIsGood M}
-  obtain ⟨M, hFiniteM, hMax⟩ :=
-    zorn_subset_nonempty S
-      (fun c hcS hcChain hcNonempty => by
-        refine ⟨⋃₀ c, ?_, ?_⟩
-        · exact idealFamily_union_isGood hcChain hcNonempty hcS
-        · intro N hNc
-          exact Set.subset_sUnion_of_mem hNc)
-      (finiteIdealFamily I)
-      (finiteIdealFamily_isGood (I := I))
-  refine ⟨M, hMax.1, hFiniteM, ?_⟩
-  intro N hN hMN
-  exact hMax.2 hN hMN
-
-/-! The same Zorn argument starts above any already proper ideal family.
-    This is the extension form needed when a PCF construction first fixes a
+/-! The Zorn argument starts above any already proper ideal family. This is
+    the extension form needed when a PCF construction first fixes a
     collection of sets that must be small and only then chooses an
     ultrafilter-dual ideal. -/
 theorem exists_maximal_good_idealFamily_above
