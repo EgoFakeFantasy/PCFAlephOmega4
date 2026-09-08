@@ -5114,24 +5114,6 @@ theorem cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
     · exact hEventual
   exact hNoCofinal s.isCofinalFamily_seq
 
-/-! Specializing the generic eventual-coordinate scale bound to
-`cardinalScaleLength theta` replaces the level cardinality by `theta`. -/
-theorem cardinalProductFrame_cardinalScaleLength_gt_of_eventual_coordinate_bound
-    {A : CardSet.{u}}
-    (hRegulars : SetOfRegulars A)
-    {kappa theta : Cardinal.{u}}
-    {J : Ideal (CardinalIndex A)}
-    {B : CardinalIndex A -> Prop}
-    (hProper : J.IsProper)
-    (hScale : HasScaleWitness
-      (cardinalProductFrame A J) (cardinalScaleLength theta))
-    (hEventual : J.Eventually B)
-    (hCoordinate : forall i : CardinalIndex A, B i -> kappa < i.1) :
-    kappa < theta := by
-  simpa only [mk_cardinalScaleLength_level] using
-    cardinalProductFrame_mk_scaleLength_gt_of_eventual_coordinate_bound
-      hRegulars hProper hScale hEventual hCoordinate
-
 /-! A canonical PCF value cannot be `aleph0` when every proper product ideal
 admits no Nat-indexed cofinal family. The proof reindexes a hypothetical
 `aleph0`-length scale by an equivalence with `Nat`, so the obstruction is a
