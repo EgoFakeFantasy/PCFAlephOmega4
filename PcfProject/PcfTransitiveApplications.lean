@@ -8,6 +8,13 @@ This module applies the formalized Jech 24.31 construction to a sufficiently
 high finite tail of the successor alephs below `aleph_omega`.  The tail is
 chosen above one additional successor of the double-powerset bound, which is
 the exact margin required after passing to the PCF spectrum.
+
+The final theorem is assembled in the same order as the paper argument:
+choose the strong-limit tail, construct its transitive generators, obtain
+Corollary 24.30 and Localization 24.32, bound the core maximum by the local
+rank argument, and finally transfer that bound to the continuum. The comments
+inside `targetConditionalStatement_of_strongLimit` mark these five steps so a
+reader can audit the dependency spine without unfolding the auxiliary proofs.
 -/
 
 open Cardinal Set
@@ -721,6 +728,8 @@ maximum. -/
 theorem targetConditionalStatement_of_strongLimit :
     targetConditionalStatement.{u} := by
   intro hStrongLimit
+  -- Step 1: choose one finite tail on which the strong-limit arithmetic is
+  -- large enough, and construct all generator and maximum witnesses there.
   obtain ⟨n, G, hSuccessorDouble, _hTransitive, hDirected, hCapture,
       hCompact, tailMax, coreMax, hCoreTailEq, hCore, hLocal⟩ :=
     exists_alephSuccSet_strongLimitTailPackage hStrongLimit
@@ -737,6 +746,8 @@ theorem targetConditionalStatement_of_strongLimit :
         cardinalProductRepresentation.pcf T :=
     cardinalProductRepresentation_pcf_pcf_eq_of_doublePowerBelow
       T (alephSuccSet_tail_alephOmegaCore n).regulars hDouble
+  -- Step 2: transitivity and capture on the chosen tail discharge the local
+  -- Corollary 24.30 input used by rank reflection.
   have h2430 : SuccessorAlephLocalCorollary2430 hLocal :=
     successorAlephLocalCorollary2430_of_tailGenerators
       n G hCapture hPcfFixed hLocal hCore
@@ -744,6 +755,8 @@ theorem targetConditionalStatement_of_strongLimit :
       hLocal targetIndexOmega4 :=
     successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
       hLocal h2430 hStrongLimit
+  -- Step 3: independently lift the same tail construction to Localization
+  -- 24.32 for the full successor-aleph core.
   have hLocalization :
       CardinalProductPcfLocalizationOutput alephSuccSet.{u} :=
     alephSuccSet_cardinalProductPcfLocalizationOutput_of_strongLimit
@@ -751,9 +764,13 @@ theorem targetConditionalStatement_of_strongLimit :
   have hCoreMaxEq : coreMax.theta = Cardinal.aleph
       (maxPcfWitnessAlephIndex coreMax) :=
     (aleph_maxPcfWitnessAlephIndex_eq coreMax).symm
+  -- Step 4: the club conclusion and localization output contradict an
+  -- `omega_4`-long local-rank pattern, so the core maximum is below the target.
   have hMlt : coreMax.theta < targetAlephOmega4.{u} :=
     coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
       hLocal hClub hLocalization hCore coreMax hCoreMaxEq
+  -- Step 5: characteristic-model counting bounds the continuum by that core
+  -- maximum; transitivity of `<` gives the advertised inequality.
   have hContinuumLe : continuumAtAlephOmega.{u} <= coreMax.theta :=
     continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
       hStrongLimit coreMax hMlt

@@ -8,11 +8,26 @@ This implements the path-composition part of Jech 24.31 and constructs a
 universal seed bounding all finite-path composite families. Cofinally high
 characteristic agreement for the coordinate-function family remains an
 explicit input; this module does not yet construct the elementary chain.
+
+## Reader's map
+
+The construction proceeds in five stages:
+
+1. encode finite generator paths and close a generator under path composition;
+2. normalize local scales by exact upper bounds;
+3. replace the elementary-chain argument by an explicit characteristic
+   closure recursion;
+4. prove eventual agreement between the terminal characteristic and every
+   normalized local scale;
+5. thin the original generators using that agreement and package the
+   strengthened double-powerset version used by the successor-aleph tail.
 -/
 
 namespace PcfProject
 
 universe u
+
+/-! ## Finite generator paths and the universal path bound -/
 
 /-- A finite path through a displayed family of thinned generators. -/
 inductive GeneratorPath {A : CardSet.{u}}
@@ -446,6 +461,8 @@ theorem exists_transitive_generators_of_cofinally_characteristic_agreement
       exact ⟨g, fun i => (hg i).trans_le (hSeedChi i), hBound⟩)
   exact ⟨H, hTransitive⟩
 
+/-! ## Exactifying local scales -/
+
 /-- Pointwise-strict exact upper bounds in a cardinal product are unique
 modulo the ideal. This is the ideal-theoretic equality used in Jech (24.14). -/
 theorem cardinalProduct_exactUpperBounds_eventually_eq
@@ -845,6 +862,8 @@ theorem PointwiseStrictScale.exactifyLargeCofinality_initialSegment_exact
         hBeta hToGamma
     refine ⟨gamma, ?_⟩
     exact J.eventually_mono hHGamma (fun _ h => h.1)
+
+/-! ## Explicit characteristic closure in place of an elementary chain -/
 
 abbrev PcfCharacteristic (A : CardSet.{u}) : Type (u + 1) :=
   forall i : CardinalIndex A, i.1.ord.ToType
@@ -1613,6 +1632,8 @@ theorem pcfCharacteristicClosure_isExactUpperBound
       (pcfCharacteristicClosureChain_base_le_scale hRegulars hSmall
         hIndexKappa hKappaCoordinates J s seed rho lambda)
 
+/-! ## Terminal agreement with every normalized local scale -/
+
 /-- After normalizing every scale at its source-large-cofinality indices, the
 terminal characteristic closure agrees modulo each ideal with the scale value
 at its own coordinate. This is the characteristic-agreement core of Jech
@@ -1689,6 +1710,8 @@ theorem exists_pcfCharacteristicClosure_eventual_agreement
         (normalized lambda).seq beta.1)
       ((normalized lambda).seq (chi lambda)) chi
       hNormalizedExact hClosureExact
+
+/-! ## Transitive generators from local scales -/
 
 /-- A family of local generator scales, together with one regular closure
 length above the powerset of the index and below all coordinates, yields a
@@ -1838,6 +1861,8 @@ theorem exists_transitive_generators_of_successorPowerBelowCoordinates
   exact exists_transitive_generators_of_regularClosureGap hRegulars hSmall
     hIndexInfinite hPower hFixed hKappaRegular hKappaUncountable
     hIndexPowerKappa hKappaCoordinates
+
+/-! ## The strengthened gap used by the successor-aleph application -/
 
 /-- A universe-correct strengthened double-powerset gap. The extra successor
 is the margin needed after passing from a set to its PCF spectrum: the
