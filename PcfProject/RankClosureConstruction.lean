@@ -13,7 +13,28 @@ universe u
 main PCF argument. The recursion anticipates every earlier ladder initial segment
 whose local rank is below `omega_4`.  Regularity of `aleph_4` keeps every
 stage below the cutoff, and continuity at limit stages makes the resulting
-trace normal. -/
+trace normal.
+
+## Reader's map
+
+The proof has six consecutive layers:
+
+1. build a normal rank-closed trace of length `aleph_3` below `omega_4`;
+2. express the local Corollary 24.30 and its ultrafilter data precisely;
+3. transport rapid sequences and exact upper bounds along a fundamental
+   sequence into a limit ordinal;
+4. prove the local Theorem 24.16 from Lemma 24.10 and Corollary 24.12;
+5. combine Theorem 24.16 with generator concentration to obtain Corollary
+   24.30;
+6. turn the club conclusion into the bounded rank-reflection contradiction
+   used by the core maximum.
+
+The capitalized `Prop` definitions below are interfaces describing the exact
+input or output of a paper theorem. A theorem with the same mathematical name
+later in the file discharges that interface from earlier constructions; the
+interface itself is not counted as a proof. -/
+
+/-! ## The normal rank-closed trace below `omega_4` -/
 
 theorem omegaThreeIndex_card_lt_targetIndexOmega4_cof :
     Cardinal.mk
@@ -506,7 +527,9 @@ theorem successorAlephLocalOmegaFourTargetReflectionPrinciple_of_rankConstructio
       (successorAlephLocalRankClosedEta_clubRankClosureBelow hMax guess
         omegaOneClubGuessingSystemAtAlephThree_spec.1)
 
-/-! Only the part of Corollary 24.30 below a fixed cutoff is used by the
+/-! ## Local Corollary 24.30: statement and ultrafilter data
+
+Only the part of Corollary 24.30 below a fixed cutoff is used by the
 bounded reflection contradiction. -/
 def SuccessorAlephLocalClubMaxPcfBelow
     {theta : Ordinal.{u}}
@@ -592,7 +615,9 @@ def SuccessorAlephLocalCorollary2430UltrafilterData
             ((fun i : Set.Iio eta => i.1) '' C) =
           Cardinal.aleph (eta + 1)
 
-/-! The canonical coordinate map from the ordinal index below `eta` to the
+/-! ## Fundamental-sequence coordinates, rapidity, and eventual top values
+
+The canonical coordinate map from the ordinal index below `eta` to the
 successor-aleph product indexed by that same initial segment.  Its
 injectivity records that no coordinate is duplicated. -/
 noncomputable def successorAlephIioCardinalIndex
@@ -1146,7 +1171,9 @@ theorem successorAlephCardinalIndexRank_fundamental
   simpa using hs.symm
 
 
-/-! The stronger directedness used by Theorem 24.16.  A family of size below
+/-! ## Directedness and exact upper bounds for Theorem 24.16
+
+The stronger directedness used by Theorem 24.16.  A family of size below
 `aleph (eta+1)` has size at most `aleph eta`, so encode it into the initial
 ordinal `omega eta`.  At coordinate `aleph (beta+1)` only the members whose
 codes lie below `omega beta` are diagonalized.  That layer has size at most
@@ -1321,7 +1348,9 @@ theorem successorAlephLocalLemma2410ExactUpperBounds :
         (J := NS) coord hSourceInfinite hThetaRegular hThetaUncountable
           hSourcePower X)
 
-/-! The true-cofinality conclusion used from Theorem 24.16 after transporting
+/-! ## Theorem 24.16: three Corollary 24.12 branches
+
+The true-cofinality conclusion used from Theorem 24.16 after transporting
 the continuous cofinal sequence to the ordinal interval below `eta`.  For
 every ultrafilter-dual ideal containing all clubs, the successor-aleph product
 has true cofinality `aleph (eta + 1)`. -/
@@ -1372,6 +1401,8 @@ theorem successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
     (hLemma : SuccessorAlephLocalLemma2410ExactUpperBounds.{u}) :
     SuccessorAlephLocalTheorem2416FundamentalSequenceScale.{u} := by
   intro eta hEtaLimit hEtaCof hPower f hFundamental hNormal
+  -- Work on the literal cofinality source. `coord` pushes its nonstationary
+  -- ideal to the successor-aleph product indexed below `eta`.
   let source := Set.Iio eta.cof.ord
   let hSourceCofNe : Order.cof source ≠ Cardinal.aleph0 :=
     cof_Iio_cofOrd_ne_aleph0_of_aleph0_lt_cof hEtaCof
@@ -1407,10 +1438,14 @@ theorem successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
     apply mk_predicates_Iio_cofOrd_le_lift eta
     exact hPower.le.trans
       (Cardinal.aleph_lt_aleph.mpr (lt_add_one eta)).le
+  -- Corollary 24.12 is exhaustive: directedness, an existing global scale,
+  -- or a cover by one scale side and one directed side.
   rcases pointwiseStrictCorollary2412_of_pushforward_exactUpperBounds
       hThetaRegular hPredicates hDirected hExact' hExactLocalized' d0 with
     hSucc | hScale | hSplit
-  · obtain ⟨d, hIncreasing, hRapid⟩ :=
+  · -- Directed branch: build a rapid chain; Lemma 24.10 makes its exact
+    -- upper bound cofinal, after which the chain can be strictified.
+    obtain ⟨d, hIncreasing, hRapid⟩ :=
       successorAlephFundamental_exists_strictIncreasing_rapidBelow_of_directed
         eta hEtaLimit hEtaCof hFundamental J (fun _ h => h) hSucc
     let e : Set.Iio theta.ord ≃o (cardinalScaleLength theta).Level :=
@@ -1437,8 +1472,11 @@ theorem successorAlephLocalTheorem2416FundamentalSequenceScale_of_lemma2410
     exact pointwiseStrictScale_of_directedBelow_of_cofinalFamily
       hThetaRegular hDirected dLevel
       (hExactLevel.isCofinalFamily_of_eventually_top hTop)
-  · exact hScale
-  · obtain ⟨X, Y, hCover, _hXProper, hYProper, ⟨sX⟩, hSuccY⟩ := hSplit
+  · -- Scale branch: Corollary 24.12 has already produced the goal.
+    exact hScale
+  · -- Split branch: construct a scale on the directed localization `Y`,
+    -- glue it to the supplied scale on `X`, then strictify globally.
+    obtain ⟨X, Y, hCover, _hXProper, hYProper, ⟨sX⟩, hSuccY⟩ := hSplit
     let P : source -> Prop := fun i => Y (coord i)
     have hIdealEq : J.localize Y = (NS.localize P).pushforward coord := by
       exact NS.pushforward_localize coord Y
@@ -1587,7 +1625,9 @@ theorem successorAlephLocalTheorem2416UltrafilterTcf :
   successorAlephLocalTheorem2416UltrafilterTcf_of_fundamentalSequenceScale
     successorAlephLocalTheorem2416FundamentalSequenceScale
 
-/-! Theorem 24.16 plus the generator-concentration conclusion of Theorem
+/-! ## Corollary 24.30 from Theorem 24.16 and generators
+
+Theorem 24.16 plus the generator-concentration conclusion of Theorem
 24.25(b) supplies all of the PCF-specific ultrafilter data in Corollary
 24.30.  The upper bound for a club restriction is the generator-ideal bound;
 the reverse bound follows from club cofinality and singularity of
@@ -1804,6 +1844,8 @@ theorem successorAlephLocalClubMaxPcfBelow_of_corollary2430_of_strongLimit
     (two_power_ordinalCof_lt_aleph_of_strongLimit_of_uncountableCof
       hStrongLimit hEtaTarget hEtaCof)
 
+/-! ## From club-local maxima to the bounded rank contradiction -/
+
 def SuccessorAlephLocalMaxPcfRankClubWitnessBelow
     {theta : Ordinal.{u}}
     (hMax : SuccessorAlephHasMaxPcfBelow theta)
@@ -1930,6 +1972,8 @@ theorem successorAlephLocalRankDomain_lt_targetIndexOmega4_of_boundedClubInputs
       (successorAlephLocalMaxPcfRankJechPropertiesBelow_of_sourceInputs
         hMax hClub hLocalization hCore)
       hDeltaTheta hDeltaTarget hDeltaLimit hDeltaCof) hReflectAt
+
+/-! ## Core maximum endpoint -/
 
 theorem coreMaxPcfWitness_lt_targetAlephOmega4_of_localRankBoundedClubInputs
     {theta : Ordinal.{u}}
