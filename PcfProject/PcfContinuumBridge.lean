@@ -7,6 +7,19 @@ import PcfProject.PcfNoHoles
 
 This file specializes the pointwise family of Jech 24.21 to the finite-aleph
 tail used by the characteristic-model construction in Theorem 24.18.
+
+Reader's map:
+
+1. identify the successor-aleph coordinates with `Nat` and turn the finite
+   maximum PCF family into a cofinal family on every tail;
+2. encode a countable subset by the characteristic functions of its model
+   chain and prove that any full-sized subcode reconstructs that function;
+3. bound the range of these characteristic functions by uniform subset
+   coding;
+4. count all `aleph_omega`-valued sequences by first choosing a
+   characteristic function and then choosing an element of its fiber;
+5. specialize the count to the maximum PCF witness and obtain the form of
+   Jech's Theorem 24.18 used by the final assembly.
 -/
 
 open Cardinal Set
@@ -15,6 +28,8 @@ open scoped Cardinal
 namespace PcfProject
 
 universe u
+
+/-! ## 1. From the global finite maximum family to a cofinal tail family -/
 
 noncomputable def alephSuccSetIndexEquiv :
     Nat ≃ CardinalIndex alephSuccSet.{u} :=
@@ -167,6 +182,8 @@ noncomputable def alephSuccFiniteMaxTailFamily (k : Nat) :
       (alephSuccSetIndexEquiv.{u} (k + n)).1.ord ≃o
         (alephSuccSetIndexEquiv.{u} (k + n)).1.ord.ToType).symm.monotone
       (hs (alephSuccSetIndexEquiv.{u} (k + n)))
+
+/-! ## 2. Full-sized stage codes reconstruct the final characteristic -/
 
 noncomputable def alephOmegaStageCode
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
@@ -400,6 +417,8 @@ theorem alephOmegaWitnessReconstruct_of_subset
 abbrev CountableAlephOmegaSubset : Type (u + 1) :=
   {a : Set AlephOmegaOrdinal.{u} // Cardinal.mk a <= Cardinal.aleph0}
 
+/-! ## 3. Uniform coding bounds the characteristic range -/
+
 noncomputable def alephOmegaCountableSubsetCharacteristic
     {k : Nat} (hk : Cardinal.aleph0 <= finiteAleph.{u} k)
     (F : AlephOmegaTailCofinalFamily.{u} k)
@@ -512,6 +531,8 @@ theorem mk_alephOmegaFinalSubstructure_le
     constructor <;> rintro ⟨i, hi⟩ <;> exact ⟨i, hi⟩
   exact (Cardinal.mk_congr (Equiv.setCongr hCarrier)).le.trans
     (mk_alephOmegaModelUnion_le hk F a ha)
+
+/-! ## 4. Count sequences by characteristic and fiber -/
 
 abbrev AlephOmegaSequence : Type (u + 1) :=
   Nat -> AlephOmegaOrdinal.{u}
@@ -644,6 +665,8 @@ theorem lift_targetAlephOmega_power_aleph0_le_of_characteristic_bound
   exact alephOmegaSequence_mk_le
     hk hkUncountable F alpha hAlphaInfinite hCharacteristic hPower
 
+/-! ## 5. Theorem 24.18 and its downstream continuum formulation -/
+
 theorem aleph0_le_finiteAleph_four :
     Cardinal.aleph0 <= finiteAleph.{u} 4 := by
   simp [finiteAleph]
@@ -671,6 +694,8 @@ theorem targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
     (M : MaxPcfWitness cardinalProductRepresentation alephSuccSet.{u})
     (hMlt : M.theta < targetAlephOmega4.{u}) :
     targetAlephOmega.{u} ^ Cardinal.aleph0 <= M.theta := by
+  -- Use the tail beginning at `aleph_4`; its index set is already bounded by
+  -- the maximum PCF witness.
   let F := alephSuccFiniteMaxTailFamily.{u} 4
   have hThetaLower : targetAlephOmega.{u} <= M.theta :=
     alephSuccSet_maxPcf_theta_ge_targetAlephOmega M.isMax
@@ -692,12 +717,16 @@ theorem targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
         Cardinal.lift.{u + 1} M.theta := by
     simpa only [Cardinal.lift_power, Cardinal.lift_ofNat] using
       (Cardinal.lift_le.mpr hPowerBase)
+  -- The hypothesis `M.theta < aleph_(aleph_4)` is exactly what the uniform
+  -- subset cover needs at the chosen tail coordinate.
   have hAlphaLt : Cardinal.lift.{u + 1} M.theta <
       Cardinal.aleph
         (Cardinal.lift.{u + 1} (finiteAleph.{u} 4)).ord := by
     have h := Cardinal.lift_lt.mpr hMlt
     rwa [lift_targetAlephOmega4_eq_aleph_lift_finiteAleph_four_ord]
       at h
+  -- Encode each countable subset of `aleph_omega` by its model-chain
+  -- characteristic, and bound the number of possible characteristics.
   have hCharacteristic :
       Cardinal.mk (AlephOmegaCharacteristicRange
         aleph0_le_finiteAleph_four F) <=
@@ -707,6 +736,8 @@ theorem targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
       (Cardinal.lift.{u + 1} M.theta)
       (Cardinal.aleph0_le_lift.mpr M.isRegular.aleph0_le)
       hIndex hStage hPower hAlphaLt
+  -- Each characteristic fiber is small as well, so the two bounds combine to
+  -- count every `aleph_omega`-valued omega-sequence.
   have hLift : Cardinal.lift.{u + 1}
       (targetAlephOmega.{u} ^ Cardinal.aleph0) <=
         Cardinal.lift.{u + 1} M.theta :=
@@ -715,6 +746,7 @@ theorem targetAlephOmega_power_aleph0_le_maxPcf_of_strongLimit_of_lt_alephOmega4
       (Cardinal.lift.{u + 1} M.theta)
       (Cardinal.aleph0_le_lift.mpr M.isRegular.aleph0_le)
       hCharacteristic hPower
+  -- Remove the universe lift to recover the stated cardinal inequality.
   exact Cardinal.lift_le.mp hLift
 
 theorem continuumAtAlephOmega_le_maxPcf_of_strongLimit_of_lt_alephOmega4
