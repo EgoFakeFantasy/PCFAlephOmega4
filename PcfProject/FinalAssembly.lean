@@ -2,26 +2,32 @@ import PcfProject.CofinalCore
 import PcfProject.FinitePcf
 
 /-!
-# Finite and concentrated PCF assembly
+# Maximum-PCF transport on the successor-aleph core
 
-This file assembles the preceding explicit hypotheses into the target
-conditional statement. It does not prove Shelah's PCF theorem unconditionally:
-the reduction from strong limit at `aleph_omega` to a continuum-bounding
-max-pcf witness remains an explicit field.
-The finite-support componentwise route can additionally combine supplied
-component structural packages into a union maximum before applying the
-explicit continuum comparison; it remains conditional.
-The general concentrated indexed-union route has the same shape, with an
-explicit greatest-component premise controlling the cross-component maximum.
-The dominating-component adapter isolates that maximum construction from the
-structural inputs still required by the countable-PCF bound.
+This file records the terminal bookkeeping used by the main proof.  Its
+purpose is to move a maximum PCF witness between a strict successor-aleph tail
+and the full core, and to expose the countable-product bound needed by the
+continuum bridge.
+
+Reader's map:
+
+1. a maximum on one strict tail is represented by a nonprincipal ultrafilter;
+   the same witness therefore belongs to every tail and remains maximal on
+   each deeper tail;
+2. splitting the full core into a finite prefix and a tail transports tail
+   maxima to the full core, while nonprincipality transports a full maximum
+   back to all tails;
+3. explicit `Nat` enumerations show that the full core and every strict tail
+   have countably infinite coordinate types;
+4. the general countable-product estimate then bounds every corresponding PCF
+   value by `aleph_omega ^ aleph_0`.
 -/
 
 namespace PcfProject
 
 universe u v w x
 
-/-! 以下仅保留核心路径实际调用的终端语义段。 -/
+/-! ## 1. A tail maximum is witnessed coherently on all deeper tails -/
 
 theorem alephSuccSet_tail_maxPcf_witness_has_full_witness_and_all_tail_eventuality
     (n : Nat)
@@ -221,6 +227,8 @@ theorem alephSuccSet_tail_maxPcf_theta_gt_targetAlephOmega
     rw [hEq]
     exact cardinalProductRepresentation.mem_pcf_regular hMax.left
   exact lt_of_le_of_ne hLower hNe
+
+/-! ## 2. Transport maxima between a strict tail and the full core -/
 
 theorem alephSuccSet_eq_first_union_zero_tail :
     alephSuccSet.{u} =
@@ -449,6 +457,8 @@ theorem alephSuccSet_maxPcf_theta_ge_targetAlephOmega
 
 /-! 自然数双射给出完整后继阿列夫乘积的可数且无限索引。 -/
 
+/-! ## 3. Explicit countable coordinate presentations -/
+
 noncomputable def alephSuccSetCardinalIndexOfNat (n : Nat) :
     CardinalIndex alephSuccSet.{u} :=
   ⟨Cardinal.aleph ((n : Ordinal.{u}) + 1), ⟨n, rfl⟩⟩
@@ -505,6 +515,8 @@ theorem alephSuccSet_cardinalIndex_infinite :
     (alephSuccSetCardinalIndexOfNat_injective.{u})
 
 /-! 完整核心中的 PCF 元素具有严格的不可数下界。 -/
+
+/-! ## 4. Countable-product bounds for the full core and its tails -/
 
 theorem alephSuccSet_pcf_mem_gt_aleph0
     {theta : Cardinal.{u}}
