@@ -67,4 +67,4 @@ lake build
 
 ## 许可
 
-本项目以 [MIT License](LICENSE) 发布。
+本项目以 [Apache License 2.0](LICENSE) 发布。
