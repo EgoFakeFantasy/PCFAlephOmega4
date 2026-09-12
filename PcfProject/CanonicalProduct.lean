@@ -20,11 +20,31 @@ cardinal set, it constructs the scale and proves `pcf {theta} = {theta}`.
 The later modules build general scales and generators from additional PCF
 hypotheses, then prove the no-holes and max-pcf results.  This module stops at
 the concrete reduced-product interface and the singleton computation.
+
+## Reader's map
+
+The file follows the mathematical dependency order rather than the order in
+which the formalization was developed:
+
+1. concrete coordinates, closed values, rapid families, and exact upper bounds;
+2. the eventual-equality quotient and its cofinality lower bounds;
+3. cardinal-length scales and the elementary-hull proof of Lemma 24.10;
+4. the directed/scale alternatives of Corollary 24.12;
+5. extraction and characterization of true cofinality;
+6. singleton and focused-coordinate computations defining the canonical PCF
+   representation.
+
+Each later block consumes interfaces established by the preceding blocks. In
+particular, the W-tree code proves the exact-upper-bound principle used by the
+Corollary 24.12 block; it is not an additional assumption on the final PCF
+representation.
 -/
 
 namespace PcfProject
 
 universe u v w
+
+/-! ## Concrete coordinates, rapidity, and closed exact upper bounds -/
 
 abbrev CardinalIndex (A : CardSet.{u}) : Type (u + 1) :=
   { theta : Cardinal.{u} // A theta }
@@ -1286,7 +1306,9 @@ theorem cardinalProductClosedExactUpperBound_top_decomposition
         (J.localize_isProper_iff (fun k => Not (X k))).mpr hOffSmall,
         ⟨p, hUpperOnX⟩, hCofinalOffX⟩
 
-/-! An ultrafilter-dual ideal decides the eventual comparison of every two
+/-! ## The eventual-equality quotient and cofinality lower bounds
+
+An ultrafilter-dual ideal decides the eventual comparison of every two
 canonical product elements. This is totality of the reduced-product preorder,
 not antisymmetry of raw product functions and not a scale construction. -/
 theorem cardinalProductFrame_eventuallyLe_total_of_isUltrafilterDual
@@ -2112,6 +2134,8 @@ theorem cardinalProductQuotient_aleph0_lt_cof_of_regulars
     cardinalProductQuotient_lift_lt_cof_of_regulars
       hRegulars hAleph0 hProper
 
+/-! ## Cardinal-length scales and localized scale gluing -/
+
 def IsCardinalProductOver
     (A : CardSet.{u})
     (F : ReducedProductFrame.{u + 1, u}) : Prop :=
@@ -2402,7 +2426,9 @@ theorem exists_cofinal_eqOn_const_cardinalScaleLength
       (univ_stationary hCofNe)
   exact ⟨b, T, hTStationary, stationary_isCofinal hTStationary, hColor⟩
 
-/-! Abstract elementary-hull core of Jech Lemma 24.10.  The hypotheses
+/-! ## Jech Lemma 24.10 from a source-sized W-tree hull
+
+Abstract elementary-hull core of Jech Lemma 24.10.  The hypotheses
 separate the three facts supplied by the hull construction: each stage has a
 rounded upper bound coded in a small type; minimality of that rounding holds
 for functions in the hull; and elementarity reflects the resulting
@@ -3081,7 +3107,9 @@ theorem localizedPushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two
   exact pushforwardCardinalProductClosedExactUpperBoundPrinciple_of_two_power_lt
     c hIndexInfinite hThetaRegular hThetaUncountable hPower
 
-/-! Canonical-size strict directedness is the boundary case immediately
+/-! ## Corollary 24.12: directedness versus global or localized scales
+
+Canonical-size strict directedness is the boundary case immediately
 above `PointwiseStrictDirectedBelow theta`: it asks for a strict upper bound
 for every family indexed by the canonical type of cardinality `theta`. -/
 def CardinalProductPointwiseStrictDirectedAt
@@ -3867,7 +3895,9 @@ theorem pointwiseStrictDirectedAt_of_no_scale
   · obtain ⟨X, hProper, hScale⟩ := hLocalized
     exact False.elim (hNoLocalizedScale X hProper hScale)
 
-/-! A cofinal family of regular cardinal length can be strictified whenever
+/-! ## True cofinality from regular-length scales
+
+A cofinal family of regular cardinal length can be strictified whenever
 the reduced product has pointwise-strict upper bounds for every shorter
 family.  At stage `alpha`, first bound all earlier recursive values, then
 bound that result together with the `alpha`-th member of the given cofinal
@@ -4431,6 +4461,8 @@ noncomputable def singletonCardinalScaleSeq
         (singletonCardinalIndex theta) = alpha :=
   rfl
 
+/-! ## Singleton and focused-coordinate products -/
+
 /-- A proper reduced product over the singleton set `{theta}` has the
 coordinatewise enumeration of `theta` as a scale of length `theta`. -/
 noncomputable def singletonCardinalScale
@@ -4816,6 +4848,8 @@ theorem cardinalProductFrame_excludePoint_hasTrueCofinality_iff
   · intro hTheta
     subst theta
     exact focusedCardinalScale_hasTrueCofinality hRegulars i0.2
+
+/-! ## The canonical PCF representation and its endpoint estimates -/
 
 noncomputable def cardinalProductRepresentation :
     PcfRepresentation.{u, u + 1, u, u} where
